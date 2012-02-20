@@ -91,7 +91,7 @@ class BackendDealerModel
 	}
 
 	/**
-	 * Add a new dealer locater.
+	 * Add a new brand.
 	 *
 	 * @param array $item The data to insert.
 	 * @return int The ID of the newly inserted dealer locater.
