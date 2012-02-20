@@ -1,8 +1,16 @@
 3.2.6 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: it is now possible to use positions inside modules' templates.
+* Backend: first page after login will always be dashboard (if allowed).
+* Core: application specific config files are now optional.
+
 Bugfixes:
 
 * Pages: blocks in fallback positions are now drag-and-droppable again.
+* Core: minifier now also works on PHP <5.2.2.
+* Core: fixed bug in minifier where @import url("xxx") would fail.
 
 
 3.2.5 (2012-02-14)
