@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>dealer</name>
+	<version>1.0.0</version>
+	<requirements>
+		<minimum_version>2.0.0</minimum_version>
+	</requirements>
+	<description>
+		<![CDATA[
+			Map with all car dealers
+		]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Arend Pijls]]></name>
+			<url><![CDATA[http://www.webplay.be]]></url>
+		</author>
+	</authors>
+	<events>
+		<event application="backend" name="after_add"><![CDATA[Triggered when a dealer is added.]]></event>
+		<event application="backend" name="after_delete"><![CDATA[Triggered when a dealer is deleted.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when a dealer is edited.]]></event>
+	</events>
+</module>

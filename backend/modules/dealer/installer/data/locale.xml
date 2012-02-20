@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <core>
+      <item type="label" name="AllDealer">
+        <translation language="nl"><![CDATA[alle getuigenissen]]></translation>
+        <translation language="en"><![CDATA[all Dealer]]></translation>
+      </item>
+      <item type="label" name="RandomDealer">
+        <translation language="nl"><![CDATA[willekeurige getuigenis]]></translation>
+        <translation language="en"><![CDATA[random Dealer]]></translation>
+      </item>
+      <item type="label" name="Dealer">
+        <translation language="nl"><![CDATA[getuigenissen]]></translation>
+        <translation language="en"><![CDATA[Dealer]]></translation>
+      </item>
+    </core>
+    <Dealer>
+      <item type="error" name="DealerIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een getuigenis in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please provide a Dealer.]]></translation>
+      </item>
+      <item type="label" name="Add">
+        <translation language="nl"><![CDATA[getuigenis toevoegen]]></translation>
+        <translation language="en"><![CDATA[add Dealer]]></translation>
+      </item>
+      <item type="label" name="Dealer">
+        <translation language="nl"><![CDATA[getuigenis]]></translation>
+        <translation language="en"><![CDATA[Dealer]]></translation>
+      </item>
+      <item type="label" name="Visible">
+        <translation language="nl"><![CDATA[zichtbaar]]></translation>
+        <translation language="en"><![CDATA[visible]]></translation>
+      </item>
+      <item type="message" name="Added">
+        <translation language="nl"><![CDATA[De getuigenis van "%1$s" werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The Dealer by "%1$s" has been added.]]></translation>
+      </item>
+      <item type="message" name="ConfirmDelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je de getuigenis van "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete the Dealer by "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="Deleted">
+        <translation language="nl"><![CDATA[De getuigenis van "%1$s" werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The Dealer by "%1$s" has been deleted.]]></translation>
+      </item>
+      <item type="message" name="Edit">
+        <translation language="nl"><![CDATA[bewerk de getuigenis van "%1$s"]]></translation>
+        <translation language="en"><![CDATA[edit the Dealer by "%1$s"]]></translation>
+      </item>
+      <item type="message" name="Edited">
+        <translation language="nl"><![CDATA[De getuigenis van "%1$s" werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The Dealer by "%1$s" has been edited.]]></translation>
+      </item>
+    </Dealer>
+  </backend>
+  <frontend>
+    <core>
+      <item type="message" name="DealerNoItems">
+        <translation language="nl"><![CDATA[Er zijn geen getuigenissen om te tonen.]]></translation>
+        <translation language="en"><![CDATA[There are no Dealer to show.]]></translation>
+      </item>
+      <item type="message" name="RandomDealer">
+        <translation language="nl"><![CDATA[Een willekeurige getuigenis:]]></translation>
+        <translation language="en"><![CDATA[A random Dealer:]]></translation>
+      </item>
+      <item type="message" name="ReadMoreDealer">
+        <translation language="nl"><![CDATA[Lees meer getuigenissen…]]></translation>
+        <translation language="en"><![CDATA[Read more Dealer…]]></translation>
+      </item>
+    </core>
+  </frontend>
+</locale>
