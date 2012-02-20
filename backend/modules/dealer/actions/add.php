@@ -12,6 +12,9 @@ class BackendDealerAdd extends BackendBaseActionAdd
 	{
 		parent::execute();
 
+		// get data
+		$this->getData();
+
 		// load form
 		$this->loadForm();
 
@@ -37,9 +40,19 @@ class BackendDealerAdd extends BackendBaseActionAdd
 		$rbtHiddenValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y');
 		$rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
 
+		// init some vars
+		$checked = array();
+		$values = array();
+
+		// get brand ids and put them in an array
+		foreach($this->brands as $value)
+		{
+			$values[] = array('label' => $value['name'], 'value' => $value['id']);
+		}
+
 		// create elements
 		$this->frm->addText('name', null, 255, 'inputText title', 'inputTextError, title');
-		$this->frm->addEditor('dealer');
+		$this->frm->addMultiCheckbox('type', $values, $checked);
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
 		$this->frm->addText('street');
 		$this->frm->addText('number');
@@ -51,6 +64,15 @@ class BackendDealerAdd extends BackendBaseActionAdd
 		$this->frm->addText('email');
 		$this->frm->addText('site');
 		$this->frm->addImage('avatar');
+
+	}
+
+	/**
+	 * Get the data.
+	 */
+	private function getData()
+	{
+		$this->brands = BackendDealerModel::getAllBrands();
 	}
 
 	/**
@@ -66,7 +88,6 @@ class BackendDealerAdd extends BackendBaseActionAdd
 
 			// validate fields
 			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
-			$this->frm->getField('dealer')->isFilled(BL::err('DealerIsRequired'));
 			$this->frm->getField('street')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('number')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('zip')->isFilled(BL::err('FieldIsRequired'));
@@ -89,7 +110,6 @@ class BackendDealerAdd extends BackendBaseActionAdd
 			{
 				// build item
 				$item['name'] = $this->frm->getField('name')->getValue();
-				$item['description'] = $this->frm->getField('dealer')->getValue();
 				$item['street'] = $this->frm->getField('street')->getValue();
 				$item['number'] = $this->frm->getField('number')->getValue();
 				$item['zip'] = $this->frm->getField('zip')->getValue();
@@ -106,22 +126,23 @@ class BackendDealerAdd extends BackendBaseActionAdd
 				$item['created_on'] = BackendModel::getUTCDate();
 				$item['edited_on'] = BackendModel::getUTCDate();
 
+				// create array item with all brands in
+				$values = array();
+				foreach($this->brands as $value)
+				{
+					// if checkbox is checked save id in array values
+					if(in_array($value['id'], (array) $this->frm->getField('type')->getValue())) $values[] = $value['id'];
+				}
+
+				$item['brands'] =  implode(",", $values);
+
 				// has the user submitted an avatar?
 				if($this->frm->getField('avatar')->isFilled())
 				{
-					// delete old avatar if it isn't the default-image
-					if($this->frm->getField('avatar') != 'no-avatar.jpg')
-					{
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/source/' . $this->record['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/128x128/' . $this->record['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/64x64/' . $this->record['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/32x32/' . $this->record['avatar']);
-					}
-
 					// create new filename
-					$filename = rand(0,3) . '_' . $item['id'] . '.' . $this->frm->getField('avatar')->getExtension();
+					$filename = rand(0,3) . '_' . SpoonFilter::urlise($item['name']) . '.' . $this->frm->getField('avatar')->getExtension();
 
-					// add into settings to update
+					// add into items to update
 					$item['avatar'] = $filename;
 
 					// resize (128x128)

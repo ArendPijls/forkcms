@@ -66,14 +66,16 @@ class BackendDealerEdit extends BackendBaseActionEdit
 		// init some vars
 		$checked = array();
 		$values = array();
-		$checked[] = 3;
-		$checked[] = 1;
-		$checked[] = 2;
+
+		// get brand ids and put them in an array
 		foreach($this->brands as $value)
 		{
 			$values[] = array('label' => $value['name'], 'value' => $value['id']);
-			$checked[] = $value['id'];
 		}
+
+		// set checked checkboxes
+		$assets = $this->record['brands'];
+		$checked = explode(',', $assets);
 
 		// create elements
 		$this->frm->addText('name', $this->record['name'], 255, 'inputText title', 'inputTextError, title');
@@ -139,7 +141,6 @@ class BackendDealerEdit extends BackendBaseActionEdit
 				// build item
 				$item['id'] = $this->id;
 				$item['name'] = $this->frm->getField('name')->getValue();
-				$item['description'] = $this->frm->getField('dealer')->getValue();
 				$item['street'] = $this->frm->getField('street')->getValue();
 				$item['number'] = $this->frm->getField('number')->getValue();
 				$item['zip'] = $this->frm->getField('zip')->getValue();
@@ -152,6 +153,16 @@ class BackendDealerEdit extends BackendBaseActionEdit
 				$item['hidden'] = $this->frm->getField('hidden')->getValue();
 				$item['user_id'] = BackendAuthentication::getUser()->getUserId();
 				$item['edited_on'] = BackendModel::getUTCDate();
+
+				// create array item with all brands in
+				$values = array();
+				foreach($this->brands as $value)
+				{
+					// if checkbox is checked save id in array values
+					if(in_array($value['id'], (array) $this->frm->getField('type')->getValue())) $values[] = $value['id'];
+				}
+
+				$item['brands'] =  implode(",", $values);
 
 				// has the user submitted an avatar?
 				if($this->frm->getField('avatar')->isFilled())
@@ -166,7 +177,7 @@ class BackendDealerEdit extends BackendBaseActionEdit
 					}
 
 					// create new filename
-					$filename = rand(0,3) . '_' . $item['id'] . '.' . $this->frm->getField('avatar')->getExtension();
+					$filename = rand(0,3) . '_' . SpoonFilter::urlise($item['name']) . '.' . $this->frm->getField('avatar')->getExtension();
 
 					// add into settings to update
 					$item['avatar'] = $filename;

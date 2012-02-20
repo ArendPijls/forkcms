@@ -24,19 +24,19 @@
 			{$dealerItems.zip} {$dealerItems.city} <br>
 			
 			{option:dealerItems.tel}
-				{$txtTel}: {$dealerItems.tel} <br>
+				{$lblTel}: {$dealerItems.tel} <br>
 			{/option:dealerItems.tel}
 			
 			{option:dealerItems.fax}
-				{$txtFax}: {$dealerItems.fax} <br>
+				{$lblFax}: {$dealerItems.fax} <br>
 			{/option:dealerItems.fax}
 			
 			{option:dealerItems.email}
-				{$txtEmail}: {$dealerItems.email} <br>
+				{$lblEmail}: {$dealerItems.email} <br>
 			{/option:dealerItems.email}
 									
 			{option:dealerItems.site}
-				{$txtSite}: {$dealerItems.site} <br>
+				{$lblSite}: {$dealerItems.site} <br>
 			{/option:dealerItems.site}
 		</div>
 	{/iteration:dealerItems}
@@ -126,19 +126,19 @@
 						{$dealerItems.zip} {$dealerItems.city} <br>
 						
 						{option:dealerItems.tel}
-							{$txtTel}: {$dealerItems.tel} <br>
+							{$lblTel}: {$dealerItems.tel} <br>
 						{/option:dealerItems.tel}
 						
 						{option:dealerItems.fax}
-							{$txtFax}: {$dealerItems.fax} <br>
+							{$lblFax}: {$dealerItems.fax} <br>
 						{/option:dealerItems.fax}
 						
 						{option:dealerItems.email}
-							{$txtEmail}: {$dealerItems.email} <br>
+							{$lblEmail}: {$dealerItems.email} <br>
 						{/option:dealerItems.email}
 												
 						{option:dealerItems.site}
-							{$txtSite}: {$dealerItems.site} <br>
+							{$lblSite}: {$dealerItems.site} <br>
 						{/option:dealerItems.site}
 					</div>
 					<div style="width:400px; float:left;">
