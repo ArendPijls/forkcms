@@ -17,7 +17,7 @@ class BackendDealerEditBrands extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the dealer locater exist
-		if($this->id !== null && BackendDealerModel::exists($this->id))
+		if($this->id !== null && BackendDealerModel::existsBrand($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
@@ -47,7 +47,7 @@ class BackendDealerEditBrands extends BackendBaseActionEdit
 	 */
 	private function getData()
 	{
-		$this->record = BackendDealerModel::get($this->id);
+		$this->record = BackendDealerModel::getBrand($this->id);
 	}
 
 	/**
@@ -64,18 +64,7 @@ class BackendDealerEditBrands extends BackendBaseActionEdit
 
 		// create elements
 		$this->frm->addText('name', $this->record['name'], 255, 'inputText title', 'inputTextError, title');
-		$this->frm->addEditor('dealer', $this->record['description']);
-		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
-		$this->frm->addText('street', $this->record['street']);
-		$this->frm->addText('number', $this->record['number']);
-		$this->frm->addText('zip', $this->record['zip']);
-		$this->frm->addText('city', $this->record['city']);
-		$this->frm->addDropdown('country', SpoonLocale::getCountries(BL::getInterfaceLanguage()), $this->record['country']);
-		$this->frm->addText('tel', $this->record['tel']);
-		$this->frm->addText('fax', $this->record['fax']);
-		$this->frm->addText('email', $this->record['email']);
-		$this->frm->addText('site', $this->record['site']);
-		$this->frm->addImage('avatar');
+		$this->frm->addImage('image');
 	}
 
 	/**
@@ -103,19 +92,15 @@ class BackendDealerEditBrands extends BackendBaseActionEdit
 
 			// validate fields
 			$this->frm->getField('name')->isFilled(BL::err('FieldIsRequired'));
-			$this->frm->getField('street')->isFilled(BL::err('FieldIsRequired'));
-			$this->frm->getField('number')->isFilled(BL::err('FieldIsRequired'));
-			$this->frm->getField('zip')->isFilled(BL::err('FieldIsRequired'));
-			$this->frm->getField('city')->isFilled(BL::err('FieldIsRequired'));
 
-			// validate avatar
-			if($this->frm->getField('avatar')->isFilled())
+			// validate image
+			if($this->frm->getField('image')->isFilled())
 			{
 				// correct extension
-				if($this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), BL::err('JPGGIFAndPNGOnly')))
+				if($this->frm->getField('image')->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), BL::err('JPGGIFAndPNGOnly')))
 				{
 					// correct mimetype?
-					$this->frm->getField('avatar')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'), BL::err('JPGGIFAndPNGOnly'));
+					$this->frm->getField('image')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'), BL::err('JPGGIFAndPNGOnly'));
 				}
 
 			}
@@ -126,62 +111,43 @@ class BackendDealerEditBrands extends BackendBaseActionEdit
 				// build item
 				$item['id'] = $this->id;
 				$item['name'] = $this->frm->getField('name')->getValue();
-				$item['description'] = $this->frm->getField('dealer')->getValue();
-				$item['street'] = $this->frm->getField('street')->getValue();
-				$item['number'] = $this->frm->getField('number')->getValue();
-				$item['zip'] = $this->frm->getField('zip')->getValue();
-				$item['city'] = $this->frm->getField('city')->getValue();
-				$item['country'] = $this->frm->getField('country')->getValue();
-				$item['tel'] = $this->frm->getField('tel')->getValue();
-				$item['fax'] = $this->frm->getField('fax')->getValue();
-				$item['email'] = $this->frm->getField('email')->getValue();
-				$item['site'] = $this->frm->getField('site')->getValue();
-				$item['hidden'] = $this->frm->getField('hidden')->getValue();
-				$item['user_id'] = BackendAuthentication::getUser()->getUserId();
-				$item['edited_on'] = BackendModel::getUTCDate();
 
-				// has the user submitted an avatar?
-				if($this->frm->getField('avatar')->isFilled())
+				// has the user submitted an image?
+				if($this->frm->getField('image')->isFilled())
 				{
-					// delete old avatar if it isn't the default-image
-					if($this->frm->getField('avatar') != 'no-avatar.jpg')
+					// delete old image if it isn't the default-image
+					if($this->frm->getField('image') != 'no-image.jpg')
 					{
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/source/' . $this->record['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/128x128/' . $this->record['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/64x64/' . $this->record['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/32x32/' . $this->record['avatar']);
+						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/source/' . $this->record['image']);
+						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/128x128/' . $this->record['image']);
+						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/64x64/' . $this->record['image']);
+						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/32x32/' . $this->record['image']);
 					}
 
 					// create new filename
-					$filename = rand(0,3) . '_' . $item['id'] . '.' . $this->frm->getField('avatar')->getExtension();
+					$filename = rand(0,3) . '_' . $item['id'] . '.' . $this->frm->getField('image')->getExtension();
 
 					// add into settings to update
-					$item['avatar'] = $filename;
+					$item['image'] = $filename;
 
 					// resize (128x128)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/128x128/' . $filename, 128, 128, true, false, 100);
+					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/frontend_dealer/brands/128x128/' . $filename, 128, 128, true, false, 100);
 
 					// resize (64x64)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/64x64/' . $filename, 64, 64, true, false, 100);
+					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/frontend_dealer/brands/64x64/' . $filename, 64, 64, true, false, 100);
 
 					// resize (32x32)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/32x32/' . $filename, 32, 32, true, false, 100);
+					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/frontend_dealer/brands/32x32/' . $filename, 32, 32, true, false, 100);
 				}
 
-				// geocode address
-				$url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($item['street'] . ' ' . $item['number'] . ', ' . $item['zip'] . ' ' . $item['city'] . ', ' . SpoonLocale::getCountry($item['country'], BL::getWorkingLanguage())) . '&sensor=false';
-				$geocode = json_decode(SpoonHTTP::getContent($url));
-				$item['lat'] = isset($geocode->results[0]->geometry->location->lat) ? $geocode->results[0]->geometry->location->lat : null;
-				$item['lng'] = isset($geocode->results[0]->geometry->location->lng) ? $geocode->results[0]->geometry->location->lng : null;
-
 				// update the dealer
-				BackendDealerModel::update($item);
+				BackendDealerModel::updateBrand($item);
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
 				// everything has been saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id']);
+				$this->redirect(BackendModel::createURLForAction('brands') . '&report=edited&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

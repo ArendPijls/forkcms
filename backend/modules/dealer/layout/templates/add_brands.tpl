@@ -18,13 +18,13 @@
 
 		<div class="options">
 			<p>
-				{option:item.avatar}
-					<img src="{$FRONTEND_FILES_URL}/frontend_dealer/avatars/128x128/{$item.avatar}" width="128" height="128" alt="" />
-				{/option:item.avatar}
+				{option:item.image}
+					<img src="{$FRONTEND_FILES_URL}/frontend_dealer/avatars/128x128/{$item.image}" width="128" height="128" alt="" />
+				{/option:item.image}
 			</p>
 			<p>
-				<label for="avatar">{$lblAvatar|ucfirst}</label>
-				{$fileAvatar} {$fileAvatarError}
+				<label for="avatar">{$lblImage|ucfirst}</label>
+				{$fileImage} {$fileImageError}
 				<span class="helpTxt">{$msgHelpAvatar}</span>
 			</p>
 		</div>

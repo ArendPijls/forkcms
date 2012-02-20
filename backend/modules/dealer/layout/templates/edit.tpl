@@ -19,8 +19,13 @@
 					<div class="heading">
 						<h3>{$lblDealer|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></h3>
 					</div>
-					<div class="optionsRTE">
-						{$txtDealer} {$txtDealerError}
+					<div class="options">
+						<label>{$lblTypes|ucfirst}</label>
+						{option:type}
+							<ul>
+								{iteration:type}<li>{$type.chkType} <label for="{$type.id}">{$type.label|ucfirst}</label></li>{/iteration:type}
+							</ul>
+						{/option:type}
 					</div>
 				</div>
 				

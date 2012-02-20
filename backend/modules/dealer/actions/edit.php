@@ -17,7 +17,7 @@ class BackendDealerEdit extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the dealer exist
-		if($this->id !== null && BackendDealerModel::exists($this->id))
+		if($this->id !== null && BackendDealerModel::existsDealer($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
@@ -47,7 +47,8 @@ class BackendDealerEdit extends BackendBaseActionEdit
 	 */
 	private function getData()
 	{
-		$this->record = BackendDealerModel::get($this->id);
+		$this->record = BackendDealerModel::getDealer($this->id);
+		$this->brands = BackendDealerModel::getAllBrands();
 	}
 
 	/**
@@ -62,9 +63,21 @@ class BackendDealerEdit extends BackendBaseActionEdit
 		$rbtHiddenValues[] = array('label' => BL::lbl('Hidden'), 'value' => 'Y');
 		$rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
 
+		// init some vars
+		$checked = array();
+		$values = array();
+		$checked[] = 3;
+		$checked[] = 1;
+		$checked[] = 2;
+		foreach($this->brands as $value)
+		{
+			$values[] = array('label' => $value['name'], 'value' => $value['id']);
+			$checked[] = $value['id'];
+		}
+
 		// create elements
 		$this->frm->addText('name', $this->record['name'], 255, 'inputText title', 'inputTextError, title');
-		$this->frm->addEditor('dealer', $this->record['description']);
+		$this->frm->addMultiCheckbox('type', $values, $checked);
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
 		$this->frm->addText('street', $this->record['street']);
 		$this->frm->addText('number', $this->record['number']);
@@ -175,7 +188,7 @@ class BackendDealerEdit extends BackendBaseActionEdit
 				$item['lng'] = isset($geocode->results[0]->geometry->location->lng) ? $geocode->results[0]->geometry->location->lng : null;
 
 				// update the dealer
-				BackendDealerModel::update($item);
+				BackendDealerModel::updateDealer($item);
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));

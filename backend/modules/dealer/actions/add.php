@@ -141,7 +141,7 @@ class BackendDealerAdd extends BackendBaseActionAdd
 				$item['lng'] = isset($geocode->results[0]->geometry->location->lng) ? $geocode->results[0]->geometry->location->lng : null;
 
 				// insert the item
-				$item['id'] = BackendDealerModel::insert($item);
+				$item['id'] = BackendDealerModel::insertDealer($item);
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));

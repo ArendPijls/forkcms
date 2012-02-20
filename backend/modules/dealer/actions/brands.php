@@ -34,6 +34,8 @@ class BackendDealerBrands extends BackendBaseActionIndex
 		// create the data grid for the overview
 		$this->datagrid = new BackendDataGridDB(BackendDealerModel::QRY_BROWSE_BRANDS, array(BackendLanguage::getWorkingLanguage()));
 
+		// hide the 'id' column
+		$this->datagrid->setColumnHidden('id');
 
 		// linkify the name column
 		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit_brands') . '&amp;id=[id]');

@@ -4,13 +4,11 @@
 <div class="pageTitle">
 	<h2>{$lblBrands|ucfirst}</h2>
 
-	{option:showBrandAdd}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add_brands'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
 			<span>{$lblAdd|ucfirst}</span>
 		</a>
 	</div>
-	{/option:showBrandAdd}
 </div>
 
 {option:datagrid}
