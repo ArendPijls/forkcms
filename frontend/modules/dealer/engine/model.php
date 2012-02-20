@@ -32,12 +32,48 @@ class FrontendDealerModel
 	 */
 	public static function getAll()
 	{
-		return (array) FrontendModel::getDB()->getRecords(
+		$tempArr = (array) FrontendModel::getDB()->getRecords(
+				'SELECT *
+				FROM dealer
+				WHERE hidden = ? AND language = ?
+				ORDER BY sequence',
+				array('N', FRONTEND_LANGUAGE)
+		);
+
+
+		$count=sizeof($tempArr);
+
+		// loop database records
+		$authors = array();
+		for($i=0;$i<$count;$i++){
+
+			$authors[$i] = $tempArr[$i];
+			$authors[$i]['name'] = $tempArr[$i]['name'];
+			$checked = explode(',', $tempArr[$i]['brands']);
+			foreach($checked as $brands)
+			{
+				$authors[$i]['brandInfo'][] = FrontendDealerModel::getBrand($brands);
+			}
+
+		}
+
+		return $authors;
+	}
+
+	/**
+	 * Get brand info.
+	 *
+	 * @param int $id The id of the item to fetch.
+	 * @return array
+	 */
+	public static function getBrand($id)
+	{
+		return (array) FrontendModel::getDB()->getRecord(
 			'SELECT *
-			 FROM dealer
-			 WHERE hidden = ? AND language = ?
-			 ORDER BY sequence',
-			array('N', FRONTEND_LANGUAGE)
+			 FROM dealer_brands
+			 WHERE id = ?
+			 LIMIT 1',
+			array((int) $id)
 		);
 	}
 

@@ -112,7 +112,6 @@
 
 		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
-
 	<div id="dealerItems">
 		{iteration:dealerItems}
 			<div style="width:900px; height:180px;">
@@ -143,13 +142,16 @@
 					</div>
 					<div style="width:400px; float:left;">
 						<strong>Merken</strong> <br>
-						<ul>
-							<li>appels</li>
-							<li>peren</li>
-							<li>bananen</li>
-							<li>druiven</li>
-														<li>appels</li>
-							<li>peren</li>
+				        	 <ul>
+				            	{iteration:dealerItems.brandInfo}
+				            		{option:dealerItems.brandInfo.name}
+				               			<li>
+				               			<img src="{$FRONTEND_FILES_URL}/frontend_dealer/brands/32x32/{$dealerItems.brandInfo.image}" width="32" height="32" alt="" style="float:left; margin: 5px;" />
+				               			{$dealerItems.brandInfo.name}
+				               			</li>
+				               		{/option:dealerItems.brandInfo.name}
+				            	{/iteration:dealerItems.brandInfo}
+				        	 </ul>
 						</ul>
 					</div>
 				</div>
