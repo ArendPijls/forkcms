@@ -44,7 +44,7 @@ class DealerInstaller extends ModuleInstaller
 		$this->setNavigation($navigationModulesId, 'Dealer', 'dealer/settings');
 
 		// add extra's
-		$this->insertExtra('dealer', 'block', 'AllDealer', 'all_dealer', null, 'N');
+		$this->insertExtra('dealer', 'block', 'Dealer', 'all_dealer', null, 'N');
 		$this->insertExtra('dealer', 'widget', 'RandomDealer', 'random_dealer', null, 'N');
 	}
 }
