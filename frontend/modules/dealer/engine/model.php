@@ -61,6 +61,20 @@ class FrontendDealerModel
 	}
 
 	/**
+	 * Get all the brands.
+	 *
+	 * @return array
+	 */
+	public static function getAllBrands()
+	{
+		return (array) FrontendModel::getDB()->getRecords(
+				'SELECT *
+				FROM dealer_brands',
+				array()
+		);
+	}
+
+	/**
 	 * Get brand info.
 	 *
 	 * @param int $id The id of the item to fetch.
