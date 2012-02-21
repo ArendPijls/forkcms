@@ -26,7 +26,6 @@ class FrontendDealerIndex extends FrontendBaseBlock
 	 */
 	private function parse()
 	{
-		// build list authors
 
 		//$this->tpl->assign('authors', FrontendDealerModel::getAll2());
 

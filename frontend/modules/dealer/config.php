@@ -9,9 +9,17 @@
 final class FrontendDealerConfig extends FrontendBaseConfig
 {
 	/**
-	 * The default action.
+	 * The default action
 	 *
-	 * @var  string
+	 * @var	string
 	 */
 	protected $defaultAction = 'index';
+
+
+	/**
+	 * The disabled actions
+	 *
+	 * @var	array
+	 */
+	protected $disabledActions = array();
 }

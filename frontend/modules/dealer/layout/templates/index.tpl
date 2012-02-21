@@ -15,5 +15,5 @@
 	</div>
 {/option:!dealerItems}
 {option:dealerItems}
-wooot
+	Zoekveld en dergelijk
 {/option:dealerItems}
