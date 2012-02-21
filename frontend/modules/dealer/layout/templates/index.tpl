@@ -2,7 +2,6 @@
 	variables that are available:
 	- {$dealerItems}: contains data about all dealers
 *}
-
 {option:!dealerItems}
 	<div id="dealerItems">
 		<div class="mod">
