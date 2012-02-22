@@ -75,7 +75,7 @@ class BackendDealerEdit extends BackendBaseActionEdit
 
 		// set checked checkboxes
 		$assets = $this->record['brands'];
-		$checked = explode(',', $assets);
+		$checked = explode(';', $assets);
 
 		// create elements
 		$this->frm->addText('name', $this->record['name'], 255, 'inputText title', 'inputTextError, title');
@@ -162,7 +162,8 @@ class BackendDealerEdit extends BackendBaseActionEdit
 					if(in_array($value['id'], (array) $this->frm->getField('type')->getValue())) $values[] = $value['id'];
 				}
 
-				$item['brands'] =  implode(",", $values);
+				$item['brands'] =  implode(";", $values);
+				$item['brands'] = ";".$item['brands'].";";
 
 				// has the user submitted an avatar?
 				if($this->frm->getField('avatar')->isFilled())

@@ -65,11 +65,8 @@ class FrontendDealerIndex extends FrontendBaseBlock
 	{
 		// parse the form
 		$this->frm->parse($this->tpl);
-
-		$this->tpl->assign('dealerItems', FrontendDealerModel::getAll());
-
-		// hide form
 		$this->tpl->assign('dealerSettings', FrontendModel::getModuleSettings('dealer'));
+
 	}
 
 	/**
@@ -90,16 +87,22 @@ class FrontendDealerIndex extends FrontendBaseBlock
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-
 				// reformat data
 				$area = $this->frm->getField('area')->getValue();
+				$area = $this->frm->getField('area')->getValue();
 
-				// get URL for action place
-				$permaLink = FrontendNavigation::getURLForBlock('dealer', 'place') . '/' . $area;
-				$redirectLink = $permaLink;
+				// create array item with all brands in
+				$brands = array();
+				foreach($this->brands as $brand)
+				{
+					// if checkbox is checked save id in array values
+					if(in_array($brand['id'], (array) $this->frm->getField('type')->getValue())) $brands[] = $brand['id'];
+				}
 
-				// redirect
-				$this->redirect($redirectLink);
+				// assign dealers items and area
+				$this->tpl->assign('dealerArea', $area);
+				$this->tpl->assign('dealerItems', FrontendDealerModel::getAll($area,$brands));
+
 			}
 		}
 	}

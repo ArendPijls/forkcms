@@ -30,18 +30,24 @@ class FrontendDealerModel
 	 *
 	 * @return array
 	 */
-	public static function getAll()
+	public static function getAll($area, $brands)
 	{
+		// loop selected brands and put them in a like %% query
+		$extendWhereQuery ="";
+		foreach($brands as $brand)
+		{
+			$extendWhereQuery  .= 'AND brands like "%;'.$brand.';%" ';
+		}
+
 		$tempArr = (array) FrontendModel::getDB()->getRecords(
 				'SELECT *
 				FROM dealer
-				WHERE hidden = ? AND language = ?
+				WHERE hidden = ? AND language = ? '.$extendWhereQuery.'
 				ORDER BY sequence',
 				array('N', FRONTEND_LANGUAGE)
 		);
 
-
-		$count=sizeof($tempArr);
+		$count=count($tempArr);
 
 		// loop database records
 		$authors = array();
@@ -49,7 +55,7 @@ class FrontendDealerModel
 
 			$authors[$i] = $tempArr[$i];
 			$authors[$i]['name'] = $tempArr[$i]['name'];
-			$checked = explode(',', $tempArr[$i]['brands']);
+			$checked = explode(';', $tempArr[$i]['brands']);
 			foreach($checked as $brands)
 			{
 				$authors[$i]['brandInfo'][] = FrontendDealerModel::getBrand($brands);
