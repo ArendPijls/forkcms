@@ -30,40 +30,71 @@ class FrontendDealerModel
 	 *
 	 * @return array
 	 */
-	public static function getAll($area, $brands)
+	public static function getAll($area, $brands, $country, $limit = 50, $distance = 25, $unit = 'km')
 	{
+
+
+		// The url for quering Google Maps api to get latitude/longitude coordinates for an address.
+		$urlGoogleMaps = 'http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false';
+
+		// build address & full url to google
+		$fullAddress = $area . ', Belgium';
+		$url = sprintf($urlGoogleMaps, urlencode($fullAddress));
+
+		// fetch data from google
+		$geocode = json_decode(SpoonHTTP::getContent($url));
+
+		// results found?
+		$lat = isset($geocode->results[0]->geometry->location->lat) ? $geocode->results[0]->geometry->location->lat : null;
+		$lng = isset($geocode->results[0]->geometry->location->lng) ? $geocode->results[0]->geometry->location->lng : null;
+
+		// radius of earth; @note: the earth is not perfectly spherical, but this is considered the 'mean radius'
+		if($unit == 'km') $radius = 6371.009; // in kilometers
+		elseif($unit == 'mi') $radius = 3958.761; // in miles
+
+		// latitude boundaries
+		$maxLat = (float) $lat + rad2deg($distance / $radius);
+		$minLat = (float) $lat - rad2deg($distance / $radius);
+
+		// longitude boundaries (longitude gets smaller when latitude increases)
+		$maxLng = (float) $lng + rad2deg($distance / $radius / cos(deg2rad((float) $lat)));
+		$minLng = (float) $lng - rad2deg($distance / $radius / cos(deg2rad((float) $lat)));
+
+
 		// loop selected brands and put them in a like %% query
-		$extendWhereQuery ="";
+		$extendWhereQuery = "";
 		foreach($brands as $brand)
 		{
 			$extendWhereQuery  .= 'AND brands like "%;'.$brand.';%" ';
 		}
 
+		// show only dealers around users loctation
+		if($country == "AROUND") $country = "BE";
+
+		// set db records in temp arr
 		$tempArr = (array) FrontendModel::getDB()->getRecords(
 				'SELECT *
 				FROM dealer
-				WHERE hidden = ? AND language = ? '.$extendWhereQuery.'
-				ORDER BY sequence',
-				array('N', FRONTEND_LANGUAGE)
+				WHERE lat > ? AND lat < ? AND lng > ? AND lng < ? AND hidden = ? AND country = ? '.$extendWhereQuery.'
+				ORDER BY ABS(lat - ?) + ABS(lng - ?) ASC
+				LIMIT ?',
+				array($minLat, $maxLat, $minLng, $maxLng, 'N', $country, (float) $lat, (float) $lng, (int) $limit)
 		);
 
-		$count=count($tempArr);
-
-		// loop database records
-		$authors = array();
-		for($i=0;$i<$count;$i++){
-
-			$authors[$i] = $tempArr[$i];
-			$authors[$i]['name'] = $tempArr[$i]['name'];
-			$checked = explode(';', $tempArr[$i]['brands']);
-			foreach($checked as $brands)
+		// loop db records and add brand info
+		$dealers = array();
+		for($i=0; $i < count($tempArr); $i++)
+		{
+			$dealers[$i] = $tempArr[$i];
+			$brands = explode(';', $tempArr[$i]['brands']);
+			foreach($brands as $brand)
 			{
-				$authors[$i]['brandInfo'][] = FrontendDealerModel::getBrand($brands);
+				$dealers[$i]['brandInfo'][] = FrontendDealerModel::getBrand($brand);
 			}
 
 		}
 
-		return $authors;
+		return $dealers;
 	}
 
 	/**
@@ -97,25 +128,4 @@ class FrontendDealerModel
 		);
 	}
 
-	/**
-	 * Get a random visible dealer.
-	 *
-	 * @return array
-	 */
-	public static function getRandom()
-	{
-		// get a random ID
-		$allIds = FrontendModel::getDB()->getColumn(
-			'SELECT id
-			 FROM dealer
-			 WHERE hidden = ? AND language = ?',
-			array('N', FRONTEND_LANGUAGE)
-		);
-
-		// return an empty array when there are no visible dealers
-		if(empty($allIds)) return array();
-
-		// return the dealers with a random ID
-		return self::get($allIds[array_rand($allIds)]);
-	}
 }

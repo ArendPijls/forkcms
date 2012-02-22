@@ -51,10 +51,9 @@ class FrontendDealerIndex extends FrontendBaseBlock
 
 		// create elements
 		$this->frm->addText('area');
-		$this->frm->addDropdown('where', array('CloseToYou' => 'CloseToYou', 'InBelgium' => 'InBelgium', 'InNederlands' => 'InNederlands', 'InFrance' => 'InFrance'));
+		$this->frm->addDropdown('country', array('AROUND' => 'CloseToYou', 'BE' => 'InBelgium', 'NL' => 'InNederlands', 'FR' => 'InFrance'));
 		$this->frm->addMultiCheckbox('type', $values);
 		//$this->frm->addDropdown('map_type', array('ROADMAP' => FL::lbl('Roadmap', $this->getModule()), 'SATELLITE' => FL::lbl('Satellite', $this->getModule()), 'HYBRID' => FL::lbl('Hybrid', $this->getModule()), 'TERRAIN' => FL::lbl('Terrain', $this->getModule())), BackendModel::getModuleSetting($this->URL->getModule(), 'map_type', 'roadmap'));
-
 
 	}
 
@@ -66,7 +65,6 @@ class FrontendDealerIndex extends FrontendBaseBlock
 		// parse the form
 		$this->frm->parse($this->tpl);
 		$this->tpl->assign('dealerSettings', FrontendModel::getModuleSettings('dealer'));
-
 	}
 
 	/**
@@ -84,12 +82,16 @@ class FrontendDealerIndex extends FrontendBaseBlock
 			// validate required fields
 			$this->frm->getField('area')->isFilled(FL::err('AreaIsRequired'));
 
+			// get input values
+			$area = $this->frm->getField('area')->getValue();
+			$country = $this->frm->getField('country')->getValue();
+
+			// ignore manipulated dropdownbox by hackers
+			if($country != "AROUND" and $country != "BE" and $country != "NL" and $country != "FR") $this->frm->addError('Eat some peanuts');
+
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-				// reformat data
-				$area = $this->frm->getField('area')->getValue();
-				$area = $this->frm->getField('area')->getValue();
 
 				// create array item with all brands in
 				$brands = array();
@@ -99,9 +101,19 @@ class FrontendDealerIndex extends FrontendBaseBlock
 					if(in_array($brand['id'], (array) $this->frm->getField('type')->getValue())) $brands[] = $brand['id'];
 				}
 
-				// assign dealers items and area
-				$this->tpl->assign('dealerArea', $area);
-				$this->tpl->assign('dealerItems', FrontendDealerModel::getAll($area,$brands));
+				$getDealers = FrontendDealerModel::getAll($area,$brands,$country);
+
+				// check of there are dealers
+				if(count($getDealers) > 0)
+				{
+					// assign dealers items and area
+					$this->tpl->assign('dealerArea', $area);
+					$this->tpl->assign('dealerItems', $getDealers);
+					$this->tpl->assign('dealerHeadingText', 'Found %s dealers');
+					$this->tpl->assign('numDealers', count($getDealers));
+				} else {
+					$this->tpl->assign('dealerErrorNoDealers', 1);
+				}
 
 			}
 		}

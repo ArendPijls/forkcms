@@ -1,6 +1,9 @@
 {*
 	variables that are available:
 	- {$dealerItems}: contains data about all dealers
+	- {$dealerHeadingText|sprintf:{$numDealers}}
+	- {$dealerErrorNoDealers}
+	- {$msgDealerNoItems}
 *}
 {form:searchForm}
 	<div class="alignBlocks">
@@ -11,7 +14,7 @@
 	</div>
 	<div>
 		<p>
-			{$ddmWhere} {$ddmWhereError}
+			{$ddmCountry}
 		</p>
 	</div>
 	<div>
@@ -26,9 +29,11 @@
 	</p>
 {/form:searchForm}
 
-{option:dealerItems}
+{option:dealerErrorNoDealers}{$msgDealerNoItems}{/option:dealerErrorNoDealers}
 
-	<div id="map"></div>
+{option:dealerItems}
+	<h2>{$dealerHeadingText|sprintf:{$numDealers}}</h2>
+	<div id="map" style="height: {$dealerSettings.height}px; width: {$dealerSettings.width}px;"></div>
 
 	{* Store item text in a div because JS goes bananas with multiline HTML *}
 	{iteration:dealerItems}
@@ -56,40 +61,33 @@
 
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 	<script type="text/javascript">
-    var latlng = new google.maps.LatLng(32.5468,-23.2031);
-    var myOptions = {
-		zoom: '{$dealerSettings.zoom_level}' == 'auto' ? 0 : {$dealerSettings.zoom_level},
-		center: latlng,
-		// no dragging the map around
-		draggable: true,
-		// no zooming in/out using scrollwheel
-		scrollwheel: false,
-		// no double click zoom
-		disableDoubleClickZoom: false,
-		mapTypeId: google.maps.MapTypeId.{$dealerSettings.map_type}
-    };
-	  function geocode() {
-    		var address = '{$dealerArea}';
-		    geocoder.geocode({
-		      'address': address,
-		      'partialmatch': true}, geocodeResult);
-  }
-	</script>
-  <div id="map">
-    <div id="map_canvas" style="height: {$dealerSettings.height}px; width: {$dealerSettings.width}px;"></div>
-    <div id="crosshair"></div>
-  </div>
-  
-  <table>
-    <tr><td>Lat/Lng:</td><td><div id="latlng"></div></td></tr>
-    <tr><td>Address:</td><td><div id="formatedAddress"></div></td></tr>
-    <tr><td>Zoom Level</td><td><div id="zoom_level">2</div></td></tr>
-  </table>
-	<script type="text/javascript">
 		var initialize = function()
 		{
 			// create boundaries
 			var latlngBounds = new google.maps.LatLngBounds();
+
+			// set options
+			var options =
+			{
+				// set zoom as defined by user, or as 0 if to be done automatically based on boundaries
+				zoom: '{$dealerSettings.zoom_level}' == 'auto' ? 0 : {$dealerSettings.zoom_level},
+				// set default center as first item's location
+				center: new google.maps.LatLng({$dealerItems.0.lat}, {$dealerItems.0.lng}),
+				// no interface, just the map
+				disableDefaultUI: true,
+				// dragging the map around
+				draggable: true,
+				// no zooming in/out using scrollwheel
+				scrollwheel: false,
+				// no double click zoom
+				disableDoubleClickZoom: true,
+				// set map type
+				mapTypeId: google.maps.MapTypeId.{$dealerSettings.map_type}
+			};
+
+			// create map
+			var map = new google.maps.Map(document.getElementById('map'), options);
+
 
 			// function to add markers to the map
 			function addMarker(lat, lng, title, text)
@@ -115,22 +113,21 @@
 				google.maps.event.addListener(marker, 'click', function()
 				{
 					// create infowindow
-					new google.maps.InfoWindow({ content: '<h2>'+ title +'</h2>' + text }).open(map, marker);
+					new google.maps.InfoWindow({ content: '<h1>'+ title +'</h1>' + text }).open(map, marker);
 				});
 			}
-
+			
 			// loop items and add to map
 			{iteration:dealerItems}
 				{option:dealerItems.lat}{option:dealerItems.lng}addMarker({$dealerItems.lat}, {$dealerItems.lng}, '{$dealerItems.name}', $('#markerText' + {$dealerItems.id}).html());{/option:dealerItems.lat}{/option:dealerItems.lng}
 			{/iteration:dealerItems}
 
 			// set center to the middle of our boundaries
-			//map.setCenter(latlngBounds.getCenter());
+			map.setCenter(latlngBounds.getCenter());
 
 			// set zoom automatically, defined by points (if allowed)
 			if('{$dealerSettings.zoom_level}' == 'auto') map.fitBounds(latlngBounds);
 		}
-
 		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
 	<div id="dealerItems">
