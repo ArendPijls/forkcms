@@ -4,6 +4,8 @@
 	- {$dealerHeadingText|sprintf:{$numDealers}}
 	- {$dealerErrorNoDealers}
 	- {$msgDealerNoItems}
+	- {$msgLookOnMap}
+	- {$msgLookOnBigGoogleMap}
 *}
 {form:searchForm}
 	<div class="alignBlocks">
@@ -138,6 +140,8 @@
 					{option:dealerItems.avatar}
 						<img src="{$FRONTEND_FILES_URL}/frontend_dealer/avatars/128x128/{$dealerItems.avatar}" width="128" height="128" alt="" style="float:left; margin: 5px;" />
 					{/option:dealerItems.avatar}
+					{$msgLookOnMap}
+					{$msgLookOnBigGoogleMap}
 					<div style="width:300px;  float:left;">
 						{$dealerItems.street} <br>
 						{$dealerItems.zip} {$dealerItems.city} <br>

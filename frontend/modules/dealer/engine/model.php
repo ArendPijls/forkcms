@@ -62,11 +62,12 @@ class FrontendDealerModel
 
 
 		// loop selected brands and put them in a like %% query
+		/*
 		$extendWhereQuery = "";
 		foreach($brands as $brand)
 		{
 			$extendWhereQuery  .= 'AND brands like "%;'.$brand.';%" ';
-		}
+		}*/
 
 		// show only dealers around users loctation
 		if($country == "AROUND") $country = "BE";
@@ -75,7 +76,8 @@ class FrontendDealerModel
 		$tempArr = (array) FrontendModel::getDB()->getRecords(
 				'SELECT *
 				FROM dealer
-				WHERE lat > ? AND lat < ? AND lng > ? AND lng < ? AND hidden = ? AND country = ? '.$extendWhereQuery.'
+
+				WHERE lat > ? AND lat < ? AND lng > ? AND lng < ? AND hidden = ? AND country = ?
 				ORDER BY ABS(lat - ?) + ABS(lng - ?) ASC
 				LIMIT ?',
 				array($minLat, $maxLat, $minLng, $maxLng, 'N', $country, (float) $lat, (float) $lng, (int) $limit)
@@ -85,15 +87,15 @@ class FrontendDealerModel
 		$dealers = array();
 		for($i=0; $i < count($tempArr); $i++)
 		{
+			$brands = "";
 			$dealers[$i] = $tempArr[$i];
-			$brands = explode(';', $tempArr[$i]['brands']);
+			$brands = FrontendDealerModel::getDealerBrands($dealers[$i]['id']);;
 			foreach($brands as $brand)
 			{
-				$dealers[$i]['brandInfo'][] = FrontendDealerModel::getBrand($brand);
+				$dealers[$i]['brandInfo'][] = FrontendDealerModel::getBrand($brand['brand_id']);
 			}
-
 		}
-
+		//spoon::dump($dealers);
 		return $dealers;
 	}
 
@@ -127,5 +129,19 @@ class FrontendDealerModel
 			array((int) $id)
 		);
 	}
-
+	/**
+	 * Get all data for the brand with the given ID.
+	 *
+	 * @param int $id The id for the dealer locater to get.
+	 * @return array
+	 */
+	public static function getDealerBrands($id)
+	{
+		return (array) FrontendModel::getDB()->getRecords(
+				'SELECT brand_id
+				FROM dealer_index
+				WHERE dealer_id = ?',
+				array((int) $id)
+		);
+	}
 }

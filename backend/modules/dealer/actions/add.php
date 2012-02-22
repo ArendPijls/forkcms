@@ -133,8 +133,6 @@ class BackendDealerAdd extends BackendBaseActionAdd
 					if(in_array($value['id'], (array) $this->frm->getField('type')->getValue())) $values[] = $value['id'];
 				}
 
-				//$item['brands'] =  implode(";", $values);
-				//$item['brands'] = ";".$item['brands'].";";
 
 				// has the user submitted an avatar?
 				if($this->frm->getField('avatar')->isFilled())
