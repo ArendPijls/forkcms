@@ -48,6 +48,7 @@ class BackendDealerEdit extends BackendBaseActionEdit
 	private function getData()
 	{
 		$this->record = BackendDealerModel::getDealer($this->id);
+		$this->dealerBrands = BackendDealerModel::getDealerBrands($this->id);
 		$this->brands = BackendDealerModel::getAllBrands();
 	}
 
@@ -66,6 +67,7 @@ class BackendDealerEdit extends BackendBaseActionEdit
 		// init some vars
 		$checked = array();
 		$values = array();
+		$values2 = array();
 
 		// get brand ids and put them in an array
 		foreach($this->brands as $value)
@@ -73,11 +75,12 @@ class BackendDealerEdit extends BackendBaseActionEdit
 			$values[] = array('label' => $value['name'], 'value' => $value['id']);
 		}
 
-		// set checked checkboxes
-		$assets = $this->record['brands'];
-		$checked = explode(';', $assets);
+		// get dealer brands and put them in a arracy
+		foreach($this->dealerBrands as $value2)
+		{
+			$checked[] = $value2['brand_id'];
+		}
 
-		// create elements
 		$this->frm->addText('name', $this->record['name'], 255, 'inputText title', 'inputTextError, title');
 		$this->frm->addMultiCheckbox('type', $values, $checked);
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
@@ -151,7 +154,6 @@ class BackendDealerEdit extends BackendBaseActionEdit
 				$item['email'] = $this->frm->getField('email')->getValue();
 				$item['site'] = $this->frm->getField('site')->getValue();
 				$item['hidden'] = $this->frm->getField('hidden')->getValue();
-				$item['user_id'] = BackendAuthentication::getUser()->getUserId();
 				$item['edited_on'] = BackendModel::getUTCDate();
 
 				// create array item with all brands in
@@ -162,8 +164,8 @@ class BackendDealerEdit extends BackendBaseActionEdit
 					if(in_array($value['id'], (array) $this->frm->getField('type')->getValue())) $values[] = $value['id'];
 				}
 
-				$item['brands'] =  implode(";", $values);
-				$item['brands'] = ";".$item['brands'].";";
+				//$item['brands'] =  implode(";", $values);
+				//$item['brands'] = ";".$item['brands'].";";
 
 				// has the user submitted an avatar?
 				if($this->frm->getField('avatar')->isFilled())
@@ -201,6 +203,7 @@ class BackendDealerEdit extends BackendBaseActionEdit
 
 				// update the dealer
 				BackendDealerModel::updateDealer($item);
+				BackendDealerModel::updateBrandsForDealer($this->id, $values);
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));

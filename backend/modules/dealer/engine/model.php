@@ -32,11 +32,23 @@ class BackendDealerModel
 	 *
 	 * @param int $id The id of the dealer locater to delete.
 	 */
-	public static function delete($id)
+	public static function deleteDealer($id)
 	{
 		BackendModel::getDB(true)->delete('dealer', 'id = ?', array((int) $id));
 	}
 
+	/**
+	 * Delete a brand.
+	 *
+	 * @param int $id The id of the dealer locater to delete.
+	 */
+	public static function deleteBrand($id)
+	{
+
+		BackendModel::getDB(true)->delete('dealer_brands', 'id = ?', array((int) $id));
+		// the update function returns the number of affected rows
+		//BackendModel::getDB(true)->update('dealer', $record, 'id = ?', array((int) $id));
+	}
 	/**
 	 * Does the dealer locater exist?
 	 *
@@ -69,22 +81,6 @@ class BackendDealerModel
 		);
 	}
 
-	/**
-	 * Get all data for the dealer locater with the given ID.
-	 *
-	 * @param int $id The id for the dealer locater to get.
-	 * @return array
-	 */
-	public static function getDealer($id)
-	{
-		return (array) BackendModel::getDB()->getRecord(
-			'SELECT *, UNIX_TIMESTAMP(created_on) AS created_on, UNIX_TIMESTAMP(edited_on) AS edited_on
-		     FROM dealer
-		     WHERE id = ?
-		     LIMIT 1',
-			array((int) $id)
-		);
-	}
 
 	/**
 	 * Get all data for the brand with the given ID.
@@ -103,6 +99,38 @@ class BackendDealerModel
 		);
 	}
 
+	/**
+	 * Get all data for the brand with the given ID.
+	 *
+	 * @param int $id The id for the dealer locater to get.
+	 * @return array
+	 */
+	public static function getDealerBrands($id)
+	{
+		return (array) BackendModel::getDB()->getRecords(
+				'SELECT brand_id
+				FROM dealer_index
+				WHERE dealer_id = ?',
+				array((int) $id)
+		);
+	}
+
+	/**
+	 * Get all data for the dealer locater with the given ID.
+	 *
+	 * @param int $id The id for the dealer locater to get.
+	 * @return array
+	 */
+	public static function getDealer($id)
+	{
+		return (array) BackendModel::getDB()->getRecord(
+				'SELECT *, UNIX_TIMESTAMP(created_on) AS created_on, UNIX_TIMESTAMP(edited_on) AS edited_on
+				FROM dealer
+				WHERE id = ?
+				LIMIT 1',
+				array((int) $id)
+		);
+	}
 	/**
 	 * Get all the brands.
 	 *
@@ -171,5 +199,24 @@ class BackendDealerModel
 	public static function updateBrand(array $item)
 	{
 		return BackendModel::getDB(true)->update('dealer_brands', $item, 'id = ?', array((int) $item['id']));
+	}
+
+	/**
+	 * Update brand index for dealer
+	 *
+	 * @return  void
+	 * @param   int $id         The dealer id
+	 * @param   mixed $brands 	The brand id
+	 */
+	public static function updateBrandsForDealer($id, $brands)
+	{
+		BackendModel::getDB(true)->delete('dealer_index', 'dealer_id = ?', array($id));
+
+		$brands = (array) $brands;
+
+		foreach($brands as $brand)
+		{
+			BackendModel::getDB(true)->insert('dealer_index', array('dealer_id' => $id, 'brand_id' => $brand));
+		}
 	}
 }

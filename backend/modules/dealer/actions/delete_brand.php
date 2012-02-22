@@ -6,7 +6,7 @@
  * @author Arend Pijls <arend.pijls@netlash.com>
  */
 
-class BackendDealerDelete extends BackendBaseActionDelete
+class BackendDealerDeleteBrand extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the current action.
@@ -17,25 +17,25 @@ class BackendDealerDelete extends BackendBaseActionDelete
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if($this->id !== null && BackendDealerModel::existsDealer($this->id))
+		if($this->id !== null && BackendDealerModel::existsBrand($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
-			// get the current dealer
-			$this->record = BackendDealerModel::getDealer($this->id);
+			// get the current brand
+			$this->record = BackendDealerModel::getBrand($this->id);
 
 			// delete it
-			BackendDealerModel::deleteDealer($this->id);
+			BackendDealerModel::deleteBrand($this->id);
 
 			// trigger event
 			BackendModel::triggerEvent($this->getModule(), 'after_add_image', array('item' => $this->record));
 
 			// redirect back to the index
-			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['name']));
+			$this->redirect(BackendModel::createURLForAction('brands') . '&report=deleted&var=' . urlencode($this->record['name']));
 		}
 
 		// no dealer found
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('brands') . '&error=non-existing');
 	}
 }

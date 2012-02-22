@@ -120,7 +120,6 @@ class BackendDealerAdd extends BackendBaseActionAdd
 				$item['email'] = $this->frm->getField('email')->getValue();
 				$item['site'] = $this->frm->getField('site')->getValue();
 				$item['hidden'] = $this->frm->getField('hidden')->getValue();
-				$item['user_id'] = BackendAuthentication::getUser()->getUserId();
 				$item['language'] = BackendLanguage::getWorkingLanguage();
 				$item['sequence'] = BackendDealerModel::getMaximumSequence() + 1;
 				$item['created_on'] = BackendModel::getUTCDate();
@@ -134,8 +133,8 @@ class BackendDealerAdd extends BackendBaseActionAdd
 					if(in_array($value['id'], (array) $this->frm->getField('type')->getValue())) $values[] = $value['id'];
 				}
 
-				$item['brands'] =  implode(";", $values);
-				$item['brands'] = ";".$item['brands'].";";
+				//$item['brands'] =  implode(";", $values);
+				//$item['brands'] = ";".$item['brands'].";";
 
 				// has the user submitted an avatar?
 				if($this->frm->getField('avatar')->isFilled())
@@ -164,6 +163,7 @@ class BackendDealerAdd extends BackendBaseActionAdd
 
 				// insert the item
 				$item['id'] = BackendDealerModel::insertDealer($item);
+				BackendDealerModel::updateBrandsForDealer($item['id'], $values);
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
