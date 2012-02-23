@@ -8,7 +8,7 @@
 {form:settings}
 	<div class="box horizontal">
 		<div class="heading">
-			<h3>{$lblGroupMap|ucfirst}</h3>
+			<h3>{$lblMapSettings|ucfirst}</h3>
 		</div>
 		<div class="options">
 			<p>
@@ -35,7 +35,31 @@
 			</p>
 		</div>
 	</div>
-
+	
+	<div class="box horizontal">
+		<div class="heading">
+			<h3>{$lblSearch|ucfirst}</h3>
+		</div>
+		<div class="options">
+			<p>
+				<label for="units">{$lblUnits|ucfirst}</label>
+				{$ddmUnits} {$ddmUnitsError}
+			</p>
+		</div>
+		<div class="options">
+			<p>
+				<label for="distance">{$lblDistance|ucfirst}</label>
+				{$txtDistance} {$txtDistanceError}
+			</p>
+		</div>
+		<div class="options">
+			<p>
+				<label for="distance">{$lblLimit|ucfirst}</label>
+				{$txtLimit} {$txtLimitError}
+			</p>
+		</div>
+	</div>
+	
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
 			<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />

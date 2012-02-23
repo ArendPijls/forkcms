@@ -51,7 +51,7 @@ class FrontendDealerIndex extends FrontendBaseBlock
 
 		// create elements
 		$this->frm->addText('area');
-		$this->frm->addDropdown('country', array('AROUND' => 'CloseToYou', 'BE' => 'InBelgium', 'NL' => 'InNederlands', 'FR' => 'InFrance'));
+		$this->frm->addDropdown('country', array('AROUND' => FL::lbl('TheClosestTo', $this->getModule()), 'BE' => FL::lbl('InBelgium', $this->getModule()), 'NL' => FL::lbl('InNetherlands', $this->getModule()), 'FR' => FL::lbl('InFrance', $this->getModule())));
 		$this->frm->addMultiCheckbox('type', $values);
 		//$this->frm->addDropdown('map_type', array('ROADMAP' => FL::lbl('Roadmap', $this->getModule()), 'SATELLITE' => FL::lbl('Satellite', $this->getModule()), 'HYBRID' => FL::lbl('Hybrid', $this->getModule()), 'TERRAIN' => FL::lbl('Terrain', $this->getModule())), BackendModel::getModuleSetting($this->URL->getModule(), 'map_type', 'roadmap'));
 

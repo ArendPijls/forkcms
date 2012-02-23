@@ -48,6 +48,7 @@ class BackendDealerIndex extends BackendBaseActionIndex
 
 		$this->datagrid->addColumn('dealer', 'Dealer', $html);
 
+
 		// linkify the name column
 		$this->datagrid->setColumnURL('dealer', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 

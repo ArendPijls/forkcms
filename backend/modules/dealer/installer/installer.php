@@ -25,6 +25,15 @@ class DealerInstaller extends ModuleInstaller
 		// module rights
 		$this->setModuleRights(1, 'dealer');
 
+		// general settings
+		$this->setSetting('location', 'zoom_level', 'auto');
+		$this->setSetting('location', 'width', 400);
+		$this->setSetting('location', 'height', 300);
+		$this->setSetting('location', 'map_type', 'ROADMAP');
+		$this->setSetting('location', 'distance', 25);
+		$this->setSetting('location', 'limit', 50);
+		$this->setSetting('location', 'units', 'KM');
+
 		// action rights
 		$this->setActionRights(1, 'dealer', 'add');
 		$this->setActionRights(1, 'dealer', 'delete');

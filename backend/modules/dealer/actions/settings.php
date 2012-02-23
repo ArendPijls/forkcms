@@ -39,7 +39,9 @@ class BackendDealerSettings extends BackendBaseActionEdit
 		$this->frm->addText('width', BackendModel::getModuleSetting($this->URL->getModule(), 'width'));
 		$this->frm->addText('height', BackendModel::getModuleSetting($this->URL->getModule(), 'height'));
 		$this->frm->addDropdown('map_type', array('ROADMAP' => BL::lbl('Roadmap', $this->getModule()), 'SATELLITE' => BL::lbl('Satellite', $this->getModule()), 'HYBRID' => BL::lbl('Hybrid', $this->getModule()), 'TERRAIN' => BL::lbl('Terrain', $this->getModule())), BackendModel::getModuleSetting($this->URL->getModule(), 'map_type', 'roadmap'));
-
+		$this->frm->addDropdown('units', array('KM' => BL::lbl('Km', $this->getModule()), 'MILES' => BL::lbl('Miles', $this->getModule())));
+		$this->frm->addText('distance', BackendModel::getModuleSetting($this->URL->getModule(), 'distance'));
+		$this->frm->addText('limit', BackendModel::getModuleSetting($this->URL->getModule(), 'limit'));
 	}
 
 	/**
@@ -50,6 +52,10 @@ class BackendDealerSettings extends BackendBaseActionEdit
 		if($this->frm->isSubmitted())
 		{
 			$this->frm->cleanupFields();
+			$this->frm->getField('distance')->isDigital(BL::err('NotNumeric'));;
+			$this->frm->getField('limit')->isDigital(BL::err('NotNumeric'));;
+			$this->frm->getField('width')->isDigital(BL::err('NotNumeric'));;
+			$this->frm->getField('height')->isDigital(BL::err('NotNumeric'));;
 
 			if($this->frm->isCorrect())
 			{
@@ -58,6 +64,10 @@ class BackendDealerSettings extends BackendBaseActionEdit
 				BackendModel::setModuleSetting($this->URL->getModule(), 'width', (int) $this->frm->getField('width')->getValue());
 				BackendModel::setModuleSetting($this->URL->getModule(), 'height', (int) $this->frm->getField('height')->getValue());
 				BackendModel::setModuleSetting($this->URL->getModule(), 'map_type', (string) $this->frm->getField('map_type')->getValue());
+
+				BackendModel::setModuleSetting($this->URL->getModule(), 'distance', (string) $this->frm->getField('distance')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'units', (string) $this->frm->getField('units')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'limit', (string) $this->frm->getField('limit')->getValue());
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_saved_settings');

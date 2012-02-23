@@ -91,7 +91,6 @@ class FrontendDealerModel
 				$dealers[$i]['brandInfo'][] = FrontendDealerModel::getBrand($brand['brand_id']);
 			}
 		}
-		//spoon::dump($dealers);
 		return $dealers;
 	}
 

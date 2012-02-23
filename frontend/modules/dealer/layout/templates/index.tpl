@@ -3,15 +3,15 @@
 	- {$dealerItems}: contains data about all dealers
 	- {$dealerHeadingText|sprintf:{$numDealers}}
 	- {$dealerErrorNoDealers}
+	- {$lblBrands}
 	- {$msgDealerNoItems}
-	- {$msgBrands}
-	- {$msgLookOnMap}
-	- {$msgLookOnBigGoogleMap}
+	- {$msgViewOnMap}
+	- {$msgViewOnBigMap}
 *}
 {form:searchForm}
 	<div class="alignBlocks">
 		<p {option:txtAreaError}class="errorArea"{/option:txtAreaError}>
-			<label for="area">{$lblCityOrPostcode|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+			<label for="area">{$lblCityOrZip|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 			{$txtArea} {$txtAreaError}
 		</p>
 	</div>
@@ -28,7 +28,7 @@
 		{/option:type}
 	</div>
 	<p>
-		<input class="inputSubmit" type="submit" name="Search" value="{$msgFindDealer|ucfirst}" />
+		<input class="inputSubmit" type="submit" name="Search" value="{$lblFindDealer|ucfirst}" />
 	</p>
 {/form:searchForm}
 
@@ -64,12 +64,13 @@
 				{$lblSite}: {$dealerItems.site} <br>
 			{/option:dealerItems.site}
 			
-			<strong>{$msgBrands}</strong> <br>
+			<strong>{$lblBrands}</strong> <br>
         	{iteration:dealerItems.brandInfo}
         		{option:dealerItems.brandInfo.name}
            			{$dealerItems.brandInfo.name}, 
            		{/option:dealerItems.brandInfo.name}
         	{/iteration:dealerItems.brandInfo}
+        	<a href="http://maps.google.com/?q={$dealerItems.street|urlencode}+{$dealerItems.number|urlencode}+{$dealerItems.zip|urlencode}+{$dealerItems.city|urlencode}" target="_blank">{$msgViewOnBigMap}</a>
 		</div>
 	{/iteration:dealerItems}
 
@@ -165,8 +166,8 @@
 					{option:dealerItems.avatar}
 						<img src="{$FRONTEND_FILES_URL}/frontend_dealer/avatars/128x128/{$dealerItems.avatar}" width="128" height="128" alt="" style="float:left; margin: 5px;" />
 					{/option:dealerItems.avatar}
-					<a href="#" onClick="openMarker({$dealerItems.dealer_id}, '{$dealerItems.name}', $('#markerText' + {$dealerItems.dealer_id}).html());">{$msgLookOnMap}</a>
-					<a href="http://maps.google.com/?q={$dealerItems.street|urlencode}+{$dealerItems.number|urlencode}+{$dealerItems.zip|urlencode}+{$dealerItems.city|urlencode}" target="_blank">{$msgLookOnBigGoogleMap}</a>
+					<a href="#" onClick="openMarker({$dealerItems.dealer_id}, '{$dealerItems.name}', $('#markerText' + {$dealerItems.dealer_id}).html());">{$msgViewOnMap}</a> <br>
+					<a href="http://maps.google.com/?q={$dealerItems.street|urlencode}+{$dealerItems.number|urlencode}+{$dealerItems.zip|urlencode}+{$dealerItems.city|urlencode}" target="_blank">{$msgViewOnBigMap}</a>
 					<div style="width:300px;  float:left;">
 						{$dealerItems.street} {$dealerItems.number} <br>
 						{$dealerItems.zip} {$dealerItems.city} <br>
@@ -188,7 +189,7 @@
 						{/option:dealerItems.site}
 					</div>
 					<div style="width:400px; float:left;">
-						<strong>{$msgBrands}</strong> <br>
+						<strong>{$lblBrands}</strong> <br>
 				        	 <ul>
 				            	{iteration:dealerItems.brandInfo}
 				            		{option:dealerItems.brandInfo.name}
