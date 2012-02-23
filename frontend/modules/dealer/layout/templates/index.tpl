@@ -75,11 +75,15 @@
 
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 	<script type="text/javascript">
+	
+		var marker =new Array();
+		
 		var initialize = function()
 		{
 			// create boundaries
 			var latlngBounds = new google.maps.LatLngBounds();
-
+			
+			
 			// set options
 			var options =
 			{
@@ -104,7 +108,7 @@
 
 
 			// function to add markers to the map
-			function addMarker(lat, lng, title, text)
+			function addMarker(id, lat, lng, title, text)
 			{
 				// create position
 				position = new google.maps.LatLng(lat, lng);
@@ -113,7 +117,8 @@
 				latlngBounds.extend(position);
 
 				// add marker
-				var marker = new google.maps.Marker(
+				
+				marker[id] = new google.maps.Marker(
 				{
 					// set position
 					position: position,
@@ -124,16 +129,16 @@
 				});
 
 				// add click event on marker
-				google.maps.event.addListener(marker, 'click', function()
+				google.maps.event.addListener(marker[id], 'click', function()
 				{
 					// create infowindow
-					new google.maps.InfoWindow({ content: '<h1>'+ title +'</h1>' + text }).open(map, marker);
+					new google.maps.InfoWindow({ content: '<h1>'+ title +'</h1>' + text }).open(map, marker[id]);
 				});
 			}
 			
 			// loop items and add to map
 			{iteration:dealerItems}
-				{option:dealerItems.lat}{option:dealerItems.lng}addMarker({$dealerItems.lat}, {$dealerItems.lng}, '{$dealerItems.name}', $('#markerText' + {$dealerItems.dealer_id}).html());{/option:dealerItems.lat}{/option:dealerItems.lng}
+				{option:dealerItems.lat}{option:dealerItems.lng}addMarker({$dealerItems.dealer_id}, {$dealerItems.lat}, {$dealerItems.lng}, '{$dealerItems.name}', $('#markerText' + {$dealerItems.dealer_id}).html());{/option:dealerItems.lat}{/option:dealerItems.lng}
 			{/iteration:dealerItems}
 
 			// set center to the middle of our boundaries
@@ -141,7 +146,15 @@
 
 			// set zoom automatically, defined by points (if allowed)
 			if('{$dealerSettings.zoom_level}' == 'auto') map.fitBounds(latlngBounds);
+			
 		}
+		
+		function openMarker(id, title, text)
+		{
+			// create infowindow
+			new google.maps.InfoWindow({ content: '<h1>'+ title +'</h1>' + text }).open(map, marker[id]);
+		}			
+
 		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
 	<div id="dealerItems">
@@ -152,7 +165,7 @@
 					{option:dealerItems.avatar}
 						<img src="{$FRONTEND_FILES_URL}/frontend_dealer/avatars/128x128/{$dealerItems.avatar}" width="128" height="128" alt="" style="float:left; margin: 5px;" />
 					{/option:dealerItems.avatar}
-					{$msgLookOnMap}
+					<a href="#" onClick="openMarker({$dealerItems.dealer_id}, '{$dealerItems.name}', $('#markerText' + {$dealerItems.dealer_id}).html());">{$msgLookOnMap}</a>
 					<a href="http://maps.google.com/?q={$dealerItems.street|urlencode}+{$dealerItems.number|urlencode}+{$dealerItems.zip|urlencode}+{$dealerItems.city|urlencode}" target="_blank">{$msgLookOnBigGoogleMap}</a>
 					<div style="width:300px;  float:left;">
 						{$dealerItems.street} {$dealerItems.number} <br>

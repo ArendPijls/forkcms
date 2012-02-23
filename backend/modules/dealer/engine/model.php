@@ -14,7 +14,7 @@ class BackendDealerModel
 	 * @var	string
 	 */
 	const QRY_BROWSE =
-		'SELECT id, name, CONCAT(street, " ", number, ", ", zip, " ", city, ", ", country) AS address
+		'SELECT id, name, avatar, CONCAT(street, " ", number, ", ", zip, " ", city, ", ", country) AS address
 	     FROM dealer
 	     WHERE language = ?
 	     ORDER BY sequence';

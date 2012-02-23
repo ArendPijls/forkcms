@@ -34,9 +34,22 @@ class BackendDealerIndex extends BackendBaseActionIndex
 		// create the data grid for the overview
 		$this->datagrid = new BackendDataGridDB(BackendDealerModel::QRY_BROWSE, array(BackendLanguage::getWorkingLanguage()));
 
+		$this->datagrid->setColumnHidden('id');
+		$this->datagrid->setColumnHidden('name');
+		$this->datagrid->setColumnHidden('avatar');
+
+		// build html
+		$html = '<div class="dataGridAvatar">' . "\n";
+		$html .= '	<div class="avatar av24">' . "\n";
+		$html .= '			<img src="' . FRONTEND_FILES_URL . '/frontend_dealer/avatars/32x32/' . $this->datagrid->getColumn('avatar')->getValue() . '" width="24" height="24"  />' . "\n";
+		$html .= '	</div>';
+		$html .= '	<p>' . $this->datagrid->getColumn('name')->getValue() . '</a>' . "\n";
+		$html .= '</div>';
+
+		$this->datagrid->addColumn('dealer', 'Dealer', $html);
 
 		// linkify the name column
-		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+		$this->datagrid->setColumnURL('dealer', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 
 		// create the "edit" button for each row
 		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BackendLanguage::getLabel('Edit'));

@@ -36,9 +36,21 @@ class BackendDealerBrands extends BackendBaseActionIndex
 
 		// hide the 'id' column
 		$this->datagrid->setColumnHidden('id');
+		$this->datagrid->setColumnHidden('name');
+		$this->datagrid->setColumnHidden('image');
+
+		// build html
+		$html = '<div class="dataGridAvatar">' . "\n";
+		$html .= '	<div class="avatar av24">' . "\n";
+		$html .= '			<img src="' . FRONTEND_FILES_URL . '/frontend_dealer/brands/32x32/' . $this->datagrid->getColumn('image')->getValue() . '" width="24" height="24"  />' . "\n";
+		$html .= '	</div>';
+		$html .= '	<p>' . $this->datagrid->getColumn('name')->getValue() . '</a>' . "\n";
+		$html .= '</div>';
+
+		$this->datagrid->addColumn('brand', 'Brand', $html);
 
 		// linkify the name column
-		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit_brands') . '&amp;id=[id]');
+		$this->datagrid->setColumnURL('brand', BackendModel::createURLForAction('edit_brands') . '&amp;id=[id]');
 
 
 		// create the "edit" button for each row
