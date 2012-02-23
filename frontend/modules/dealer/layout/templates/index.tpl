@@ -4,6 +4,7 @@
 	- {$dealerHeadingText|sprintf:{$numDealers}}
 	- {$dealerErrorNoDealers}
 	- {$msgDealerNoItems}
+	- {$msgBrands}
 	- {$msgLookOnMap}
 	- {$msgLookOnBigGoogleMap}
 *}
@@ -39,8 +40,12 @@
 
 	{* Store item text in a div because JS goes bananas with multiline HTML *}
 	{iteration:dealerItems}
-		<div id="markerText{$dealerItems.id}" style="display:none;">						
-			{$dealerItems.street} <br>
+		<div id="markerText{$dealerItems.dealer_id}" style="display:none;">	
+			{option:dealerItems.avatar}
+				<img src="{$FRONTEND_FILES_URL}/frontend_dealer/avatars/64x64/{$dealerItems.avatar}" width="64" height="64" alt="" style="float:right; margin: 5px;" />
+			{/option:dealerItems.avatar}
+										
+			{$dealerItems.street} {$dealerItems.number}<br>
 			{$dealerItems.zip} {$dealerItems.city} <br>
 			
 			{option:dealerItems.tel}
@@ -58,6 +63,13 @@
 			{option:dealerItems.site}
 				{$lblSite}: {$dealerItems.site} <br>
 			{/option:dealerItems.site}
+			
+			<strong>{$msgBrands}</strong> <br>
+        	{iteration:dealerItems.brandInfo}
+        		{option:dealerItems.brandInfo.name}
+           			{$dealerItems.brandInfo.name}, 
+           		{/option:dealerItems.brandInfo.name}
+        	{/iteration:dealerItems.brandInfo}
 		</div>
 	{/iteration:dealerItems}
 
@@ -76,7 +88,7 @@
 				// set default center as first item's location
 				center: new google.maps.LatLng({$dealerItems.0.lat}, {$dealerItems.0.lng}),
 				// no interface, just the map
-				disableDefaultUI: true,
+				disableDefaultUI: false,
 				// dragging the map around
 				draggable: true,
 				// no zooming in/out using scrollwheel
@@ -121,7 +133,7 @@
 			
 			// loop items and add to map
 			{iteration:dealerItems}
-				{option:dealerItems.lat}{option:dealerItems.lng}addMarker({$dealerItems.lat}, {$dealerItems.lng}, '{$dealerItems.name}', $('#markerText' + {$dealerItems.id}).html());{/option:dealerItems.lat}{/option:dealerItems.lng}
+				{option:dealerItems.lat}{option:dealerItems.lng}addMarker({$dealerItems.lat}, {$dealerItems.lng}, '{$dealerItems.name}', $('#markerText' + {$dealerItems.dealer_id}).html());{/option:dealerItems.lat}{/option:dealerItems.lng}
 			{/iteration:dealerItems}
 
 			// set center to the middle of our boundaries
@@ -141,9 +153,9 @@
 						<img src="{$FRONTEND_FILES_URL}/frontend_dealer/avatars/128x128/{$dealerItems.avatar}" width="128" height="128" alt="" style="float:left; margin: 5px;" />
 					{/option:dealerItems.avatar}
 					{$msgLookOnMap}
-					{$msgLookOnBigGoogleMap}
+					<a href="http://maps.google.com/?q={$dealerItems.street|urlencode}+{$dealerItems.number|urlencode}+{$dealerItems.zip|urlencode}+{$dealerItems.city|urlencode}" target="_blank">{$msgLookOnBigGoogleMap}</a>
 					<div style="width:300px;  float:left;">
-						{$dealerItems.street} <br>
+						{$dealerItems.street} {$dealerItems.number} <br>
 						{$dealerItems.zip} {$dealerItems.city} <br>
 						
 						{option:dealerItems.tel}
@@ -163,7 +175,7 @@
 						{/option:dealerItems.site}
 					</div>
 					<div style="width:400px; float:left;">
-						<strong>Merken</strong> <br>
+						<strong>{$msgBrands}</strong> <br>
 				        	 <ul>
 				            	{iteration:dealerItems.brandInfo}
 				            		{option:dealerItems.brandInfo.name}

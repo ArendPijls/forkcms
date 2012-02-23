@@ -122,8 +122,6 @@ class BackendDealerAdd extends BackendBaseActionAdd
 				$item['hidden'] = $this->frm->getField('hidden')->getValue();
 				$item['language'] = BackendLanguage::getWorkingLanguage();
 				$item['sequence'] = BackendDealerModel::getMaximumSequence() + 1;
-				$item['created_on'] = BackendModel::getUTCDate();
-				$item['edited_on'] = BackendModel::getUTCDate();
 
 				// create array item with all brands in
 				$values = array();

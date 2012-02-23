@@ -33,7 +33,6 @@ class FrontendDealerModel
 	public static function getAll($area, $brands, $country, $limit = 50, $distance = 25, $unit = 'km')
 	{
 
-
 		// The url for quering Google Maps api to get latitude/longitude coordinates for an address.
 		$urlGoogleMaps = 'http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false';
 
@@ -60,36 +59,33 @@ class FrontendDealerModel
 		$maxLng = (float) $lng + rad2deg($distance / $radius / cos(deg2rad((float) $lat)));
 		$minLng = (float) $lng - rad2deg($distance / $radius / cos(deg2rad((float) $lat)));
 
+		// show only dealers in selected country
+		$sqlCountry = "";
+		if($country == "BE" or $country == "FR" or $country == "NL") $sqlCountry = " AND country = ".$country;
 
-		// loop selected brands and put them in a like %% query
-		/*
-		$extendWhereQuery = "";
-		foreach($brands as $brand)
-		{
-			$extendWhereQuery  .= 'AND brands like "%;'.$brand.';%" ';
-		}*/
-
-		// show only dealers around users loctation
-		if($country == "AROUND") $country = "BE";
+		// show only selected brands
+		$sqlBrands = "";
+		if(!empty($brands)) $sqlBrands = 'AND ds.brand_id IN (' . implode(',', $brands) . ')';
 
 		// set db records in temp arr
-		$tempArr = (array) FrontendModel::getDB()->getRecords(
-				'SELECT *
-				FROM dealer
-
-				WHERE lat > ? AND lat < ? AND lng > ? AND lng < ? AND hidden = ? AND country = ?
-				ORDER BY ABS(lat - ?) + ABS(lng - ?) ASC
+		$tempArr = (array) FrontendModel::getDB()->retrieve(
+				'SELECT *, d.name as name
+				FROM dealer AS d
+				INNER JOIN dealer_index AS ds ON ds.dealer_id = d.id
+				INNER JOIN dealer_brands AS s ON ds.brand_id = s.id
+				WHERE d.lat > ? AND d.lat < ? AND d.lng > ? AND d.lng < ? AND d.hidden = ? '.$sqlCountry.' '.$sqlBrands.'
+				GROUP BY dealer_id
+				ORDER BY ABS(d.lat - ?) + ABS(d.lng - ?) ASC
 				LIMIT ?',
-				array($minLat, $maxLat, $minLng, $maxLng, 'N', $country, (float) $lat, (float) $lng, (int) $limit)
+				array($minLat, $maxLat, $minLng, $maxLng, 'N', (float) $lat, (float) $lng, (int) $limit)
 		);
 
 		// loop db records and add brand info
 		$dealers = array();
 		for($i=0; $i < count($tempArr); $i++)
 		{
-			$brands = "";
 			$dealers[$i] = $tempArr[$i];
-			$brands = FrontendDealerModel::getDealerBrands($dealers[$i]['id']);;
+			$brands = FrontendDealerModel::getDealerBrands($dealers[$i]['dealer_id']);;
 			foreach($brands as $brand)
 			{
 				$dealers[$i]['brandInfo'][] = FrontendDealerModel::getBrand($brand['brand_id']);

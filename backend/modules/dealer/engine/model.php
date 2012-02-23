@@ -124,7 +124,7 @@ class BackendDealerModel
 	public static function getDealer($id)
 	{
 		return (array) BackendModel::getDB()->getRecord(
-				'SELECT *, UNIX_TIMESTAMP(created_on) AS created_on, UNIX_TIMESTAMP(edited_on) AS edited_on
+				'SELECT *
 				FROM dealer
 				WHERE id = ?
 				LIMIT 1',

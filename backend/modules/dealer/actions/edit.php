@@ -154,7 +154,6 @@ class BackendDealerEdit extends BackendBaseActionEdit
 				$item['email'] = $this->frm->getField('email')->getValue();
 				$item['site'] = $this->frm->getField('site')->getValue();
 				$item['hidden'] = $this->frm->getField('hidden')->getValue();
-				$item['edited_on'] = BackendModel::getUTCDate();
 
 				// create array item with all brands in
 				$values = array();
