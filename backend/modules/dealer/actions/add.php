@@ -48,19 +48,23 @@ class BackendDealerAdd extends BackendBaseActionAdd
 		$rbtHiddenValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y');
 		$rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
 
-		// init some vars
-		$checked = array();
-		$values = array();
-
-		// get brand ids and put them in an array
-		foreach($this->brands as $value)
+		if(!empty($this->brands))
 		{
-			$values[] = array('label' => $value['name'], 'value' => $value['id']);
+			// init some vars
+			$checked = array();
+			$values = array();
+
+			// get brand ids and put them in an array
+			foreach($this->brands as $value)
+			{
+				$values[] = array('label' => $value['name'], 'value' => $value['id']);
+			}
+			// create chekcboxes
+			$this->frm->addMultiCheckbox('type', $values, $checked);
 		}
 
 		// create elements
 		$this->frm->addText('name', null, 255, 'inputText title', 'inputTextError, title');
-		$this->frm->addMultiCheckbox('type', $values, $checked);
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
 		$this->frm->addText('street');
 		$this->frm->addText('number');

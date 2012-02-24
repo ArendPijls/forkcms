@@ -69,7 +69,7 @@ class FrontendDealerModel
 
 		// show only dealers in selected country
 		$sqlCountry = "";
-		if($country == "BE" || $country == "FR" || $country == "NL") $sqlCountry = " AND country = " . $country;
+		if($country == "BE" || $country == "FR" || $country == "NL") $sqlCountry = " AND country = '" . $country. "'";
 
 		// show only selected brands
 		$sqlBrands = "";
@@ -111,8 +111,9 @@ class FrontendDealerModel
 	{
 		return (array) FrontendModel::getDB()->getRecords(
 				'SELECT *
-				FROM dealer_brands',
-				array()
+				FROM dealer_brands
+				WHERE language = ?',
+				array(FRONTEND_LANGUAGE)
 		);
 	}
 

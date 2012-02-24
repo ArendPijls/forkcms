@@ -25,6 +25,9 @@
 								{iteration:type}<li>{$type.chkType} <label for="{$type.id}">{$type.label|ucfirst}</label></li>{/iteration:type}
 							</ul>
 						{/option:type}
+						{option:!type}
+							{$msgNoBrandsFound}
+						{/option:!type}
 					</div>
 				</div>
 				

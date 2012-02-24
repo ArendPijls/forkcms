@@ -167,8 +167,9 @@ class BackendDealerModel
 	{
 		return (array) BackendModel::getDB()->getRecords(
 				'SELECT *
-				FROM dealer_brands',
-				array()
+				FROM dealer_brands
+				WHERE language = ?',
+				array(BL::getWorkingLanguage())
 		);
 	}
 	/**

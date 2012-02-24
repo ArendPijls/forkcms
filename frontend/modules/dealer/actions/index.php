@@ -42,16 +42,21 @@ class FrontendDealerIndex extends FrontendBaseBlock
 		// init some vars
 		$values = array();
 
-		// get brand ids and put them in an array
-		foreach($this->brands as $value)
+		if(!empty($this->brands))
 		{
-			$values[] = array('label' => $value['name'], 'value' => $value['id']);
+			// get brand ids and put them in an array
+			foreach($this->brands as $value)
+			{
+				$values[] = array('label' => $value['name'], 'value' => $value['id']);
+			}
+
+			// create multi checkboxes
+			$this->frm->addMultiCheckbox('type', $values);
 		}
 
 		// create elements
 		$this->frm->addText('area');
 		$this->frm->addDropdown('country', array('AROUND' => FL::lbl('TheClosestTo', $this->getModule()), 'BE' => FL::lbl('InBelgium', $this->getModule()), 'NL' => FL::lbl('InNetherlands', $this->getModule()), 'FR' => FL::lbl('InFrance', $this->getModule())));
-		$this->frm->addMultiCheckbox('type', $values);
 	}
 
 	/**
@@ -83,7 +88,7 @@ class FrontendDealerIndex extends FrontendBaseBlock
 			$country = $this->frm->getField('country')->getValue();
 
 			// ignore manipulated dropdownbox by hackers
-			if($country != "AROUND" and $country != "BE" and $country != "NL" and $country != "FR") $this->frm->addError('Eat some peanuts');
+			if($country != "AROUND" and $country != "BE" and $country != "NL" and $country != "FR") $this->frm->addError('Eating peanuts');
 
 			// no errors?
 			if($this->frm->isCorrect())
@@ -105,7 +110,7 @@ class FrontendDealerIndex extends FrontendBaseBlock
 					// assign dealers items and area
 					$this->tpl->assign('dealerArea', $area);
 					$this->tpl->assign('dealerItems', $getDealers);
-					$this->tpl->assign('dealerHeadingText', 'Found %s dealers');
+					$this->tpl->assign('dealerHeadingText', FL::msg('NumDealersFound'));
 					$this->tpl->assign('numDealers', count($getDealers));
 				}
 				else
