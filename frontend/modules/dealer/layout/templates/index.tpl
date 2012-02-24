@@ -4,6 +4,9 @@
 	- {$dealerHeadingText|sprintf:{$numDealers}}
 	- {$dealerErrorNoDealers}
 	- {$lblBrands}
+	- {$lblCityOrZip|ucfirst} {$lblTel} {$lblFax} {$lblAddress} {$lblNumber} {$lblSite}
+	- {$lblRequiredField}
+	- {$lblFindDealer|ucfirst}
 	- {$msgDealerNoItems}
 	- {$msgViewOnMap}
 	- {$msgViewOnBigMap}

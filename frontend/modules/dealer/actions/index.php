@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Show all dealers.
+ * Search form with brands and on submit showing dealer locaters
  *
  * @author Arend Pijls <arend.pijls@netlash.com>
  */
@@ -20,7 +20,6 @@ class FrontendDealerIndex extends FrontendBaseBlock
 		$this->loadForm();
 		$this->validateForm();
 		$this->parse();
-
 	}
 
 	/**
@@ -53,8 +52,6 @@ class FrontendDealerIndex extends FrontendBaseBlock
 		$this->frm->addText('area');
 		$this->frm->addDropdown('country', array('AROUND' => FL::lbl('TheClosestTo', $this->getModule()), 'BE' => FL::lbl('InBelgium', $this->getModule()), 'NL' => FL::lbl('InNetherlands', $this->getModule()), 'FR' => FL::lbl('InFrance', $this->getModule())));
 		$this->frm->addMultiCheckbox('type', $values);
-		//$this->frm->addDropdown('map_type', array('ROADMAP' => FL::lbl('Roadmap', $this->getModule()), 'SATELLITE' => FL::lbl('Satellite', $this->getModule()), 'HYBRID' => FL::lbl('Hybrid', $this->getModule()), 'TERRAIN' => FL::lbl('Terrain', $this->getModule())), BackendModel::getModuleSetting($this->URL->getModule(), 'map_type', 'roadmap'));
-
 	}
 
 	/**
@@ -72,7 +69,6 @@ class FrontendDealerIndex extends FrontendBaseBlock
 	 */
 	private function validateForm()
 	{
-
 		// is the form submitted
 		if($this->frm->isSubmitted())
 		{
@@ -92,9 +88,9 @@ class FrontendDealerIndex extends FrontendBaseBlock
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-
 				// create array item with all brands in
 				$brands = array();
+
 				foreach($this->brands as $brand)
 				{
 					// if checkbox is checked save id in array values
@@ -111,10 +107,11 @@ class FrontendDealerIndex extends FrontendBaseBlock
 					$this->tpl->assign('dealerItems', $getDealers);
 					$this->tpl->assign('dealerHeadingText', 'Found %s dealers');
 					$this->tpl->assign('numDealers', count($getDealers));
-				} else {
+				}
+				else
+				{
 					$this->tpl->assign('dealerErrorNoDealers', 1);
 				}
-
 			}
 		}
 	}

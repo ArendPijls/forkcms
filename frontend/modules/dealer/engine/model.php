@@ -28,6 +28,12 @@ class FrontendDealerModel
 	/**
 	 * Get all dealer.
 	 *
+	 * @param string $area 			The city or postcode
+	 * @param array $brands 		An array of selected brands
+	 * @param string $country 		Search only in: BE, FR and NL
+	 * @param int $limit 			The limit of records
+	 * @param int $distance 		The distance radius
+	 * @param string $unit 			Calculating distance with KM or Miles
 	 * @return array
 	 */
 	public static function getAll($area, $brands, $country, $limit = 50, $distance = 25, $unit = 'km')
@@ -61,19 +67,19 @@ class FrontendDealerModel
 
 		// show only dealers in selected country
 		$sqlCountry = "";
-		if($country == "BE" or $country == "FR" or $country == "NL") $sqlCountry = " AND country = ".$country;
+		if($country == "BE" || $country == "FR" || $country == "NL") $sqlCountry = " AND country = " . $country;
 
 		// show only selected brands
 		$sqlBrands = "";
 		if(!empty($brands)) $sqlBrands = 'AND ds.brand_id IN (' . implode(',', $brands) . ')';
 
 		// set db records in temp arr
-		$tempArr = (array) FrontendModel::getDB()->retrieve(
+		$tempArr = (array) FrontendModel::getDB()->GetRecords(
 				'SELECT *, d.name as name
 				FROM dealer AS d
 				INNER JOIN dealer_index AS ds ON ds.dealer_id = d.id
 				INNER JOIN dealer_brands AS s ON ds.brand_id = s.id
-				WHERE d.lat > ? AND d.lat < ? AND d.lng > ? AND d.lng < ? AND d.hidden = ? '.$sqlCountry.' '.$sqlBrands.'
+				WHERE d.lat > ? AND d.lat < ? AND d.lng > ? AND d.lng < ? AND d.hidden = ? ' . $sqlCountry . ' ' . $sqlBrands . '
 				GROUP BY dealer_id
 				ORDER BY ABS(d.lat - ?) + ABS(d.lng - ?) ASC
 				LIMIT ?',
