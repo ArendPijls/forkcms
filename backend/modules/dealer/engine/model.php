@@ -24,7 +24,8 @@ class BackendDealerModel
 	 */
 	const QRY_BROWSE_BRANDS =
 		'SELECT id, name, image
-		FROM dealer_brands';
+		 FROM dealer_brands
+		 WHERE language = ?';
 
 	/**
 	 * Delete a brand.
