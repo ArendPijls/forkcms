@@ -2,7 +2,7 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
-	<h2>{$lblDealer|ucfirst}: {$msgEdit|sprintf:{$item.name}}</h2>
+	<h2>{$lblDealer|ucfirst}: {$item.name}</h2>
 </div>
 
 {form:edit}

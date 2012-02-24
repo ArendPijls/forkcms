@@ -4,7 +4,7 @@
 	- {$dealerHeadingText|sprintf:{$numDealers}}
 	- {$dealerErrorNoDealers}
 	- {$lblBrands}
-	- {$lblCityOrZip|ucfirst} {$lblTel} {$lblFax} {$lblAddress} {$lblNumber} {$lblSite}
+	- {$lblCityOrZip|ucfirst} {$lblTel|ucfirst} {$lblFax|ucfirst} {$lblAddress|ucfirst} {$lblNumber|ucfirst} {$lblSite|ucfirst}
 	- {$lblRequiredField}
 	- {$lblFindDealer|ucfirst}
 	- {$msgDealerNoItems}
@@ -26,7 +26,7 @@
 	<div>
 		{option:type}
 			<ul>
-				{iteration:type}<li>{$type.chkType} <label for="{$type.id}">{$type.label|ucfirst}</label></li>{/iteration:type}
+				{iteration:type}<li>{$type.chkType|ucfirst} <label for="{$type.id}">{$type.label|ucfirst}</label></li>{/iteration:type}
 			</ul>
 		{/option:type}
 	</div>
@@ -52,7 +52,7 @@
 			{$dealerItems.zip} {$dealerItems.city} <br>
 			
 			{option:dealerItems.tel}
-				{$lblTel}: {$dealerItems.tel} <br>
+				{$lblPhone}: {$dealerItems.tel} <br>
 			{/option:dealerItems.tel}
 			
 			{option:dealerItems.fax}
@@ -176,19 +176,19 @@
 						{$dealerItems.zip} {$dealerItems.city} <br>
 						
 						{option:dealerItems.tel}
-							{$lblTel}: {$dealerItems.tel} <br>
+							{$lblPhone|ucfirst}: {$dealerItems.tel} <br>
 						{/option:dealerItems.tel}
 						
 						{option:dealerItems.fax}
-							{$lblFax}: {$dealerItems.fax} <br>
+							{$lblFax|ucfirst}: {$dealerItems.fax} <br>
 						{/option:dealerItems.fax}
 						
 						{option:dealerItems.email}
-							{$lblEmail}: {$dealerItems.email} <br>
+							{$lblEmail|ucfirst}: {$dealerItems.email} <br>
 						{/option:dealerItems.email}
 												
 						{option:dealerItems.site}
-							{$lblSite}: {$dealerItems.site} <br>
+							{$lblSite|ucfirst}: {$dealerItems.site} <br>
 						{/option:dealerItems.site}
 					</div>
 					<div style="width:400px; float:left;">

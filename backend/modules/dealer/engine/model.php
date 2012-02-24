@@ -5,7 +5,6 @@
  *
  * @author Arend Pijls <arend.pijls@netlash.com>
  */
-
 class BackendDealerModel
 {
 	/**
@@ -28,6 +27,30 @@ class BackendDealerModel
 		FROM dealer_brands';
 
 	/**
+	 * Delete a brand.
+	 *
+	 * @param int $id 		The id of the dealer locater to delete.
+	 */
+	public static function deleteBrand($id)
+	{
+		BackendModel::getDB(true)->delete('dealer_brands', 'id = ?', array((int) $id));
+
+		// get image file name
+		$imageFilname = (string) BackendModel::getDB()->getVar(
+				'SELECT image
+				FROM dealer_brands
+				WHERE id = ?',
+				array((int) $id)
+		);
+
+		// delete brand images
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/source/' . $imageFilname);
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/128x128/' . $imageFilname);
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/64x64/' . $imageFilname);
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/32x32/' . $imageFilname);
+	}
+
+	/**
 	 * Delete a dealer.
 	 *
 	 * @param int $id The id of the dealer locater to delete.
@@ -38,17 +61,21 @@ class BackendDealerModel
 	}
 
 	/**
-	 * Delete a brand.
+	 * Does the brand exist?
 	 *
-	 * @param int $id The id of the dealer locater to delete.
+	 * @param	int $id		The id of the brand to check for existence.
+	 * @return bool
 	 */
-	public static function deleteBrand($id)
+	public static function existsBrand($id)
 	{
-
-		BackendModel::getDB(true)->delete('dealer_brands', 'id = ?', array((int) $id));
-		// the update function returns the number of affected rows
-		//BackendModel::getDB(true)->update('dealer', $record, 'id = ?', array((int) $id));
+		return (bool) BackendModel::getDB()->getVar(
+				'SELECT COUNT(id)
+				FROM dealer_brands
+				WHERE id = ?',
+				array((int) $id)
+		);
 	}
+
 	/**
 	 * Does the dealer locater exist?
 	 *
@@ -64,23 +91,6 @@ class BackendDealerModel
 			array((int) $id)
 		);
 	}
-
-	/**
-	 * Does the brand exist?
-	 *
-	 * @param int $id The id of the brand to check for existence.
-	 * @return bool
-	 */
-	public static function existsBrand($id)
-	{
-		return (bool) BackendModel::getDB()->getVar(
-				'SELECT COUNT(id)
-				FROM dealer_brands
-				WHERE id = ?',
-				array((int) $id)
-		);
-	}
-
 
 	/**
 	 * Get all data for the brand with the given ID.
@@ -100,9 +110,9 @@ class BackendDealerModel
 	}
 
 	/**
-	 * Get all data for the brand with the given ID.
+	 * Get all data for the brands with the given dealer ID.
 	 *
-	 * @param int $id The id for the dealer locater to get.
+	 * @param int $id The id of the dealer locator for getting the brands
 	 * @return array
 	 */
 	public static function getDealerBrands($id)
@@ -116,7 +126,7 @@ class BackendDealerModel
 	}
 
 	/**
-	 * Get all data for the dealer locater with the given ID.
+	 * Get all data for the one dealer locater with the given ID.
 	 *
 	 * @param int $id The id for the dealer locater to get.
 	 * @return array
@@ -204,9 +214,9 @@ class BackendDealerModel
 	/**
 	 * Update brand index for dealer
 	 *
-	 * @return  void
 	 * @param   int $id         The dealer id
-	 * @param   mixed $brands 	The brand id
+	 * @param   array $brands 	Array with all dealer brands
+	 * @return void
 	 */
 	public static function updateBrandsForDealer($id, $brands)
 	{

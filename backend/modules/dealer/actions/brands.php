@@ -1,7 +1,7 @@
 <?php
 
 /**
- * desplay  dealer overview
+ * Display brands overview
  *
  * @author Arend Pijls <arend.pijls@netlash.com>
  */
@@ -10,7 +10,6 @@ class BackendDealerBrands extends BackendBaseActionIndex
 	/**
 	 * Execute the action
 	 */
-
 	public function execute()
 	{
 		// call parent, this will probably add some general CSS/JS or other required files
@@ -51,7 +50,6 @@ class BackendDealerBrands extends BackendBaseActionIndex
 
 		// linkify the name column
 		$this->datagrid->setColumnURL('brand', BackendModel::createURLForAction('edit_brands') . '&amp;id=[id]');
-
 
 		// create the "edit" button for each row
 		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_brands') . '&amp;id=[id]', BackendLanguage::getLabel('Edit'));

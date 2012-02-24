@@ -61,7 +61,6 @@ class BackendDealerAddBrands extends BackendBaseActionAdd
 					// correct mimetype?
 					$this->frm->getField('image')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'), BL::err('JPGGIFAndPNGOnly'));
 				}
-
 			}
 
 			// no errors?
@@ -70,15 +69,11 @@ class BackendDealerAddBrands extends BackendBaseActionAdd
 				// build item
 				$item['name'] = $this->frm->getField('name')->getValue();
 
-				// insert the item
-				$item['id'] = BackendDealerModel::insertBrand($item);
-
 				// has the user submitted an image?
 				if($this->frm->getField('image')->isFilled())
 				{
-
 					// create new filename
-					$filename = rand(0,3) . '_' . $item['id'] . '.' . $this->frm->getField('image')->getExtension();
+					$filename = rand(0,1000) . '_' . SpoonFilter::urlise($item['name']) . '.' . $this->frm->getField('image')->getExtension();
 
 					// add into settings to update
 					$item['image'] = $filename;
@@ -92,6 +87,9 @@ class BackendDealerAddBrands extends BackendBaseActionAdd
 					// resize (32x32)
 					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/frontend_dealer/brands/32x32/' . $filename, 32, 32, true, false, 100);
 				}
+
+				// insert the item
+				$item['id'] = BackendDealerModel::insertBrand($item);
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));

@@ -1,11 +1,10 @@
 <?php
 
 /**
- * Edit a dealer.
+ * Edit a brand.
  *
  * @author Arend Pijls <arend.pijls@netlash.com>
  */
-
 class BackendDealerEditBrands extends BackendBaseActionEdit
 {
 	/**
@@ -102,7 +101,6 @@ class BackendDealerEditBrands extends BackendBaseActionEdit
 					// correct mimetype?
 					$this->frm->getField('image')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'), BL::err('JPGGIFAndPNGOnly'));
 				}
-
 			}
 
 			// no errors?
@@ -125,7 +123,7 @@ class BackendDealerEditBrands extends BackendBaseActionEdit
 					}
 
 					// create new filename
-					$filename = rand(0,3) . '_' . $item['id'] . '.' . $this->frm->getField('image')->getExtension();
+					$filename = rand(0,1000) . '_' . SpoonFilter::urlise($item['name']) . '.' . $this->frm->getField('image')->getExtension();
 
 					// add into settings to update
 					$item['image'] = $filename;

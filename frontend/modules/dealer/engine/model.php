@@ -31,13 +31,15 @@ class FrontendDealerModel
 	 * @param string $area 			The city or postcode
 	 * @param array $brands 		An array of selected brands
 	 * @param string $country 		Search only in: BE, FR and NL
-	 * @param int $limit 			The limit of records
-	 * @param int $distance 		The distance radius
-	 * @param string $unit 			Calculating distance with KM or Miles
 	 * @return array
 	 */
-	public static function getAll($area, $brands, $country, $limit = 50, $distance = 25, $unit = 'km')
+	public static function getAll($area, $brands, $country)
 	{
+		// get module settings
+		$moduleSettings = FrontendModel::getModuleSettings('dealer');
+		$limit = $moduleSettings['limit'];
+		$distance = $moduleSettings['distance'];
+		$unit = $moduleSettings['units'];
 
 		// The url for quering Google Maps api to get latitude/longitude coordinates for an address.
 		$urlGoogleMaps = 'http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false';
@@ -54,8 +56,8 @@ class FrontendDealerModel
 		$lng = isset($geocode->results[0]->geometry->location->lng) ? $geocode->results[0]->geometry->location->lng : null;
 
 		// radius of earth; @note: the earth is not perfectly spherical, but this is considered the 'mean radius'
-		if($unit == 'km') $radius = 6371.009; // in kilometers
-		elseif($unit == 'mi') $radius = 3958.761; // in miles
+		if($unit == 'KM') $radius = 6371.009; // in kilometers
+		elseif($unit == 'MILES') $radius = 3958.761; // in miles
 
 		// latitude boundaries
 		$maxLat = (float) $lat + rad2deg($distance / $radius);
@@ -71,15 +73,15 @@ class FrontendDealerModel
 
 		// show only selected brands
 		$sqlBrands = "";
-		if(!empty($brands)) $sqlBrands = 'AND ds.brand_id IN (' . implode(',', $brands) . ')';
+		if(!empty($brands)) $sqlBrands = 'AND di.brand_id IN (' . implode(',', $brands) . ')';
 
 		// set db records in temp arr
 		$tempArr = (array) FrontendModel::getDB()->GetRecords(
 				'SELECT *, d.name as name
 				FROM dealer AS d
-				INNER JOIN dealer_index AS ds ON ds.dealer_id = d.id
-				INNER JOIN dealer_brands AS s ON ds.brand_id = s.id
-				WHERE d.lat > ? AND d.lat < ? AND d.lng > ? AND d.lng < ? AND d.hidden = ? ' . $sqlCountry . ' ' . $sqlBrands . '
+				INNER JOIN dealer_index AS di ON di.dealer_id = d.id
+				INNER JOIN dealer_brands AS b ON di.brand_id = b.id
+				WHERE d.lat > ? AND d.lat < ? AND d.lng > ? AND d.lng < ? AND d.hidden = ? '.$sqlCountry.' '.$sqlBrands.'
 				GROUP BY dealer_id
 				ORDER BY ABS(d.lat - ?) + ABS(d.lng - ?) ASC
 				LIMIT ?',

@@ -12,7 +12,6 @@
  *
  * @author Arend Pijls <arend.pijls@netlash.com>
  */
-
 class BackendDealerSettings extends BackendBaseActionEdit
 {
 	/**
@@ -39,7 +38,7 @@ class BackendDealerSettings extends BackendBaseActionEdit
 		$this->frm->addText('width', BackendModel::getModuleSetting($this->URL->getModule(), 'width'));
 		$this->frm->addText('height', BackendModel::getModuleSetting($this->URL->getModule(), 'height'));
 		$this->frm->addDropdown('map_type', array('ROADMAP' => BL::lbl('Roadmap', $this->getModule()), 'SATELLITE' => BL::lbl('Satellite', $this->getModule()), 'HYBRID' => BL::lbl('Hybrid', $this->getModule()), 'TERRAIN' => BL::lbl('Terrain', $this->getModule())), BackendModel::getModuleSetting($this->URL->getModule(), 'map_type', 'roadmap'));
-		$this->frm->addDropdown('units', array('KM' => BL::lbl('Km', $this->getModule()), 'MILES' => BL::lbl('Miles', $this->getModule())));
+		$this->frm->addDropdown('units', array('KM' => BL::lbl('Km', $this->getModule()), 'MILES' => BL::lbl('Miles', $this->getModule())), BackendModel::getModuleSetting($this->URL->getModule(), 'units', 'KM'));
 		$this->frm->addText('distance', BackendModel::getModuleSetting($this->URL->getModule(), 'distance'));
 		$this->frm->addText('limit', BackendModel::getModuleSetting($this->URL->getModule(), 'limit'));
 	}

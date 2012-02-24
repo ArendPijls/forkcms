@@ -5,7 +5,6 @@
  *
  * @author Arend Pijls <arend.pijls@netlash.com>
  */
-
 final class BackendDealerConfig extends BackendBaseConfig
 {
 	/**

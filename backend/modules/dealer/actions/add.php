@@ -29,6 +29,14 @@ class BackendDealerAdd extends BackendBaseActionAdd
 	}
 
 	/**
+	 * Get the data.
+	 */
+	private function getData()
+	{
+		$this->brands = BackendDealerModel::getAllBrands();
+	}
+
+	/**
 	 * Load the form
 	 */
 	private function loadForm()
@@ -64,15 +72,6 @@ class BackendDealerAdd extends BackendBaseActionAdd
 		$this->frm->addText('email');
 		$this->frm->addText('site');
 		$this->frm->addImage('avatar');
-
-	}
-
-	/**
-	 * Get the data.
-	 */
-	private function getData()
-	{
-		$this->brands = BackendDealerModel::getAllBrands();
 	}
 
 	/**
@@ -102,7 +101,6 @@ class BackendDealerAdd extends BackendBaseActionAdd
 					// correct mimetype?
 					$this->frm->getField('avatar')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'), BL::err('JPGGIFAndPNGOnly'));
 				}
-
 			}
 
 			// no errors?
@@ -131,12 +129,11 @@ class BackendDealerAdd extends BackendBaseActionAdd
 					if(in_array($value['id'], (array) $this->frm->getField('type')->getValue())) $values[] = $value['id'];
 				}
 
-
 				// has the user submitted an avatar?
 				if($this->frm->getField('avatar')->isFilled())
 				{
 					// create new filename
-					$filename = rand(0,3) . '_' . SpoonFilter::urlise($item['name']) . '.' . $this->frm->getField('avatar')->getExtension();
+					$filename = rand(0,1000) . '_' . SpoonFilter::urlise($item['name']) . '.' . $this->frm->getField('avatar')->getExtension();
 
 					// add into items to update
 					$item['avatar'] = $filename;

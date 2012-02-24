@@ -10,7 +10,6 @@ class BackendDealerIndex extends BackendBaseActionIndex
 	/**
 	 * Execute the action
 	 */
-
 	public function execute()
 	{
 		// call parent, this will probably add some general CSS/JS or other required files
@@ -47,7 +46,6 @@ class BackendDealerIndex extends BackendBaseActionIndex
 		$html .= '</div>';
 
 		$this->datagrid->addColumn('dealer', 'Dealer', $html);
-
 
 		// linkify the name column
 		$this->datagrid->setColumnURL('dealer', BackendModel::createURLForAction('edit') . '&amp;id=[id]');

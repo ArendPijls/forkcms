@@ -1,11 +1,10 @@
 <?php
 
 /**
- * Delete a dealer.
+ * Delete a brand.
  *
  * @author Arend Pijls <arend.pijls@netlash.com>
  */
-
 class BackendDealerDeleteBrand extends BackendBaseActionDelete
 {
 	/**

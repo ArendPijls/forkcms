@@ -5,7 +5,6 @@
  *
  * @author Arend Pijls <arend.pijls@netlash.com>
  */
-
 class BackendDealerEdit extends BackendBaseActionEdit
 {
 	/**
@@ -66,23 +65,22 @@ class BackendDealerEdit extends BackendBaseActionEdit
 
 		// init some vars
 		$checked = array();
-		$values = array();
-		$values2 = array();
+		$brandIds = array();
 
 		// get brand ids and put them in an array
 		foreach($this->brands as $value)
 		{
-			$values[] = array('label' => $value['name'], 'value' => $value['id']);
+			$brandIds[] = array('label' => $value['name'], 'value' => $value['id']);
 		}
 
 		// get dealer brands and put them in a arracy
-		foreach($this->dealerBrands as $value2)
+		foreach($this->dealerBrands as $value)
 		{
-			$checked[] = $value2['brand_id'];
+			$checked[] = $value['brand_id'];
 		}
 
 		$this->frm->addText('name', $this->record['name'], 255, 'inputText title', 'inputTextError, title');
-		$this->frm->addMultiCheckbox('type', $values, $checked);
+		$this->frm->addMultiCheckbox('type', $brandIds, $checked);
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
 		$this->frm->addText('street', $this->record['street']);
 		$this->frm->addText('number', $this->record['number']);
@@ -135,7 +133,6 @@ class BackendDealerEdit extends BackendBaseActionEdit
 					// correct mimetype?
 					$this->frm->getField('avatar')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'), BL::err('JPGGIFAndPNGOnly'));
 				}
-
 			}
 
 			// no errors?
@@ -163,9 +160,6 @@ class BackendDealerEdit extends BackendBaseActionEdit
 					if(in_array($value['id'], (array) $this->frm->getField('type')->getValue())) $values[] = $value['id'];
 				}
 
-				//$item['brands'] =  implode(";", $values);
-				//$item['brands'] = ";".$item['brands'].";";
-
 				// has the user submitted an avatar?
 				if($this->frm->getField('avatar')->isFilled())
 				{
@@ -179,7 +173,7 @@ class BackendDealerEdit extends BackendBaseActionEdit
 					}
 
 					// create new filename
-					$filename = rand(0,3) . '_' . SpoonFilter::urlise($item['name']) . '.' . $this->frm->getField('avatar')->getExtension();
+					$filename = rand(0,1000) . '_' . SpoonFilter::urlise($item['name']) . '.' . $this->frm->getField('avatar')->getExtension();
 
 					// add into settings to update
 					$item['avatar'] = $filename;
