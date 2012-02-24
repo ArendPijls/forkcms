@@ -33,8 +33,6 @@ class BackendDealerModel
 	 */
 	public static function deleteBrand($id)
 	{
-		BackendModel::getDB(true)->delete('dealer_brands', 'id = ?', array((int) $id));
-
 		// get image file name
 		$imageFilname = (string) BackendModel::getDB()->getVar(
 				'SELECT image
@@ -48,6 +46,9 @@ class BackendDealerModel
 		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/128x128/' . $imageFilname);
 		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/64x64/' . $imageFilname);
 		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/32x32/' . $imageFilname);
+
+		// delete brand
+		BackendModel::getDB(true)->delete('dealer_brands', 'id = ?', array((int) $id));
 	}
 
 	/**
@@ -57,6 +58,21 @@ class BackendDealerModel
 	 */
 	public static function deleteDealer($id)
 	{
+		// get avatar file name
+		$imageFilname = (string) BackendModel::getDB()->getVar(
+				'SELECT avatar
+				FROM dealer
+				WHERE id = ?',
+				array((int) $id)
+		);
+
+		// delete brand images
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/source/' . $imageFilname);
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/128x128/' . $imageFilname);
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/64x64/' . $imageFilname);
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/32x32/' . $imageFilname);
+
+		// delete dealer
 		BackendModel::getDB(true)->delete('dealer', 'id = ?', array((int) $id));
 	}
 
