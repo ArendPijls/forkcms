@@ -1,72 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
-  <backend>
-    <core>
-      <item type="label" name="AllDealer">
-        <translation language="nl"><![CDATA[alle getuigenissen]]></translation>
-        <translation language="en"><![CDATA[all Dealer]]></translation>
+<backend>
+    <dealer>
+      <item type="label" name="Auto">
+        <translation language="en"><![CDATA[automatic]]></translation>
+        <translation language="nl"><![CDATA[automatisch]]></translation>
       </item>
-      <item type="label" name="RandomDealer">
-        <translation language="nl"><![CDATA[willekeurige getuigenis]]></translation>
-        <translation language="en"><![CDATA[random Dealer]]></translation>
+      <item type="label" name="Brands">
+        <translation language="en"><![CDATA[brands]]></translation>
+        <translation language="nl"><![CDATA[merken]]></translation>
       </item>
-      <item type="label" name="Dealer">
-        <translation language="nl"><![CDATA[getuigenissen]]></translation>
-        <translation language="en"><![CDATA[Dealer]]></translation>
+      <item type="label" name="Dealers">
+        <translation language="en"><![CDATA[dealer locaters]]></translation>
+        <translation language="nl"><![CDATA[handelaar]]></translation>
       </item>
-    </core>
-    <Dealer>
-      <item type="error" name="DealerIsRequired">
-        <translation language="nl"><![CDATA[Gelieve een getuigenis in te geven.]]></translation>
-        <translation language="en"><![CDATA[Please provide a Dealer.]]></translation>
+      <item type="label" name="Distance">
+        <translation language="en"><![CDATA[distance]]></translation>
+        <translation language="nl"><![CDATA[afstand]]></translation>
       </item>
-      <item type="label" name="Add">
-        <translation language="nl"><![CDATA[getuigenis toevoegen]]></translation>
-        <translation language="en"><![CDATA[add Dealer]]></translation>
+      <item type="label" name="Email">
+        <translation language="en"><![CDATA[email]]></translation>
+        <translation language="nl"><![CDATA[email]]></translation>
       </item>
-      <item type="label" name="Dealer">
-        <translation language="nl"><![CDATA[getuigenis]]></translation>
-        <translation language="en"><![CDATA[Dealer]]></translation>
+      <item type="label" name="Fax">
+        <translation language="en"><![CDATA[fax]]></translation>
+        <translation language="nl"><![CDATA[fax]]></translation>
       </item>
-      <item type="label" name="Visible">
-        <translation language="nl"><![CDATA[zichtbaar]]></translation>
-        <translation language="en"><![CDATA[visible]]></translation>
+      <item type="label" name="Hybrid">
+        <translation language="en"><![CDATA[hybrid]]></translation>
+        <translation language="nl"><![CDATA[hybrid]]></translation>
       </item>
-      <item type="message" name="Added">
-        <translation language="nl"><![CDATA[De getuigenis van "%1$s" werd toegevoegd.]]></translation>
-        <translation language="en"><![CDATA[The Dealer by "%1$s" has been added.]]></translation>
+      <item type="label" name="Km">
+        <translation language="en"><![CDATA[km]]></translation>
+        <translation language="nl"><![CDATA[kilomters]]></translation>
       </item>
-      <item type="message" name="ConfirmDelete">
-        <translation language="nl"><![CDATA[Ben je zeker dat je de getuigenis van "%1$s" wil verwijderen?]]></translation>
-        <translation language="en"><![CDATA[Are you sure you want to delete the Dealer by "%1$s"?]]></translation>
+      <item type="label" name="Limit">
+        <translation language="en"><![CDATA[limit]]></translation>
+        <translation language="nl"><![CDATA[limiet]]></translation>
       </item>
-      <item type="message" name="Deleted">
-        <translation language="nl"><![CDATA[De getuigenis van "%1$s" werd verwijderd.]]></translation>
-        <translation language="en"><![CDATA[The Dealer by "%1$s" has been deleted.]]></translation>
+      <item type="label" name="Map">
+        <translation language="en"><![CDATA[map]]></translation>
+        <translation language="nl"><![CDATA[map]]></translation>
       </item>
-      <item type="message" name="Edit">
-        <translation language="nl"><![CDATA[bewerk de getuigenis van "%1$s"]]></translation>
-        <translation language="en"><![CDATA[edit the Dealer by "%1$s"]]></translation>
+      <item type="label" name="MapSettings">
+        <translation language="en"><![CDATA[map settings]]></translation>
+        <translation language="nl"><![CDATA[map opties]]></translation>
       </item>
-      <item type="message" name="Edited">
-        <translation language="nl"><![CDATA[De getuigenis van "%1$s" werd opgeslagen.]]></translation>
-        <translation language="en"><![CDATA[The Dealer by "%1$s" has been edited.]]></translation>
+      <item type="label" name="MapType">
+        <translation language="en"><![CDATA[map type]]></translation>
+        <translation language="nl"><![CDATA[map type]]></translation>
       </item>
-    </Dealer>
+      <item type="label" name="Miles">
+        <translation language="en"><![CDATA[miles]]></translation>
+        <translation language="nl"><![CDATA[mijlen]]></translation>
+      </item>
+      <item type="label" name="Roadmap">
+        <translation language="en"><![CDATA[road map]]></translation>
+        <translation language="nl"><![CDATA[wegenkaart]]></translation>
+      </item>
+      <item type="label" name="Satellite">
+        <translation language="en"><![CDATA[satellite]]></translation>
+        <translation language="nl"><![CDATA[satelliet]]></translation>
+      </item>
+      <item type="label" name="Site">
+        <translation language="en"><![CDATA[site]]></translation>
+        <translation language="nl"><![CDATA[site]]></translation>
+      </item>
+      <item type="label" name="Tel">
+        <translation language="en"><![CDATA[phone]]></translation>
+        <translation language="nl"><![CDATA[telefoon]]></translation>
+      </item>
+      <item type="label" name="Terrain">
+        <translation language="en"><![CDATA[terrain]]></translation>
+        <translation language="nl"><![CDATA[terein]]></translation>
+      </item>
+      <item type="label" name="Units">
+        <translation language="en"><![CDATA[units]]></translation>
+        <translation language="nl"><![CDATA[eenheden]]></translation>
+      </item>
+      <item type="label" name="ZoomLevel">
+        <translation language="en"><![CDATA[zoom level]]></translation>
+        <translation language="nl"><![CDATA[zoom level]]></translation>
+      </item>
+      <item type="message" name="NoBrandsFound">
+        <translation language="nl"><![CDATA[Geen merken gevonden]]></translation>
+        <translation language="en"><![CDATA[No brands found]]></translation>
+      </item>
+      <item type="error" name="NotNumeric">
+        <translation language="en"><![CDATA[only numbers]]></translation>
+        <translation language="nl"><![CDATA[alleen getallen]]></translation>
+      </item>
+    </dealer>
   </backend>
   <frontend>
     <core>
-      <item type="message" name="DealerNoItems">
-        <translation language="nl"><![CDATA[Er zijn geen getuigenissen om te tonen.]]></translation>
-        <translation language="en"><![CDATA[There are no Dealer to show.]]></translation>
+      <item type="err" name="AreaIsRequired">
+        <translation language="en"><![CDATA[City or Zip is required]]></translation>
+        <translation language="nl"><![CDATA[Postcode of stad is verplicht]]></translation>
       </item>
-      <item type="message" name="RandomDealer">
-        <translation language="nl"><![CDATA[Een willekeurige getuigenis:]]></translation>
-        <translation language="en"><![CDATA[A random Dealer:]]></translation>
+      <item type="label" name="Phone">
+        <translation language="en"><![CDATA[phone]]></translation>
+        <translation language="nl"><![CDATA[telefoon]]></translation>
       </item>
-      <item type="message" name="ReadMoreDealer">
-        <translation language="nl"><![CDATA[Lees meer getuigenissen…]]></translation>
-        <translation language="en"><![CDATA[Read more Dealer…]]></translation>
+      <item type="label" name="Fax">
+        <translation language="en"><![CDATA[fax]]></translation>
+        <translation language="nl"><![CDATA[fax]]></translation>
+      </item>
+      <item type="label" name="Site">
+        <translation language="en"><![CDATA[site]]></translation>
+        <translation language="nl"><![CDATA[site]]></translation>
+      </item>
+      <item type="label" name="CityOrZip">
+        <translation language="en"><![CDATA[City or zip]]></translation>
+        <translation language="nl"><![CDATA[Stad of postcode]]></translation>
+      </item>
+      <item type="label" name="TheClosestTo">
+        <translation language="en"><![CDATA[the closest to]]></translation>
+        <translation language="nl"><![CDATA[het dichtste bij]]></translation>
+      </item>
+      <item type="label" name="InNetherlands">
+        <translation language="en"><![CDATA[Only in the Netherlands]]></translation>
+        <translation language="nl"><![CDATA[Enkel vestigingen uit Nederland]]></translation>
+      </item>
+      <item type="label" name="InFrance">
+        <translation language="en"><![CDATA[Only in Frnace]]></translation>
+        <translation language="nl"><![CDATA[Enkel vestigingen uit Frankrijk]]></translation>
+      </item>
+      <item type="label" name="InBelgium">
+        <translation language="en"><![CDATA[Only in Belgium]]></translation>
+        <translation language="nl"><![CDATA[Enkel vestigingen uit België]]></translation>
+      </item>
+      <item type="label" name="Brands">
+        <translation language="en"><![CDATA[brands]]></translation>
+        <translation language="nl"><![CDATA[merken]]></translation>
+      </item>
+      <item type="message" name="ViewOnBigMap">
+        <translation language="en"><![CDATA[View on google maps]]></translation>
+        <translation language="nl"><![CDATA[Bekijk op google maps]]></translation>
+      </item
+      <item type="message" name="ViewOnMap">
+        <translation language="en"><![CDATA[View on maps]]></translation>
+        <translation language="nl"><![CDATA[Bekijk op de kaart]]></translation>
+      </item>
+      <item type="label" name="FindDealer">
+        <translation language="en"><![CDATA[find dealer]]></translation>
+        <translation language="nl"><![CDATA[vind handelaar]]></translation>
+      </item>
+      <item type="message" name="NumDealersFound">
+        <translation language="en"><![CDATA[%1$s dealers found]]></translation>
+        <translation language="nl"><![CDATA[%1$s handelaars gevonden]]></translation>
       </item>
     </core>
   </frontend>

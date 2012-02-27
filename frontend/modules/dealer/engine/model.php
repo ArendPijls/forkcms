@@ -45,7 +45,17 @@ class FrontendDealerModel
 		$urlGoogleMaps = 'http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false';
 
 		// build address & full url to google
-		$fullAddress = $area . ', Belgium';
+		if($country == "BE") $fullCountryText = "Belgium";
+		if($country == "NL") $fullCountryText = "Netherlands";
+		if($country == "FR")
+		{
+			$fullCountryText = "France";
+		}
+		else
+		{
+			$fullCountryText = "Belgium";
+		}
+		$fullAddress = $area . ', '.$fullCountryText;
 		$url = sprintf($urlGoogleMaps, urlencode($fullAddress));
 
 		// fetch data from google
@@ -81,11 +91,11 @@ class FrontendDealerModel
 				FROM dealer AS d
 				INNER JOIN dealer_index AS di ON di.dealer_id = d.id
 				INNER JOIN dealer_brands AS b ON di.brand_id = b.id
-				WHERE d.lat > ? AND d.lat < ? AND d.lng > ? AND d.lng < ? AND d.hidden = ? '.$sqlCountry.' '.$sqlBrands.'
+				WHERE d.language = ? AND d.lat > ? AND d.lat < ? AND d.lng > ? AND d.lng < ? AND d.hidden = ? '.$sqlCountry.' '.$sqlBrands.'
 				GROUP BY dealer_id
 				ORDER BY ABS(d.lat - ?) + ABS(d.lng - ?) ASC
 				LIMIT ?',
-				array($minLat, $maxLat, $minLng, $maxLng, 'N', (float) $lat, (float) $lng, (int) $limit)
+				array(FRONTEND_LANGUAGE, $minLat, $maxLat, $minLng, $maxLng, 'N', (float) $lat, (float) $lng, (int) $limit)
 		);
 
 		// loop db records and add brand info

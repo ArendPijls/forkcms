@@ -55,5 +55,22 @@ class DealerInstaller extends ModuleInstaller
 		// add extra's
 		$this->insertExtra('dealer', 'block', 'Dealer', 'all_dealer', null, 'N');
 		$this->insertExtra('dealer', 'widget', 'RandomDealer', 'random_dealer', null, 'N');
+
+		// create directory for the original files
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/');
+
+		// create directory + folder for the dealer avatars
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/avatars/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/banners/avatars/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/avatars/128x128/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/avatars/avatars/128x128/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/avatars/32x32/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/avatars/avatars/32x32/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/avatars/64x64/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/avatars/avatars/64x64/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/avatars/source/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/avatars/avatars/source/');
+
+		// create directory + folder for the brand images
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/brands/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/brands/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/brands/128x128/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/brands/128x128/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/brands/32x32/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/brands/32x32/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/brands/64x64/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/brands/64x64/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/brands/source/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/brands/source/');
 	}
 }

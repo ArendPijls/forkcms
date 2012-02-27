@@ -68,6 +68,7 @@ class BackendDealerAddBrands extends BackendBaseActionAdd
 			{
 				// build item
 				$item['name'] = $this->frm->getField('name')->getValue();
+				$item['language'] = BackendLanguage::getWorkingLanguage();
 
 				// has the user submitted an image?
 				if($this->frm->getField('image')->isFilled())
