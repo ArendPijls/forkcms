@@ -26,13 +26,13 @@ class DealerInstaller extends ModuleInstaller
 		$this->setModuleRights(1, 'dealer');
 
 		// general settings
-		$this->setSetting('location', 'zoom_level', 'auto');
-		$this->setSetting('location', 'width', 400);
-		$this->setSetting('location', 'height', 300);
-		$this->setSetting('location', 'map_type', 'ROADMAP');
-		$this->setSetting('location', 'distance', 25);
-		$this->setSetting('location', 'limit', 50);
-		$this->setSetting('location', 'units', 'KM');
+		$this->setSetting('dealer', 'zoom_level', 'auto');
+		$this->setSetting('dealer', 'width', 900);
+		$this->setSetting('dealer', 'height', 500);
+		$this->setSetting('dealer', 'map_type', 'ROADMAP');
+		$this->setSetting('dealer', 'distance', 25);
+		$this->setSetting('dealer', 'limit', 50);
+		$this->setSetting('dealer', 'units', 'KM');
 
 		// action rights
 		$this->setActionRights(1, 'dealer', 'add');
@@ -44,17 +44,14 @@ class DealerInstaller extends ModuleInstaller
 
 		// set navigation
 		$navigationModulesId = $this->setNavigation(null, 'Modules');
-		$this->setNavigation($navigationModulesId, 'Dealer', 'dealer/index', array('dealer/add', 'dealer/edit'));
-		$this->setNavigation($navigationModulesId, 'Brands', 'dealer/brands', array('search/add_brands', 'search/edit_brands'));
+		$navigationDealerId = $this->setNavigation($navigationModulesId, 'Dealer');
+		$this->setNavigation($navigationDealerId, 'Dealer', 'dealer/index', array('dealer/add', 'dealer/edit'));
+		$this->setNavigation($navigationDealerId, 'Brands', 'dealer/brands', array('dealer/add_brands', 'dealer/edit_brands'));
 
 		// settings navigation
 		$navigationSettingsId = $this->setNavigation(null, 'Settings');
 		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
 		$this->setNavigation($navigationModulesId, 'Dealer', 'dealer/settings');
-
-		// add extra's
-		$this->insertExtra('dealer', 'block', 'Dealer', 'all_dealer', null, 'N');
-		$this->insertExtra('dealer', 'widget', 'RandomDealer', 'random_dealer', null, 'N');
 
 		// create directory for the original files
 		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/');

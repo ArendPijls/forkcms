@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
-<backend>
+  <backend>
+  	<core>
+      <item type="label" name="Dealer">
+        <translation language="en"><![CDATA[dealer]]></translation>
+        <translation language="nl"><![CDATA[handelaar]]></translation>
+      </item>
+  	</core>
     <dealer>
       <item type="label" name="Auto">
         <translation language="en"><![CDATA[automatic]]></translation>
@@ -94,7 +100,23 @@
   </backend>
   <frontend>
     <core>
-      <item type="err" name="AreaIsRequired">
+      <item type="message" name="ViewOnBigMap">
+        <translation language="en"><![CDATA[View on google maps]]></translation>
+        <translation language="nl"><![CDATA[Bekijk op google maps]]></translation>
+      </item>
+      <item type="message" name="ViewOnMap">
+        <translation language="en"><![CDATA[View on maps]]></translation>
+        <translation language="nl"><![CDATA[Bekijk op de kaart]]></translation>
+      </item>
+      <item type="message" name="NumDealersFound">
+        <translation language="en"><![CDATA[%1$s dealers found]]></translation>
+        <translation language="nl"><![CDATA[%1$s handelaars gevonden]]></translation>
+      </item>
+      <item type="message" name="DealerNoItems">
+        <translation language="en"><![CDATA[No dealers found specified location]]></translation>
+        <translation language="nl"><![CDATA[Er zijn geen handelaars gevonden in opgegeven locatie.]]></translation>
+      </item>
+	  <item type="error" name="AreaIsRequired">
         <translation language="en"><![CDATA[City or Zip is required]]></translation>
         <translation language="nl"><![CDATA[Postcode of stad is verplicht]]></translation>
       </item>
@@ -103,7 +125,7 @@
         <translation language="nl"><![CDATA[telefoon]]></translation>
       </item>
       <item type="label" name="Fax">
-        <translation language="en"><![CDATA[fax]]></translation>
+        <translation language="en"><![CDATA[fax]]></translation> 
         <translation language="nl"><![CDATA[fax]]></translation>
       </item>
       <item type="label" name="Site">
@@ -134,21 +156,9 @@
         <translation language="en"><![CDATA[brands]]></translation>
         <translation language="nl"><![CDATA[merken]]></translation>
       </item>
-      <item type="message" name="ViewOnBigMap">
-        <translation language="en"><![CDATA[View on google maps]]></translation>
-        <translation language="nl"><![CDATA[Bekijk op google maps]]></translation>
-      </item
-      <item type="message" name="ViewOnMap">
-        <translation language="en"><![CDATA[View on maps]]></translation>
-        <translation language="nl"><![CDATA[Bekijk op de kaart]]></translation>
-      </item>
       <item type="label" name="FindDealer">
         <translation language="en"><![CDATA[find dealer]]></translation>
         <translation language="nl"><![CDATA[vind handelaar]]></translation>
-      </item>
-      <item type="message" name="NumDealersFound">
-        <translation language="en"><![CDATA[%1$s dealers found]]></translation>
-        <translation language="nl"><![CDATA[%1$s handelaars gevonden]]></translation>
       </item>
     </core>
   </frontend>

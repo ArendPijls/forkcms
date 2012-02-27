@@ -110,6 +110,21 @@ class BackendDealerModel
 	}
 
 	/**
+	 * Get all the brands.
+	 *
+	 * @return array
+	 */
+	public static function getAllBrands()
+	{
+		return (array) BackendModel::getDB()->getRecords(
+				'SELECT *
+				FROM dealer_brands
+				WHERE language = ?',
+				array(BL::getWorkingLanguage())
+		);
+	}
+
+	/**
 	 * Get all data for the brand with the given ID.
 	 *
 	 * @param int $id The id for the dealer locater to get.
@@ -120,6 +135,23 @@ class BackendDealerModel
 		return (array) BackendModel::getDB()->getRecord(
 				'SELECT *
 				FROM dealer_brands
+				WHERE id = ?
+				LIMIT 1',
+				array((int) $id)
+		);
+	}
+
+	/**
+	 * Get all data for the one dealer locater with the given ID.
+	 *
+	 * @param int $id The id for the dealer locater to get.
+	 * @return array
+	 */
+	public static function getDealer($id)
+	{
+		return (array) BackendModel::getDB()->getRecord(
+				'SELECT *
+				FROM dealer
 				WHERE id = ?
 				LIMIT 1',
 				array((int) $id)
@@ -142,36 +174,6 @@ class BackendDealerModel
 		);
 	}
 
-	/**
-	 * Get all data for the one dealer locater with the given ID.
-	 *
-	 * @param int $id The id for the dealer locater to get.
-	 * @return array
-	 */
-	public static function getDealer($id)
-	{
-		return (array) BackendModel::getDB()->getRecord(
-				'SELECT *
-				FROM dealer
-				WHERE id = ?
-				LIMIT 1',
-				array((int) $id)
-		);
-	}
-	/**
-	 * Get all the brands.
-	 *
-	 * @return array
-	 */
-	public static function getAllBrands()
-	{
-		return (array) BackendModel::getDB()->getRecords(
-				'SELECT *
-				FROM dealer_brands
-				WHERE language = ?',
-				array(BL::getWorkingLanguage())
-		);
-	}
 	/**
 	 * Get the max sequence id for a dealer locater
 	 *

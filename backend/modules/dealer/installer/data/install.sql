@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `dealer` (
   `hidden` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Whether this dealer is shown or not.',
   `sequence` int(11) NOT NULL COMMENT 'The sequence of this dealer.',
   `lat` float NOT NULL COMMENT 'The latitude of this dealer.',
-  `lng` float NOT NULL COMMENT 'The longitude of this dealer.'
+  `lng` float NOT NULL COMMENT 'The longitude of this dealer.',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;
 
@@ -24,7 +24,7 @@ CREATE TABLE `dealer_brands` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'The unique ID for this brand.',
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name for this brand.',
   `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The image filename for this brand.',
-  `language` varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The language for this brand.'
+  `language` varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The language for this brand.',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;
 

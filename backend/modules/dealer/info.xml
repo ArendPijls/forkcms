@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
-	<name>dealer</name>
+	<name>Dealer locater</name>
 	<version>1.0.0</version>
 	<requirements>
 		<minimum_version>2.0.0</minimum_version>
 	</requirements>
 	<description>
 		<![CDATA[
-			Map with all car dealers
+			Map with all nearby dealer locators
 		]]>
 	</description>
 	<authors>

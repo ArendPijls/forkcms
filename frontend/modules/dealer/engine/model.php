@@ -55,7 +55,7 @@ class FrontendDealerModel
 		{
 			$fullCountryText = "Belgium";
 		}
-		$fullAddress = $area . ', '.$fullCountryText;
+		$fullAddress = $area . ', ' . $fullCountryText;
 		$url = sprintf($urlGoogleMaps, urlencode($fullAddress));
 
 		// fetch data from google
@@ -79,7 +79,7 @@ class FrontendDealerModel
 
 		// show only dealers in selected country
 		$sqlCountry = "";
-		if($country == "BE" || $country == "FR" || $country == "NL") $sqlCountry = " AND country = '" . $country. "'";
+		if($country == "BE" || $country == "FR" || $country == "NL") $sqlCountry = " AND country = '" . $country . "'";
 
 		// show only selected brands
 		$sqlBrands = "";
@@ -91,7 +91,7 @@ class FrontendDealerModel
 				FROM dealer AS d
 				INNER JOIN dealer_index AS di ON di.dealer_id = d.id
 				INNER JOIN dealer_brands AS b ON di.brand_id = b.id
-				WHERE d.language = ? AND d.lat > ? AND d.lat < ? AND d.lng > ? AND d.lng < ? AND d.hidden = ? '.$sqlCountry.' '.$sqlBrands.'
+				WHERE d.language = ? AND d.lat > ? AND d.lat < ? AND d.lng > ? AND d.lng < ? AND d.hidden = ? ' . $sqlCountry . ' ' . $sqlBrands . '
 				GROUP BY dealer_id
 				ORDER BY ABS(d.lat - ?) + ABS(d.lng - ?) ASC
 				LIMIT ?',
