@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `dealer` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;
 
-CREATE TABLE `dealer_brands` (
+CREATE TABLE IF NOT EXISTS `dealer_brands` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'The unique ID for this brand.',
   `name` varchar(255) NOT NULL COMMENT 'The name for this brand.',
   `image` varchar(255) NOT NULL COMMENT 'The image filename for this brand.',
@@ -26,7 +26,7 @@ CREATE TABLE `dealer_brands` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;
 
-CREATE TABLE `dealer_index` (
+CREATE TABLE IF NOT EXISTS `dealer_index` (
   `dealer_id` int(11) NOT NULL COMMENT 'The dealer ID.',
   `brand_id` int(11) NOT NULL COMMENT 'The brand ID.'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

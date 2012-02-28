@@ -3,8 +3,8 @@
   <backend>
   	<core>
       <item type="label" name="Dealer">
-        <translation language="en"><![CDATA[dealer]]></translation>
-        <translation language="nl"><![CDATA[handelaar]]></translation>
+        <translation language="en"><![CDATA[dealer locator]]></translation>
+        <translation language="nl"><![CDATA[dealer locator]]></translation>
       </item>
   	</core>
     <dealer>
@@ -17,8 +17,8 @@
         <translation language="nl"><![CDATA[merken]]></translation>
       </item>
       <item type="label" name="Dealers">
-        <translation language="en"><![CDATA[dealer locaters]]></translation>
-        <translation language="nl"><![CDATA[handelaar]]></translation>
+        <translation language="en"><![CDATA[dealers]]></translation>
+        <translation language="nl"><![CDATA[verdelers]]></translation>
       </item>
       <item type="label" name="Distance">
         <translation language="en"><![CDATA[distance]]></translation>
@@ -110,11 +110,11 @@
       </item>
       <item type="message" name="NumDealersFound">
         <translation language="en"><![CDATA[%1$s dealers found]]></translation>
-        <translation language="nl"><![CDATA[%1$s handelaars gevonden]]></translation>
+        <translation language="nl"><![CDATA[%1$s verdelers gevonden]]></translation>
       </item>
       <item type="message" name="DealerNoItems">
         <translation language="en"><![CDATA[No dealers found specified location]]></translation>
-        <translation language="nl"><![CDATA[Er zijn geen handelaars gevonden in opgegeven locatie.]]></translation>
+        <translation language="nl"><![CDATA[Er zijn geen verdelers gevonden in opgegeven locatie.]]></translation>
       </item>
 	  <item type="error" name="AreaIsRequired">
         <translation language="en"><![CDATA[City or Zip is required]]></translation>
@@ -158,7 +158,7 @@
       </item>
       <item type="label" name="FindDealer">
         <translation language="en"><![CDATA[find dealer]]></translation>
-        <translation language="nl"><![CDATA[vind handelaar]]></translation>
+        <translation language="nl"><![CDATA[vind verdeler]]></translation>
       </item>
     </core>
   </frontend>

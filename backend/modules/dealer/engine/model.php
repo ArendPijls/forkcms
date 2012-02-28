@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * All model functions for the dealer locater module.
  *
@@ -17,6 +24,7 @@ class BackendDealerModel
 	     FROM dealer
 	     WHERE language = ?
 	     ORDER BY sequence';
+
 	/**
 	 * Overview of the brands.
 	 *
@@ -36,10 +44,10 @@ class BackendDealerModel
 	{
 		// get image file name
 		$imageFilname = (string) BackendModel::getDB()->getVar(
-				'SELECT image
-				FROM dealer_brands
-				WHERE id = ?',
-				array((int) $id)
+			'SELECT image
+			 FROM dealer_brands
+			 WHERE id = ?',
+			array((int) $id)
 		);
 
 		// delete brand images
@@ -61,17 +69,17 @@ class BackendDealerModel
 	{
 		// get avatar file name
 		$imageFilname = (string) BackendModel::getDB()->getVar(
-				'SELECT avatar
-				FROM dealer
-				WHERE id = ?',
-				array((int) $id)
+			'SELECT avatar
+			 FROM dealer
+			 WHERE id = ?',
+			array((int) $id)
 		);
 
 		// delete brand images
-		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/source/' . $imageFilname);
-		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/128x128/' . $imageFilname);
-		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/64x64/' . $imageFilname);
-		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/32x32/' . $imageFilname);
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/avatars/source/' . $imageFilname);
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/avatars/128x128/' . $imageFilname);
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/avatars/64x64/' . $imageFilname);
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/avatars/32x32/' . $imageFilname);
 
 		// delete dealer
 		BackendModel::getDB(true)->delete('dealer', 'id = ?', array((int) $id));
@@ -86,10 +94,10 @@ class BackendDealerModel
 	public static function existsBrand($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-				'SELECT COUNT(id)
-				FROM dealer_brands
-				WHERE id = ?',
-				array((int) $id)
+			'SELECT COUNT(id)
+			 FROM dealer_brands
+			 WHERE id = ?',
+			array((int) $id)
 		);
 	}
 
@@ -117,10 +125,10 @@ class BackendDealerModel
 	public static function getAllBrands()
 	{
 		return (array) BackendModel::getDB()->getRecords(
-				'SELECT *
-				FROM dealer_brands
-				WHERE language = ?',
-				array(BL::getWorkingLanguage())
+			'SELECT *
+			 FROM dealer_brands
+			 WHERE language = ?',
+			array(BL::getWorkingLanguage())
 		);
 	}
 
@@ -133,11 +141,11 @@ class BackendDealerModel
 	public static function getBrand($id)
 	{
 		return (array) BackendModel::getDB()->getRecord(
-				'SELECT *
-				FROM dealer_brands
-				WHERE id = ?
-				LIMIT 1',
-				array((int) $id)
+			'SELECT *
+			 FROM dealer_brands
+			 WHERE id = ?
+			 LIMIT 1',
+			array((int) $id)
 		);
 	}
 
@@ -150,11 +158,11 @@ class BackendDealerModel
 	public static function getDealer($id)
 	{
 		return (array) BackendModel::getDB()->getRecord(
-				'SELECT *
-				FROM dealer
-				WHERE id = ?
-				LIMIT 1',
-				array((int) $id)
+			'SELECT *
+			 FROM dealer
+			 WHERE id = ?
+			 LIMIT 1',
+			array((int) $id)
 		);
 	}
 
@@ -167,10 +175,10 @@ class BackendDealerModel
 	public static function getDealerBrands($id)
 	{
 		return (array) BackendModel::getDB()->getRecords(
-				'SELECT brand_id
-				FROM dealer_index
-				WHERE dealer_id = ?',
-				array((int) $id)
+			'SELECT brand_id
+			 FROM dealer_index
+			 WHERE dealer_id = ?',
+			array((int) $id)
 		);
 	}
 
@@ -240,7 +248,7 @@ class BackendDealerModel
 	 */
 	public static function updateBrandsForDealer($id, $brands)
 	{
-		BackendModel::getDB(true)->delete('dealer_index', 'dealer_id = ?', array($id));
+		BackendModel::getDB(true)->delete('dealer_index', 'dealer_id = ?', array((int) $id));
 
 		$brands = (array) $brands;
 

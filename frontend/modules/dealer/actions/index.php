@@ -1,11 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Search form with brands and on submit showing dealer locaters
  *
  * @author Arend Pijls <arend.pijls@netlash.com>
  */
-
 class FrontendDealerIndex extends FrontendBaseBlock
 {
 	/**

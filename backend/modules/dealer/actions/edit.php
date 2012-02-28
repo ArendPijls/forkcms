@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Edit a dealer.
  *
@@ -73,14 +80,18 @@ class BackendDealerEdit extends BackendBaseActionEdit
 			$brandIds[] = array('label' => $value['name'], 'value' => $value['id']);
 		}
 
-		// get dealer brands and put them in a arracy
-		foreach($this->dealerBrands as $value)
+		// check if dealers has brands
+		if(!empty($this->dealerBrands))
 		{
-			$checked[] = $value['brand_id'];
+			foreach($this->dealerBrands as $value)
+			{
+				$checked[] = $value['brand_id'];
+			}
+			// create chekcboxes
+			$this->frm->addMultiCheckbox('type', $brandIds, $checked);
 		}
 
 		$this->frm->addText('name', $this->record['name'], 255, 'inputText title', 'inputTextError, title');
-		$this->frm->addMultiCheckbox('type', $brandIds, $checked);
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
 		$this->frm->addText('street', $this->record['street']);
 		$this->frm->addText('number', $this->record['number']);
@@ -90,7 +101,7 @@ class BackendDealerEdit extends BackendBaseActionEdit
 		$this->frm->addText('tel', $this->record['tel']);
 		$this->frm->addText('fax', $this->record['fax']);
 		$this->frm->addText('email', $this->record['email']);
-		$this->frm->addText('site', $this->record['site']);
+		$this->frm->addText('website', $this->record['website']);
 		$this->frm->addImage('avatar');
 	}
 
@@ -124,6 +135,12 @@ class BackendDealerEdit extends BackendBaseActionEdit
 			$this->frm->getField('zip')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('city')->isFilled(BL::err('FieldIsRequired'));
 
+			// validate email
+			if($this->frm->getField('email')->isFilled())
+			{
+				$this->frm->getField('email')->isEmail(BL::err('NoValidEmail'));
+			}
+
 			// validate avatar
 			if($this->frm->getField('avatar')->isFilled())
 			{
@@ -149,7 +166,7 @@ class BackendDealerEdit extends BackendBaseActionEdit
 				$item['tel'] = $this->frm->getField('tel')->getValue();
 				$item['fax'] = $this->frm->getField('fax')->getValue();
 				$item['email'] = $this->frm->getField('email')->getValue();
-				$item['site'] = $this->frm->getField('site')->getValue();
+				$item['website'] = $this->frm->getField('website')->getValue();
 				$item['hidden'] = $this->frm->getField('hidden')->getValue();
 
 				// create array item with all brands in
@@ -166,10 +183,10 @@ class BackendDealerEdit extends BackendBaseActionEdit
 					// delete old avatar if it isn't the default-image
 					if($this->frm->getField('avatar') != 'no-avatar.jpg')
 					{
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/source/' . $this->record['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/128x128/' . $this->record['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/64x64/' . $this->record['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/32x32/' . $this->record['avatar']);
+						SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/avatars/source/' . $this->record['avatar']);
+						SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/avatars/128x128/' . $this->record['avatar']);
+						SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/avatars/64x64/' . $this->record['avatar']);
+						SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/avatars/32x32/' . $this->record['avatar']);
 					}
 
 					// create new filename
@@ -179,13 +196,13 @@ class BackendDealerEdit extends BackendBaseActionEdit
 					$item['avatar'] = $filename;
 
 					// resize (128x128)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/128x128/' . $filename, 128, 128, true, false, 100);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/avatars/128x128/' . $filename, 128, 128, true, false, 100);
 
 					// resize (64x64)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/64x64/' . $filename, 64, 64, true, false, 100);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/avatars/64x64/' . $filename, 64, 64, true, false, 100);
 
 					// resize (32x32)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/frontend_dealer/avatars/32x32/' . $filename, 32, 32, true, false, 100);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/avatars/32x32/' . $filename, 32, 32, true, false, 100);
 				}
 
 				// geocode address
@@ -207,4 +224,3 @@ class BackendDealerEdit extends BackendBaseActionEdit
 		}
 	}
 }
-

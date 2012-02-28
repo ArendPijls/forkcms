@@ -1,11 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Display a form to create a new brand.
  *
  * @author Arend Pijls <arend.pijls@netlash.com>
  */
-
 class BackendDealerAddBrands extends BackendBaseActionAdd
 {
 	public function execute()
