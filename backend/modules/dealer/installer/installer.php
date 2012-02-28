@@ -54,20 +54,29 @@ class DealerInstaller extends ModuleInstaller
 		$this->setNavigation($navigationModulesId, 'Dealer', 'dealer/settings');
 
 		// create directory for the original files
-		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/dealer/');
 
 		// create directory + folder for the dealer avatars
-		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/avatars/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/banners/avatars/');
-		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/avatars/128x128/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/avatars/avatars/128x128/');
-		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/avatars/32x32/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/avatars/avatars/32x32/');
-		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/avatars/64x64/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/avatars/avatars/64x64/');
-		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/avatars/source/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/avatars/avatars/source/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/avatars/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/banners/avatars/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/avatars/16x16/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/dealer/avatars/16x16/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/avatars/24x24/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/dealer/avatars/24x24/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/avatars/32x32/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/dealer/avatars/32x32/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/avatars/64x64/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/dealer/avatars/64x64/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/avatars/128x128/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/dealer/avatars/128x128/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/avatars/256x256/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/dealer/avatars/256x256/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/avatars/source/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/dealer/avatars/source/');
 
 		// create directory + folder for the brand images
-		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/brands/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/brands/');
-		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/brands/128x128/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/brands/128x128/');
-		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/brands/32x32/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/brands/32x32/');
-		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/brands/64x64/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/brands/64x64/');
-		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/frontend_dealer/brands/source/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/frontend_dealer/brands/source/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/brands/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/dealer/brands/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/brands/16x16/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/dealer/brands/16x16/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/brands/24x24/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/dealer/brands/24x24/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/brands/32x32/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/dealer/brands/32x32/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/brands/64x64/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/dealer/brands/64x64/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/brands/128x128/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/dealer/brands/128x128/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/brands/256x256/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/dealer/brands/256x256/');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/brands/source/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/dealer/brands/source/');
+
+		// add extra's
+		$this->insertExtra('dealer', 'block', 'Dealer', null, 'a:1:{s:3:"url";s:37:"/private/nl/dealer/index?token=true";}', 'N');
 	}
 }
