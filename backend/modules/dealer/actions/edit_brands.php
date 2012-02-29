@@ -71,6 +71,12 @@ class BackendDealerEditBrands extends BackendBaseActionEdit
 		// create elements
 		$this->frm->addText('name', $this->record['name'], 255, 'inputText title', 'inputTextError, title');
 		$this->frm->addImage('image');
+
+		// meta object
+		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'name', true);
+
+		// set callback for generating a unique URL
+		$this->meta->setUrlCallback('BackendBlogModel', 'getURL', array($this->record['id']));
 	}
 
 	/**
@@ -81,6 +87,15 @@ class BackendDealerEditBrands extends BackendBaseActionEdit
 		// call parent
 		parent::parse();
 
+		// get url
+		$url = BackendModel::getURLForBlock($this->URL->getModule(), 'brand');
+		$url404 = BackendModel::getURL(404);
+
+		// parse additional variables
+		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
+
+		// fetch proper slug
+		$this->record['url'] = $this->meta->getURL();
 		// assign fields
 		$this->tpl->assign('item', $this->record);
 	}
@@ -123,10 +138,10 @@ class BackendDealerEditBrands extends BackendBaseActionEdit
 					// delete old image if it isn't the default-image
 					if($this->frm->getField('image') != 'no-image.jpg')
 					{
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/source/' . $this->record['image']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/128x128/' . $this->record['image']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/64x64/' . $this->record['image']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/32x32/' . $this->record['image']);
+						SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/brands/source/' . $this->record['image']);
+						SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/brands/128x128/' . $this->record['image']);
+						SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/brands/64x64/' . $this->record['image']);
+						SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/brands/32x32/' . $this->record['image']);
 					}
 
 					// create new filename
@@ -136,13 +151,13 @@ class BackendDealerEditBrands extends BackendBaseActionEdit
 					$item['image'] = $filename;
 
 					// resize (128x128)
-					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/frontend_dealer/brands/128x128/' . $filename, 128, 128, true, false, 100);
+					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/brands/128x128/' . $filename, 128, 128, true, false, 100);
 
 					// resize (64x64)
-					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/frontend_dealer/brands/64x64/' . $filename, 64, 64, true, false, 100);
+					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/brands/64x64/' . $filename, 64, 64, true, false, 100);
 
 					// resize (32x32)
-					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/frontend_dealer/brands/32x32/' . $filename, 32, 32, true, false, 100);
+					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/brands/32x32/' . $filename, 32, 32, true, false, 100);
 				}
 
 				// update the dealer

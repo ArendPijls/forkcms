@@ -248,6 +248,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 
 		// assign category
 		if($this->categoryId !== null) $this->tpl->assign('categoryId', $this->categoryId);
+
+		spoon::dump( SITE_URL . $url);
 	}
 
 	/**

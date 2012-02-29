@@ -62,7 +62,7 @@ class FrontendDealerIndex extends FrontendBaseBlock
 
 		// create elements
 		$this->frm->addText('area');
-		$this->frm->addDropdown('country', array('AROUND' => FL::lbl('TheClosestTo', $this->getModule()), 'BE' => FL::lbl('InBelgium', $this->getModule()), 'NL' => FL::lbl('InNetherlands', $this->getModule()), 'FR' => FL::lbl('InFrance', $this->getModule())));
+		$this->frm->addDropdown('country', array('AROUND' => FL::lbl('TheClosestTo'), 'BE' => FL::lbl('InBelgium'), 'NL' => FL::lbl('InNetherlands'), 'FR' => FL::lbl('InFrance')));
 	}
 
 	/**

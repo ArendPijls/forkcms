@@ -99,8 +99,8 @@
 							{$txtEmail} {$txtEmailError}
 						</p>
 						<p>
-							<label for="site">{$lblSite|ucfirst}</label>
-							{$txtSite} {$txtSiteError}
+							<label for="website">{$lblWebsite|ucfirst}</label>
+							{$txtWebsite} {$txtWebsiteError}
 						</p>
 					</div>
 				</div>
@@ -129,19 +129,8 @@
 
 	
 	<div class="fullwidthOptions">
-		{option:showDealerDelete}
-		<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
-			<span>{$lblDelete|ucfirst}</span>
-		</a>
-		<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
-			<p>
-				{$msgConfirmDelete|sprintf:{$item.name}}
-			</p>
-		</div>
-		{/option:showDealerDelete}
-
 		<div class="buttonHolderRight">
-			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblPublish|ucfirst}" />
+			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblPublish|ucfirst}" />
 		</div>
 	</div>
 {/form:add}

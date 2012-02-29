@@ -82,6 +82,9 @@ class BackendDealerAdd extends BackendBaseActionAdd
 		$this->frm->addText('email');
 		$this->frm->addText('website');
 		$this->frm->addImage('avatar');
+
+		// meta
+		$this->meta = new BackendMeta($this->frm, null, 'name', true);
 	}
 
 	/**
@@ -119,10 +122,14 @@ class BackendDealerAdd extends BackendBaseActionAdd
 				}
 			}
 
+			// validate meta
+			$this->meta->validate();
+
 			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
+				$item['meta_id'] = $this->meta->save();
 				$item['name'] = $this->frm->getField('name')->getValue();
 				$item['street'] = $this->frm->getField('street')->getValue();
 				$item['number'] = $this->frm->getField('number')->getValue();
@@ -147,20 +154,17 @@ class BackendDealerAdd extends BackendBaseActionAdd
 				// has the user submitted an avatar?
 				if($this->frm->getField('avatar')->isFilled())
 				{
-					// create new filename
-					$filename = rand(0,1000) . '_' . SpoonFilter::urlise($item['name']) . '.' . $this->frm->getField('avatar')->getExtension();
-
 					// add into items to update
-					$item['avatar'] = $filename;
+					$item['avatar'] = $this->meta->getURL() . '.' . $this->frm->getField('avatar')->getExtension();
 
 					// resize (128x128)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/avatars/128x128/' . $filename, 128, 128, true, false, 100);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/avatars/128x128/' . $this->meta->getURL() . '.' . $this->frm->getField('avatar')->getExtension(), 128, 128, true, false, 100);
 
 					// resize (64x64)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/avatars/64x64/' . $filename, 64, 64, true, false, 100);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/avatars/64x64/' . $this->meta->getURL() . '.' . $this->frm->getField('avatar')->getExtension(), 64, 64, true, false, 100);
 
 					// resize (32x32)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/avatars/32x32/' . $filename, 32, 32, true, false, 100);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/avatars/32x32/' . $this->meta->getURL() . '.' . $this->frm->getField('avatar')->getExtension(), 32, 32, true, false, 100);
 				}
 
 				// geocode address

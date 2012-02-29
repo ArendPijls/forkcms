@@ -15,20 +15,43 @@
 class FrontendDealerModel
 {
 	/**
-	 * Get the visible dealers with the given ID.
+	 * Get an dealer locator
 	 *
-	 * @param int $id The id of the item to fetch.
+	 * @param string $URL The URL for the item.
 	 * @return array
 	 */
-	public static function get($id)
+	public static function get($URL)
 	{
-		return (array) FrontendModel::getDB()->getRecord(
-			'SELECT *
-			 FROM dealer
-			 WHERE id = ? AND hidden = ?
+		$return = (array) FrontendModel::getDB()->getRecord(
+			'SELECT i.*,
+			 m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
+			 m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
+			 m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
+			 m.url,
+			 m.data AS meta_data
+			 FROM dealer AS i
+			 INNER JOIN meta AS m ON i.meta_id = m.id
+			 WHERE i.language = ? AND i.hidden = ? AND m.url = ?
 			 LIMIT 1',
-			array((int) $id, 'N')
+			array(FRONTEND_LANGUAGE, 'N', (string) $URL)
 		);
+
+		// unserialize
+		if(isset($return['meta_data'])) $return['meta_data'] = @unserialize($return['meta_data']);
+
+		// init url
+		$linkPlace = FrontendNavigation::getURLForBlock('dealer', 'place');
+		$return['full_url'] = $linkPlace . '/' . $return['url'];
+
+		// add brands
+		$brands = FrontendDealerModel::getDealerBrands($return['id']);;
+		foreach($brands as $brand)
+		{
+			$return['brandInfo'][] = FrontendDealerModel::getBrand($brand['brand_id']);
+		}
+
+		// return
+		return $return;
 	}
 
 	/**
@@ -89,18 +112,19 @@ class FrontendDealerModel
 
 		// show only selected brands
 		$sqlBrands = "";
-		if(!empty($brands)) $sqlBrands = 'AND di.brand_id IN (' . implode(',', $brands) . ')';
+		if(!empty($brands)) $sqlBrands = ' AND di.brand_id IN (' . implode(',', $brands) . ')';
 
 		// set db records in temp arr
 		$tempArr = (array) FrontendModel::getDB()->GetRecords(
 				'SELECT *, d.name as name
-				FROM dealer AS d
-				INNER JOIN dealer_index AS di ON di.dealer_id = d.id
-				INNER JOIN dealer_brands AS b ON di.brand_id = b.id
-				WHERE d.language = ? AND d.lat > ? AND d.lat < ? AND d.lng > ? AND d.lng < ? AND d.hidden = ? ' . $sqlCountry . ' ' . $sqlBrands . '
-				GROUP BY dealer_id
-				ORDER BY ABS(d.lat - ?) + ABS(d.lng - ?) ASC
-				LIMIT ?',
+				 FROM dealer AS d
+				 INNER JOIN dealer_index AS di ON di.dealer_id = d.id
+				 INNER JOIN dealer_brands AS b ON di.brand_id = b.id
+				 INNER JOIN meta AS m ON d.meta_id = m.id
+				 WHERE d.language = ? AND d.lat > ? AND d.lat < ? AND d.lng > ? AND d.lng < ? AND d.hidden = ? ' . $sqlCountry . ' ' . $sqlBrands . '
+				 GROUP BY dealer_id
+				 ORDER BY ABS(d.lat - ?) + ABS(d.lng - ?) ASC
+				 LIMIT ?',
 				array(FRONTEND_LANGUAGE, $minLat, $maxLat, $minLng, $maxLng, 'N', (float) $lat, (float) $lng, (int) $limit)
 		);
 
@@ -108,7 +132,11 @@ class FrontendDealerModel
 		$dealers = array();
 		for($i=0; $i < count($tempArr); $i++)
 		{
+			// init url
 			$dealers[$i] = $tempArr[$i];
+			$linkLocator = FrontendNavigation::getURLForBlock('dealer', 'locator');
+			$dealers[$i]['full_url'] = $linkLocator . '/' . $dealers[$i]['url'];
+
 			$brands = FrontendDealerModel::getDealerBrands($dealers[$i]['dealer_id']);;
 			foreach($brands as $brand)
 			{
@@ -141,14 +169,21 @@ class FrontendDealerModel
 	 */
 	public static function getBrand($id)
 	{
-		return (array) FrontendModel::getDB()->getRecord(
+		$items = (array) FrontendModel::getDB()->getRecord(
 			'SELECT *
 			 FROM dealer_brands
 			 WHERE id = ?
 			 LIMIT 1',
 			array((int) $id)
 		);
+
+		$linkBrand = FrontendNavigation::getURLForBlock('dealer', 'brand');
+		$items['full_url'] = $linkBrand . '/' . $items['name'];
+
+		// return
+		return $items;
 	}
+
 	/**
 	 * Get all data for the brand with the given ID.
 	 *
