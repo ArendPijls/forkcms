@@ -164,6 +164,14 @@
         <translation language="en"><![CDATA[find dealer]]></translation>
         <translation language="nl"><![CDATA[vind verdeler]]></translation>
       </item>
+      <item type="action" name="Locator">
+        <translation language="en"><![CDATA[locator]]></translation>
+        <translation language="nl"><![CDATA[verdeler]]></translation>
+      </item>
+      <item type="action" name="Brand">
+        <translation language="en"><![CDATA[brand]]></translation>
+        <translation language="nl"><![CDATA[merk]]></translation>
+      </item>
     </core>
   </frontend>
 </locale>

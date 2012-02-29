@@ -76,7 +76,7 @@ class BackendDealerEditBrands extends BackendBaseActionEdit
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'name', true);
 
 		// set callback for generating a unique URL
-		$this->meta->setUrlCallback('BackendBlogModel', 'getURL', array($this->record['id']));
+		$this->meta->setUrlCallback('BackendDealerModel', 'getURL', array($this->record['id']));
 	}
 
 	/**
@@ -131,6 +131,7 @@ class BackendDealerEditBrands extends BackendBaseActionEdit
 				// build item
 				$item['id'] = $this->id;
 				$item['name'] = $this->frm->getField('name')->getValue();
+				$item['meta_id'] = $this->meta->save();
 
 				// has the user submitted an image?
 				if($this->frm->getField('image')->isFilled())

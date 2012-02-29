@@ -153,8 +153,10 @@
 				            	{iteration:dealerItem.brandInfo}
 				            		{option:dealerItem.brandInfo.name}
 				               			<li>
-				               			<img src="{$FRONTEND_FILES_URL}/dealer/brands/32x32/{$dealerItem.brandInfo.image}" width="32" height="32" alt="" style="float:left; margin: 5px;" />
-				               			{$dealerItem.brandInfo.name}
+					               			<a href="{$dealerItem.brandInfo.full_url}">
+						               			<img src="{$FRONTEND_FILES_URL}/dealer/brands/32x32/{$dealerItem.brandInfo.image}" width="32" height="32" border="0" alt="" style="float:left; margin: 5px;" />
+						               			{$dealerItem.brandInfo.name}
+					               			</a>
 				               			</li>
 				               		{/option:dealerItem.brandInfo.name}
 				            	{/iteration:dealerItem.brandInfo}

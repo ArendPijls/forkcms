@@ -1,41 +1,8 @@
-{*
-	variables that are available:
-	- {$dealerItems}: contains data about all dealers
-	- {$dealerHeadingText|sprintf:{$numDealers}}
-	- {$dealerErrorNoDealers}
-	- {$lblBrands}
-	- {$lblCityOrZip|ucfirst} {$lblTel|ucfirst} {$lblFax|ucfirst} {$lblAddress|ucfirst} {$lblNumber|ucfirst} {$lblSite|ucfirst}
-	- {$lblRequiredField}
-	- {$lblFindDealer|ucfirst}
-	- {$msgDealerNoItems}
-	- {$msgViewOnMap}
-	- {$msgViewOnBigMap}
-*}
-{form:searchForm}
-	<div class="alignBlocks">
-		<p {option:txtAreaError}class="errorArea"{/option:txtAreaError}>
-			<label for="area">{$lblCityOrZip|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-			{$txtArea} {$txtAreaError}
-		</p>
-	</div>
-	<div>
-		<p>
-			{$ddmCountry}
-		</p>
-	</div>
-	<div>
-		{option:type}
-			<ul>
-				{iteration:type}<li>{$type.chkType|ucfirst} <label for="{$type.id}">{$type.label|ucfirst}</label></li>{/iteration:type}
-			</ul>
-		{/option:type}
-	</div>
-	<p>
-		<input class="inputSubmit" type="submit" name="Search" value="{$lblFindDealer|ucfirst}" />
-	</p>
-{/form:searchForm}
 
-{option:dealerErrorNoDealers}{$msgDealerNoItems}{/option:dealerErrorNoDealers}
+{option:brandItem}
+<h3>{$brandItem.name}</h3>
+<img src="{$FRONTEND_FILES_URL}/dealer/brands/128x128/{$brandItem.image}" width="128" height="128" alt="" />
+{/option:brandItem}
 
 {option:dealerItems}
 	<h2>{$dealerHeadingText|sprintf:{$numDealers}}</h2>
@@ -66,13 +33,7 @@
 			{option:dealerItems.site}
 				{$lblSite}: {$dealerItems.site} <br>
 			{/option:dealerItems.site}
-			
-			<strong>{$lblBrands}</strong> <br>
-        	{iteration:dealerItems.brandInfo}
-        		{option:dealerItems.brandInfo.name}
-           			{$dealerItems.brandInfo.name}, 
-           		{/option:dealerItems.brandInfo.name}
-        	{/iteration:dealerItems.brandInfo}
+
         	<a href="http://maps.google.com/?q={$dealerItems.street|urlencode}+{$dealerItems.number|urlencode}+{$dealerItems.zip|urlencode}+{$dealerItems.city|urlencode}" target="_blank">{$msgViewOnBigMap}</a>
 		</div>
 	{/iteration:dealerItems}
@@ -190,22 +151,6 @@
 						{option:dealerItems.site}
 							{$lblSite|ucfirst}: {$dealerItems.site} <br>
 						{/option:dealerItems.site}
-					</div>
-					<div style="width:400px; float:left;">
-						<strong>{$lblBrands}</strong> <br>
-				        	 <ul>
-				            	{iteration:dealerItems.brandInfo}
-				            		{option:dealerItems.brandInfo.name}
-				               			<li>
-				               			<a href="{$dealerItems.brandInfo.full_url}">
-					               			<img src="{$FRONTEND_FILES_URL}/dealer/brands/32x32/{$dealerItems.brandInfo.image}" width="32" height="32" border="0" alt="" style="float:left; margin: 5px;" />
-					               			{$dealerItems.brandInfo.name}
-				               			</a>
-				               			</li>
-				               		{/option:dealerItems.brandInfo.name}
-				            	{/iteration:dealerItems.brandInfo}
-				        	 </ul>
-						</ul>
 					</div>
 				</div>
 			</div>

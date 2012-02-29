@@ -177,6 +177,9 @@ class BackendDealerAdd extends BackendBaseActionAdd
 				$item['id'] = BackendDealerModel::insertDealer($item);
 				BackendDealerModel::updateBrandsForDealer($item['id'], $values);
 
+				// add search index
+				BackendSearchModel::saveIndex($this->getModule(), $item['id'], array('title' => $item['name'], 'text' => $item['name']));
+
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
 

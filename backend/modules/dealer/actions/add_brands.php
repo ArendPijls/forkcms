@@ -42,6 +42,9 @@ class BackendDealerAddBrands extends BackendBaseActionAdd
 		// create elements
 		$this->frm->addText('name', null, 255, 'inputText title', 'inputTextError, title');
 		$this->frm->addImage('image');
+
+		// meta
+		$this->meta = new BackendMeta($this->frm, null, 'name', true);
 	}
 
 	/**
@@ -73,6 +76,7 @@ class BackendDealerAddBrands extends BackendBaseActionAdd
 			if($this->frm->isCorrect())
 			{
 				// build item
+				$item['meta_id'] = $this->meta->save();
 				$item['name'] = $this->frm->getField('name')->getValue();
 				$item['language'] = BackendLanguage::getWorkingLanguage();
 

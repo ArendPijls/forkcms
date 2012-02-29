@@ -108,7 +108,7 @@ class BackendDealerEdit extends BackendBaseActionEdit
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'name', true);
 
 		// set callback for generating a unique URL
-		$this->meta->setUrlCallback('BackendBlogModel', 'getURL', array($this->record['id']));
+		$this->meta->setUrlCallback('BackendDealerModel', 'getURL', array($this->record['id']));
 	}
 
 	/**
@@ -229,7 +229,10 @@ class BackendDealerEdit extends BackendBaseActionEdit
 
 				// update the dealer
 				BackendDealerModel::updateDealer($item);
-				BackendDealerModel::updateBrandsForDealer($this->id, $values);
+				BackendDealerModel::updateBrandsForDealer($item['id'], $values);
+
+				// edit search index
+				BackendSearchModel::saveIndex($this->getModule(), $item['id'], array('title' => $item['name'], 'text' => $item['name']));
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
