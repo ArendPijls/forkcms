@@ -96,6 +96,10 @@
         <translation language="en"><![CDATA[only numbers]]></translation>
         <translation language="nl"><![CDATA[alleen getallen]]></translation>
       </item>
+      <item type="error" name="NoValidEmail">
+        <translation language="nl"><![CDATA[Geen geldige email]]></translation>
+        <translation language="en"><![CDATA[No valid email]]></translation>
+      </item>
     </dealer>
   </backend>
   <frontend>

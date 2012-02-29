@@ -22,8 +22,7 @@ class BackendDealerModel
 	const QRY_BROWSE =
 		'SELECT id, name, avatar, CONCAT(street, " ", number, ", ", zip, " ", city, ", ", country) AS address
 	     FROM dealer
-	     WHERE language = ?
-	     ORDER BY sequence';
+	     WHERE language = ?';
 
 	/**
 	 * Overview of the brands.
@@ -51,10 +50,10 @@ class BackendDealerModel
 		);
 
 		// delete brand images
-		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/source/' . $imageFilname);
-		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/128x128/' . $imageFilname);
-		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/64x64/' . $imageFilname);
-		SpoonFile::delete(FRONTEND_FILES_PATH . '/frontend_dealer/brands/32x32/' . $imageFilname);
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/brands/source/' . $imageFilname);
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/brands/128x128/' . $imageFilname);
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/brands/64x64/' . $imageFilname);
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/brands/32x32/' . $imageFilname);
 
 		// delete brand
 		BackendModel::getDB(true)->delete('dealer_brands', 'id = ?', array((int) $id));
@@ -158,9 +157,10 @@ class BackendDealerModel
 	public static function getDealer($id)
 	{
 		return (array) BackendModel::getDB()->getRecord(
-			'SELECT *
-			 FROM dealer
-			 WHERE id = ?
+			'SELECT i.*, m.url
+			 FROM dealer AS i
+			 INNER JOIN meta AS m ON m.id = i.meta_id
+			 WHERE i.id = ?
 			 LIMIT 1',
 			array((int) $id)
 		);
@@ -183,16 +183,60 @@ class BackendDealerModel
 	}
 
 	/**
-	 * Get the max sequence id for a dealer locater
+	 * Retrieve the unique URL for an item
 	 *
-	 * @return int
+	 * @param string $URL The URL to base on.
+	 * @param int[optional] $id The id of the item to ignore.
+	 * @return string
 	 */
-	public static function getMaximumSequence()
+	public static function getURL($URL, $id = null)
 	{
-		return (int) BackendModel::getDB()->getVar(
-			'SELECT MAX(sequence)
-			 FROM dealer'
-		);
+		$URL = (string) $URL;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// new item
+		if($id === null)
+		{
+			// get number of categories with this URL
+			$number = (int) $db->getVar(
+					'SELECT COUNT(i.id)
+					FROM dealer AS i
+					INNER JOIN meta AS m ON i.meta_id = m.id
+					WHERE i.language = ? AND m.url = ?',
+					array(BL::getWorkingLanguage(), $URL)
+			);
+
+			// already exists
+			if($number != 0)
+			{
+				$URL = BackendModel::addNumber($URL);
+				return self::getURL($URL);
+			}
+		}
+
+		// current category should be excluded
+		else
+		{
+			// get number of items with this URL
+			$number = (int) $db->getVar(
+					'SELECT COUNT(i.id)
+					FROM dealer AS i
+					INNER JOIN meta AS m ON i.meta_id = m.id
+					WHERE i.language = ? AND m.url = ? AND i.id != ?',
+					array(BL::getWorkingLanguage(), $URL, $id)
+			);
+
+			// already exists
+			if($number != 0)
+			{
+				$URL = BackendModel::addNumber($URL);
+				return self::getURL($URL, $id);
+			}
+		}
+
+		return $URL;
 	}
 
 	/**

@@ -10,23 +10,28 @@
 		<label for="title">{$lblName|ucfirst}</label>
 		{$txtName} {$txtNameError}
 	</p>
-	
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblImage|ucfirst}</h3>
-		</div>
+	<div class="tabs">
+		<ul>
+			<li><a href="#tabContent">{$lblImage|ucfirst}</a></li>
+			<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
+		</ul>
 
-		<div class="options">
-			<p>
-				{option:item.image}
-					<img src="{$FRONTEND_FILES_URL}/frontend_dealer/brands/128x128/{$item.image}" width="128" height="128" alt="" />
-				{/option:item.image}
-			</p>
-			<p>
-				<label for="image">{$lblImage|ucfirst}</label>
-				{$fileImage} {$fileImageError}
-				<span class="helpTxt">{$msgHelpAvatar}</span>
-			</p>
+		<div id="tabContent">
+			<div class="options">
+				<p>
+					{option:item.image}
+						<img src="{$FRONTEND_FILES_URL}/dealer/brands/128x128/{$item.image}" width="128" height="128" alt="" />
+					{/option:item.image}
+				</p>
+				<p>
+					<label for="image">{$lblImage|ucfirst}</label>
+					{$fileImage} {$fileImageError}
+					<span class="helpTxt">{$msgHelpAvatar}</span>
+				</p>
+			</div>
+		</div>	
+		<div id="tabSEO">
+			{include:{$BACKEND_CORE_PATH}/layout/templates/seo.tpl}
 		</div>
 	</div>
 	{option:showDealerDelete}

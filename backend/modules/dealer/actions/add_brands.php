@@ -86,13 +86,13 @@ class BackendDealerAddBrands extends BackendBaseActionAdd
 					$item['image'] = $filename;
 
 					// resize (128x128)
-					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/frontend_dealer/brands/128x128/' . $filename, 128, 128, true, false, 100);
+					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/brands/128x128/' . $filename, 128, 128, true, false, 100);
 
 					// resize (64x64)
-					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/frontend_dealer/brands/64x64/' . $filename, 64, 64, true, false, 100);
+					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/brands/64x64/' . $filename, 64, 64, true, false, 100);
 
 					// resize (32x32)
-					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/frontend_dealer/brands/32x32/' . $filename, 32, 32, true, false, 100);
+					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/brands/32x32/' . $filename, 32, 32, true, false, 100);
 				}
 
 				// insert the item

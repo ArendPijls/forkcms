@@ -70,19 +70,19 @@ class BackendDealerEdit extends BackendBaseActionEdit
 		$rbtHiddenValues[] = array('label' => BL::lbl('Hidden'), 'value' => 'Y');
 		$rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
 
-		// init some vars
-		$checked = array();
-		$brandIds = array();
-
-		// get brand ids and put them in an array
-		foreach($this->brands as $value)
-		{
-			$brandIds[] = array('label' => $value['name'], 'value' => $value['id']);
-		}
-
 		// check if dealers has brands
-		if(!empty($this->dealerBrands))
+		if(!empty($this->brands))
 		{
+			// init some vars
+			$checked = array();
+			$brandIds = array();
+
+			// get brand ids and put them in an array
+			foreach($this->brands as $value)
+			{
+				$brandIds[] = array('label' => $value['name'], 'value' => $value['id']);
+			}
+
 			foreach($this->dealerBrands as $value)
 			{
 				$checked[] = $value['brand_id'];
@@ -103,6 +103,12 @@ class BackendDealerEdit extends BackendBaseActionEdit
 		$this->frm->addText('email', $this->record['email']);
 		$this->frm->addText('website', $this->record['website']);
 		$this->frm->addImage('avatar');
+
+		// meta object
+		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'name', true);
+
+		// set callback for generating a unique URL
+		$this->meta->setUrlCallback('BackendBlogModel', 'getURL', array($this->record['id']));
 	}
 
 	/**
@@ -110,10 +116,19 @@ class BackendDealerEdit extends BackendBaseActionEdit
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
-		// assign fields
+		// get url
+		$url = BackendModel::getURLForBlock($this->URL->getModule(), 'locator');
+		$url404 = BackendModel::getURL(404);
+
+		// parse additional variables
+		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
+
+		// fetch proper slug
+		$this->record['url'] = $this->meta->getURL();
+
+		// assign the active record and additional variables
 		$this->tpl->assign('item', $this->record);
 	}
 
@@ -158,6 +173,7 @@ class BackendDealerEdit extends BackendBaseActionEdit
 				// build item
 				$item['id'] = $this->id;
 				$item['name'] = $this->frm->getField('name')->getValue();
+				$item['meta_id'] = $this->meta->save();
 				$item['street'] = $this->frm->getField('street')->getValue();
 				$item['number'] = $this->frm->getField('number')->getValue();
 				$item['zip'] = $this->frm->getField('zip')->getValue();

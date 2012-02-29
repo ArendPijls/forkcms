@@ -45,7 +45,7 @@
 	{iteration:dealerItems}
 		<div id="markerText{$dealerItems.dealer_id}" style="display:none;">	
 			{option:dealerItems.avatar}
-				<img src="{$FRONTEND_FILES_URL}/frontend_dealer/avatars/64x64/{$dealerItems.avatar}" width="64" height="64" alt="" style="float:right; margin: 5px;" />
+				<img src="{$FRONTEND_FILES_URL}/dealer/avatars/64x64/{$dealerItems.avatar}" width="64" height="64" alt="" style="float:right; margin: 5px;" />
 			{/option:dealerItems.avatar}
 										
 			{$dealerItems.street} {$dealerItems.number}<br>
@@ -165,9 +165,9 @@
 		{iteration:dealerItems}
 			<div style="width:900px; height:180px;">
 				<div class="inner">
-					<h4>{$dealerItems.name}</h4>
+					<h4><a href="{$dealerItems.full_url}">{$dealerItems.name}</a></h4>
 					{option:dealerItems.avatar}
-						<img src="{$FRONTEND_FILES_URL}/frontend_dealer/avatars/128x128/{$dealerItems.avatar}" width="128" height="128" alt="" style="float:left; margin: 5px;" />
+						<img src="{$FRONTEND_FILES_URL}/dealer/avatars/128x128/{$dealerItems.avatar}" width="128" height="128" alt="" style="float:left; margin: 5px;" />
 					{/option:dealerItems.avatar}
 					<a href="#" onClick="openMarker({$dealerItems.dealer_id}, '{$dealerItems.name}', $('#markerText' + {$dealerItems.dealer_id}).html());">{$msgViewOnMap}</a> <br>
 					<a href="http://maps.google.com/?q={$dealerItems.street|urlencode}+{$dealerItems.number|urlencode}+{$dealerItems.zip|urlencode}+{$dealerItems.city|urlencode}" target="_blank">{$msgViewOnBigMap}</a>
@@ -197,7 +197,7 @@
 				            	{iteration:dealerItems.brandInfo}
 				            		{option:dealerItems.brandInfo.name}
 				               			<li>
-				               			<img src="{$FRONTEND_FILES_URL}/frontend_dealer/brands/32x32/{$dealerItems.brandInfo.image}" width="32" height="32" alt="" style="float:left; margin: 5px;" />
+				               			<img src="{$FRONTEND_FILES_URL}/dealer/brands/32x32/{$dealerItems.brandInfo.image}" width="32" height="32" alt="" style="float:left; margin: 5px;" />
 				               			{$dealerItems.brandInfo.name}
 				               			</li>
 				               		{/option:dealerItems.brandInfo.name}
