@@ -40,8 +40,8 @@ class FrontendDealerBrand extends FrontendBaseBlock
 		// anything found?
 		if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
 
-		// get all dealers bi brand id
-		$this->dealers = FrontendDealerModel::getDealerBrands($this->record['id']);
+		// get all dealers with brand id
+		$this->dealers = FrontendDealerModel::getBrandDealers($this->record['id']);
 	}
 
 	/**

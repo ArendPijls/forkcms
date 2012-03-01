@@ -157,14 +157,16 @@ class BackendDealerAdd extends BackendBaseActionAdd
 					// add into items to update
 					$item['avatar'] = $this->meta->getURL() . '.' . $this->frm->getField('avatar')->getExtension();
 
-					// resize (128x128)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/avatars/128x128/' . $this->meta->getURL() . '.' . $this->frm->getField('avatar')->getExtension(), 128, 128, true, false, 100);
-
-					// resize (64x64)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/avatars/64x64/' . $this->meta->getURL() . '.' . $this->frm->getField('avatar')->getExtension(), 64, 64, true, false, 100);
-
-					// resize (32x32)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/avatars/32x32/' . $this->meta->getURL() . '.' . $this->frm->getField('avatar')->getExtension(), 32, 32, true, false, 100);
+					// loop upload directory
+					foreach(SpoonDirectory::getList(FRONTEND_FILES_PATH . '/dealer/avatars/') as $value)
+					{
+						if($value !== 'source')
+						{
+							list( $width , $height ) = split('x', $value);
+							// resize avatar
+							$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/avatars/' . $width . 'x' . $height . '/' . $this->meta->getURL() . '.' . $this->frm->getField('avatar')->getExtension(), $width, $height, true, false, 100);
+						}
+					}
 				}
 
 				// geocode address

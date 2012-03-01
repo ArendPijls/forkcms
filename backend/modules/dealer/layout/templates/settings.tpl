@@ -60,6 +60,36 @@
 		</div>
 	</div>
 	
+	<div class="box horizontal">
+		<div class="heading">
+			<h3>{$lblIndividualMap|ucfirst}</h3>
+		</div>
+		<div class="options">
+			<p>
+				<label for="zoomLevelWidget">{$lblZoomLevel|ucfirst}</label>
+				{$ddmZoomLevelWidget} {$ddmZoomLevelWidgetError}
+			</p>
+		</div>
+		<div class="options">
+			<p>
+				<label for="widthWidget">{$lblWidth|ucfirst}</label>
+				{$txtWidthWidget} {$txtWidthWidgetError}
+			</p>
+		</div>
+		<div class="options">
+			<p>
+				<label for="heightWidget">{$lblHeight|ucfirst}</label>
+				{$txtHeightWidget} {$txtHeightWidgetError}
+			</p>
+		</div>
+		<div class="options">
+			<p>
+				<label for="mapTypeWidget">{$lblMapType|ucfirst}</label>
+				{$ddmMapTypeWidget} {$ddmMapTypeWidgetError}
+			</p>
+		</div>
+	</div>
+	
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
 			<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />

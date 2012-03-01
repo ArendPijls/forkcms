@@ -40,6 +40,12 @@ class DealerInstaller extends ModuleInstaller
 		$this->setSetting('dealer', 'limit', 50);
 		$this->setSetting('dealer', 'units', 'KM');
 
+		// widget settings
+		$this->setSetting('location', 'zoom_level_widget', 13);
+		$this->setSetting('location', 'width_widget', 400);
+		$this->setSetting('location', 'height_widget', 300);
+		$this->setSetting('location', 'map_type_widget', 'ROADMAP');
+
 		// action rights
 		$this->setActionRights(1, 'dealer', 'add');
 		$this->setActionRights(1, 'dealer', 'delete');

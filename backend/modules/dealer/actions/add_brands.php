@@ -81,22 +81,21 @@ class BackendDealerAddBrands extends BackendBaseActionAdd
 				$item['language'] = BackendLanguage::getWorkingLanguage();
 
 				// has the user submitted an image?
-				if($this->frm->getField('image')->isFilled())
+				if($this->frm->getField('avatar')->isFilled())
 				{
-					// create new filename
-					$filename = rand(0,1000) . '_' . SpoonFilter::urlise($item['name']) . '.' . $this->frm->getField('image')->getExtension();
+					// add into items to update
+					$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
 
-					// add into settings to update
-					$item['image'] = $filename;
-
-					// resize (128x128)
-					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/brands/128x128/' . $filename, 128, 128, true, false, 100);
-
-					// resize (64x64)
-					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/brands/64x64/' . $filename, 64, 64, true, false, 100);
-
-					// resize (32x32)
-					$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/brands/32x32/' . $filename, 32, 32, true, false, 100);
+					// loop upload directory
+					foreach(SpoonDirectory::getList(FRONTEND_FILES_PATH . '/dealer/brands/') as $value)
+					{
+						if($value !== 'source')
+						{
+							list( $width , $height ) = split('x', $value);
+							// resize avatar
+							$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/brands/' . $width . 'x' . $height . '/' . $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension(), $width, $height, true, false, 100);
+						}
+					}
 				}
 
 				// insert the item

@@ -93,9 +93,6 @@ class FrontendDealerIndex extends FrontendBaseBlock
 			$area = $this->frm->getField('area')->getValue();
 			$country = $this->frm->getField('country')->getValue();
 
-			// ignore manipulated dropdownbox by hackers
-			if($country != "AROUND" and $country != "BE" and $country != "NL" and $country != "FR") $this->frm->addError('Eating peanuts');
-
 			// no errors?
 			if($this->frm->isCorrect())
 			{

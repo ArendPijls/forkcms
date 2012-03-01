@@ -1,6 +1,8 @@
 CREATE TABLE IF NOT EXISTS `dealer` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'The unique ID for this dealer.',
   `language` varchar(10) NOT NULL COMMENT 'The language of this dealer.',
+  `meta_id` int(11) NOT NULL COMMENT 'The meta_id for indexing.',
+  `extra_id` int(11) NOT NULL COMMENT 'The extra_id for the widgets.',
   `name` varchar(128) NOT NULL COMMENT 'The name of this dealer.',
   `street` varchar(255) NOT NULL COMMENT 'The street of this dealer.',
   `number` varchar(255) NOT NULL COMMENT 'The number of this dealer.',

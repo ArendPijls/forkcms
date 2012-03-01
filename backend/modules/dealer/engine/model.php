@@ -74,11 +74,30 @@ class BackendDealerModel
 			array((int) $id)
 		);
 
-		// delete brand images
+		// loop upload directory
+		foreach(SpoonDirectory::getList(FRONTEND_FILES_PATH . '/dealer/avatars/') as $value)
+		{
+			if($value !== 'source')
+			{
+				list( $width , $height ) = split('x', $value);
+				// delete images
+				SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/avatars/' . $width . 'x' . $height . '/' . $imageFilname);
+			}
+		}
+
+		// delete source images
 		SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/avatars/source/' . $imageFilname);
-		SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/avatars/128x128/' . $imageFilname);
-		SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/avatars/64x64/' . $imageFilname);
-		SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/avatars/32x32/' . $imageFilname);
+
+		// get extra_id of deleted dealer
+		$extraId = (string) BackendModel::getDB()->getVar(
+			'SELECT extra_id
+			 FROM dealer
+			 WHERE id = ?',
+			array((int) $id)
+		);
+
+		// delete extra
+		BackendModel::getDB(true)->delete('modules_extras', 'id = ? AND module = ? AND type = ? AND action = ?', array($extraId, 'dealer', 'widget', 'dealer'));
 
 		// delete dealer
 		BackendModel::getDB(true)->delete('dealer', 'id = ?', array((int) $id));
@@ -247,7 +266,33 @@ class BackendDealerModel
 	 */
 	public static function insertDealer(array $item)
 	{
-		return BackendModel::getDB(true)->insert('dealer', $item);
+		// build extra
+		$extra = array(
+				'module' => 'dealer',
+				'type' => 'widget',
+				'label' => 'Dealer',
+				'action' => 'dealer',
+				'data' => null,
+				'hidden' => 'N'
+		);
+
+		// insert extra
+		$item['extra_id'] = BackendModel::getDB(true)->insert('modules_extras', $extra);
+		$extra['id'] = $item['extra_id'];
+
+		// insert and return the new id
+		$item['id'] = BackendModel::getDB(true)->insert('dealer', $item);
+
+		// update extra (item id is now known)
+		$extra['data'] = serialize(array(
+				'id' => $item['id'],
+				'extra_label' => SpoonFilter::ucfirst(BL::lbl('Dealer', 'core')) . ': ' . $item['name'],
+				'language' => $item['language'],
+				'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])
+		);
+		BackendModel::getDB(true)->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+
+		return $item['id'];
 	}
 
 	/**
@@ -269,6 +314,25 @@ class BackendDealerModel
 	 */
 	public static function updateDealer(array $item)
 	{
+		// build extra
+		$extra = array(
+				'id' => $item['extra_id'],
+				'module' => 'dealer',
+				'type' => 'widget',
+				'label' => 'Dealer',
+				'action' => 'dealer',
+				'data' => serialize(array(
+						'id' => $item['id'],
+						'extra_label' => SpoonFilter::ucfirst(BL::lbl('Dealer', 'core')) . ': ' . $item['name'],
+						'language' => $item['language'],
+						'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])
+				),
+				'hidden' => 'N'
+		);
+
+		// update extra
+		BackendModel::getDB(true)->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+
 		return BackendModel::getDB(true)->update('dealer', $item, 'id = ?', array((int) $item['id']));
 	}
 
