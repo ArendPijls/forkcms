@@ -330,4 +330,33 @@ class FrontendDealerModel
 		elseif($a1['proximity'] == $a2['proximity']) return 0;
 		else return -1;
 	}
+
+	/**
+	 * Parse the search results for this module
+	 *
+	 * Note: a module's search function should always:
+	 * 		- accept an array of entry id's
+	 * 		- return only the entries that are allowed to be displayed, with their array's index being the entry's id
+	 *
+	 * @param array $ids The ids of the found results.
+	 * @return array
+	 */
+	public static function search(array $ids)
+	{
+		$items = (array) FrontendModel::getDB()->getRecords(
+				'SELECT i.id, i.name as title, i.name as text, m.url
+				FROM dealer AS i
+				INNER JOIN meta AS m ON i.meta_id = m.id
+				WHERE i.hidden = ? AND i.language = ? AND i.id IN (' . implode(',', $ids) . ')',
+				array('N', FRONTEND_LANGUAGE), 'id'
+		);
+
+		// prepare items for search
+		foreach($items as &$item)
+		{
+			$item['full_url'] = FrontendNavigation::getURLForBlock('dealer', 'locator') . '/' . $item['url'];
+		}
+
+		return $items;
+	}
 }

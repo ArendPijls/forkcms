@@ -100,6 +100,10 @@
         <translation language="nl"><![CDATA[Geen geldige email]]></translation>
         <translation language="en"><![CDATA[No valid email]]></translation>
       </item>
+      <item type="label" name="IndividualMap">
+      	<translation language="nl"><![CDATA[widget: één verdeler / map]]></translation>
+        <translation language="en"><![CDATA[widget: individual dealer / map]]></translation>
+      </item>
     </dealer>
   </backend>
   <frontend>
