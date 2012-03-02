@@ -87,6 +87,7 @@ class BackendDealerEdit extends BackendBaseActionEdit
 			{
 				$checked[] = $value['brand_id'];
 			}
+
 			// create chekcboxes
 			$this->frm->addMultiCheckbox('type', $brandIds, $checked);
 		}
@@ -174,6 +175,7 @@ class BackendDealerEdit extends BackendBaseActionEdit
 				$item['id'] = $this->id;
 				$item['name'] = $this->frm->getField('name')->getValue();
 				$item['meta_id'] = $this->meta->save();
+				$item['extra_id'] = $this->record['extra_id'];
 				$item['street'] = $this->frm->getField('street')->getValue();
 				$item['number'] = $this->frm->getField('number')->getValue();
 				$item['zip'] = $this->frm->getField('zip')->getValue();

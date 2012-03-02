@@ -298,8 +298,8 @@ class BackendDealerModel
 	/**
 	 * Add a new brand.
 	 *
-	 * @param array $item The data to insert.
-	 * @return int The ID of the newly inserted brand.
+	 * @param array $item 	The data to insert.
+	 * @return int 			The ID of the newly inserted brand.
 	 */
 	public static function insertBrand(array $item)
 	{
@@ -309,8 +309,8 @@ class BackendDealerModel
 	/**
 	 * Update an existing dealer locater.
 	 *
-	 * @param array $item The new data.
-	 * @return int
+	 * @param array $item 	The new data.
+	 * @return int			The ID of the newly updated dealer locator.
 	 */
 	public static function updateDealer(array $item)
 	{

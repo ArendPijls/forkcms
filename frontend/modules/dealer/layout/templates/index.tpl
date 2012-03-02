@@ -7,6 +7,7 @@
 	- {$lblCityOrZip|ucfirst} {$lblTel|ucfirst} {$lblFax|ucfirst} {$lblAddress|ucfirst} {$lblNumber|ucfirst} {$lblSite|ucfirst}
 	- {$lblRequiredField}
 	- {$lblFindDealer|ucfirst}
+	- {$msgSellsTheseBrands}
 	- {$msgDealerNoItems}
 	- {$msgViewOnMap}
 	- {$msgViewOnBigMap}
@@ -14,16 +15,12 @@
 {form:searchForm}
 	<div class="alignBlocks">
 		<p {option:txtAreaError}class="errorArea"{/option:txtAreaError}>
-			<label for="area">{$lblCityOrZip|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-			{$txtArea} {$txtAreaError}
+			<div><label for="area">{$lblCityOrZip|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label></div>
+			<div style="float:left;">{$txtArea} {$txtAreaError}</div>{$ddmCountry}
 		</p>
 	</div>
 	<div>
-		<p>
-			{$ddmCountry}
-		</p>
-	</div>
-	<div>
+		{$msgSellsTheseBrands|ucfirst}
 		{option:type}
 			<ul>
 				{iteration:type}<li>{$type.chkType|ucfirst} <label for="{$type.id}">{$type.label|ucfirst}</label></li>{/iteration:type}
@@ -35,10 +32,10 @@
 	</p>
 {/form:searchForm}
 
-{option:dealerErrorNoDealers}{$msgDealerNoItems}{/option:dealerErrorNoDealers}
+{option:dealerErrorNoDealers}<h3>{$msgDealerNoItems}</h3>{/option:dealerErrorNoDealers}
 
 {option:dealerItems}
-	<h2>{$dealerHeadingText|sprintf:{$numDealers}}</h2>
+	<h3>{$dealerHeadingText|sprintf:{$numDealers}}</h3>
 	<div id="map" style="height: {$dealerSettings.height}px; width: {$dealerSettings.width}px;"></div>
 
 	{* Store item text in a div because JS goes bananas with multiline HTML *}
@@ -163,17 +160,17 @@
 	</script>
 	<div id="dealerItems">
 		{iteration:dealerItems}
-			<div style="width:900px; height:180px;">
-				<div class="inner">
-					<h4><a href="{$dealerItems.full_url}">{$dealerItems.name}</a></h4>
-					{option:dealerItems.avatar}
-						<img src="{$FRONTEND_FILES_URL}/dealer/avatars/128x128/{$dealerItems.avatar}" width="128" height="128" alt="" style="float:left; margin: 5px;" />
-					{/option:dealerItems.avatar}
-					<a href="#" onClick="openMarker({$dealerItems.dealer_id}, '{$dealerItems.name}', $('#markerText' + {$dealerItems.dealer_id}).html());">{$msgViewOnMap}</a> <br>
-					<a href="http://maps.google.com/?q={$dealerItems.street|urlencode}+{$dealerItems.number|urlencode}+{$dealerItems.zip|urlencode}+{$dealerItems.city|urlencode}" target="_blank">{$msgViewOnBigMap}</a>
-					<div style="width:300px;  float:left;">
-						{$dealerItems.street} {$dealerItems.number} <br>
-						{$dealerItems.zip} {$dealerItems.city} <br>
+			<div class="dealerBlock">
+					<div>
+						<span class="dealerTitle"><a href="{$dealerItems.full_url}">{$dealerItems.name}</a></span>
+						<a href="#" onClick="openMarker({$dealerItems.dealer_id}, '{$dealerItems.name}', $('#markerText' + {$dealerItems.dealer_id}).html());">{$msgViewOnMap}</a>
+					</div>
+					<div class="dealerInfo">
+						{option:dealerItems.avatar}
+							<a href="{$dealerItems.full_url}"><img src="{$FRONTEND_FILES_URL}/dealer/avatars/128x128/{$dealerItems.avatar}" width="128" height="128" alt="{$dealerItems.name}" border="0" style="float:left; margin: 5px;" /></a>
+						{/option:dealerItems.avatar}
+						{$dealerItems.street|ucfirst} {$dealerItems.number} <br>
+						{$dealerItems.zip} {$dealerItems.city|ucfirst} <br>
 						
 						{option:dealerItems.tel}
 							{$lblPhone|ucfirst}: {$dealerItems.tel} <br>
@@ -184,29 +181,30 @@
 						{/option:dealerItems.fax}
 						
 						{option:dealerItems.email}
-							{$lblEmail|ucfirst}: {$dealerItems.email} <br>
+							{$lblEmail|ucfirst}: <a href="mailto:{$dealerItems.email}">{$dealerItems.email}</a><br>
 						{/option:dealerItems.email}
 												
 						{option:dealerItems.site}
 							{$lblSite|ucfirst}: {$dealerItems.site} <br>
 						{/option:dealerItems.site}
 					</div>
-					<div style="width:400px; float:left;">
-						<strong>{$lblBrands}</strong> <br>
-				        	 <ul>
-				            	{iteration:dealerItems.brandInfo}
-				            		{option:dealerItems.brandInfo.name}
-				               			<li>
-				               			<a href="{$dealerItems.brandInfo.full_url}">
-					               			<img src="{$FRONTEND_FILES_URL}/dealer/brands/32x32/{$dealerItems.brandInfo.image}" width="32" height="32" border="0" alt="" style="float:left; margin: 5px;" />
-					               			{$dealerItems.brandInfo.name}
-				               			</a>
-				               			</li>
-				               		{/option:dealerItems.brandInfo.name}
-				            	{/iteration:dealerItems.brandInfo}
-				        	 </ul>
-						</ul>
-					</div>
+				<div class="dealerMapLink">
+					<a href="http://maps.google.com/?q={$dealerItems.street|urlencode}+{$dealerItems.number|urlencode}+{$dealerItems.zip|urlencode}+{$dealerItems.city|urlencode}" target="_blank">{$msgViewOnBigMap}</a>
+				</div>
+				<div class="dealerInfo"">
+					<strong>{$lblBrands|ucfirst}:</strong><br>
+		        	 <ul>
+		            	{iteration:dealerItems.brandInfo}
+		            		{option:dealerItems.brandInfo.name}
+		               			<li>
+		               			<div class="dealerBrand"><a href="{$dealerItems.brandInfo.full_url}">
+			               			<img src="{$FRONTEND_FILES_URL}/dealer/brands/32x32/{$dealerItems.brandInfo.image}" width="32" height="32" border="0" alt="" style="float:left; margin: 5px;" />
+			               			{$dealerItems.brandInfo.name}
+		               			</a></div>
+		               			</li>
+		               		{/option:dealerItems.brandInfo.name}
+		            	{/iteration:dealerItems.brandInfo}
+		        	 </ul>
 				</div>
 			</div>
 		{/iteration:dealerItems}

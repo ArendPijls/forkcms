@@ -40,8 +40,8 @@ class FrontendDealerModel
 		if(isset($return['meta_data'])) $return['meta_data'] = @unserialize($return['meta_data']);
 
 		// init url
-		$linkPlace = FrontendNavigation::getURLForBlock('dealer', 'place');
-		$return['full_url'] = $linkPlace . '/' . $return['url'];
+		$linkLocator = FrontendNavigation::getURLForBlock('dealer', 'locator');
+		$return['full_url'] = $linkLocator . '/' . $return['url'];
 
 		// add brands
 		$brands = FrontendDealerModel::getDealerBrands($return['id']);;

@@ -81,7 +81,7 @@ class BackendDealerAddBrands extends BackendBaseActionAdd
 				$item['language'] = BackendLanguage::getWorkingLanguage();
 
 				// has the user submitted an image?
-				if($this->frm->getField('avatar')->isFilled())
+				if($this->frm->getField('image')->isFilled())
 				{
 					// add into items to update
 					$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
@@ -93,7 +93,7 @@ class BackendDealerAddBrands extends BackendBaseActionAdd
 						{
 							list( $width , $height ) = split('x', $value);
 							// resize avatar
-							$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/brands/' . $width . 'x' . $height . '/' . $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension(), $width, $height, true, false, 100);
+							$this->frm->getField('image')->createThumbnail(FRONTEND_FILES_PATH . '/dealer/brands/' . $width . 'x' . $height . '/' . $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension(), $width, $height, true, false, 100);
 						}
 					}
 				}

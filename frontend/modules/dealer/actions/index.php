@@ -70,6 +70,9 @@ class FrontendDealerIndex extends FrontendBaseBlock
 	 */
 	private function parse()
 	{
+
+		$this->header->addCSS('/frontend/modules/' . $this->getModule() . '/layout/css/dealer.css');
+
 		// parse the form
 		$this->frm->parse($this->tpl);
 		$this->tpl->assign('dealerSettings', FrontendModel::getModuleSettings('dealer'));

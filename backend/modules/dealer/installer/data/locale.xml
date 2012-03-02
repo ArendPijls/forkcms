@@ -92,6 +92,10 @@
         <translation language="nl"><![CDATA[Geen merken gevonden]]></translation>
         <translation language="en"><![CDATA[No brands found]]></translation>
       </item>
+      <item type="message" name="SellsTheseBrands">
+        <translation language="nl"><![CDATA[verkoopt deze merken]]></translation>
+        <translation language="en"><![CDATA[sells these brands]]></translation>
+      </item>
       <item type="error" name="NotNumeric">
         <translation language="en"><![CDATA[only numbers]]></translation>
         <translation language="nl"><![CDATA[alleen getallen]]></translation>

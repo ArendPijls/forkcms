@@ -46,6 +46,12 @@ class FrontendDealerLocator extends FrontendBaseBlock
 	 */
 	private function parse()
 	{
+		// load css
+		$this->header->addCSS('/frontend/modules/' . $this->getModule() . '/layout/css/dealer.css');
+
+		// add into breadcrumb
+		$this->breadcrumb->addElement($this->record['name']);
+
 		// parse records and settings
 		$this->tpl->assign('dealerItem', $this->record);
 		$this->tpl->assign('dealerSettings', FrontendModel::getModuleSettings('dealer'));
