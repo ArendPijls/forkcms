@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `dealer` (
 CREATE TABLE IF NOT EXISTS `dealer_brands` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'The unique ID for this brand.',
   `name` varchar(255) NOT NULL COMMENT 'The name for this brand.',
+  `meta_id` int(11) NOT NULL COMMENT 'The meta_id for indexing.',
   `image` varchar(255) NOT NULL COMMENT 'The image filename for this brand.',
   `language` varchar(10) NOT NULL COMMENT 'The language for this brand.',
   PRIMARY KEY (`id`)

@@ -41,10 +41,10 @@ class DealerInstaller extends ModuleInstaller
 		$this->setSetting('dealer', 'units', 'KM');
 
 		// widget settings
-		$this->setSetting('location', 'zoom_level_widget', 13);
-		$this->setSetting('location', 'width_widget', 400);
-		$this->setSetting('location', 'height_widget', 300);
-		$this->setSetting('location', 'map_type_widget', 'ROADMAP');
+		$this->setSetting('dealer', 'zoom_level_widget', 13);
+		$this->setSetting('dealer', 'width_widget', 400);
+		$this->setSetting('dealer', 'height_widget', 300);
+		$this->setSetting('dealer', 'map_type_widget', 'ROADMAP');
 
 		// action rights
 		$this->setActionRights(1, 'dealer', 'add');
@@ -89,6 +89,6 @@ class DealerInstaller extends ModuleInstaller
 		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/files/dealer/brands/source/')) SpoonDirectory::create(PATH_WWW . '/frontend/files/dealer/brands/source/');
 
 		// add extra's
-		$this->insertExtra('dealer', 'block', 'Dealer', null, 'a:1:{s:3:"url";s:37:"/private/nl/dealer/index?token=true";}', 'N');
+		$this->insertExtra('dealer', 'block', 'Dealer', null, 'a:1:{s:3:"url";s:35:"/private/nl/dealer/index?token=true";}', 'N');
 	}
 }
