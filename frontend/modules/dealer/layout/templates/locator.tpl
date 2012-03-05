@@ -3,7 +3,7 @@
 	- {$dealerItem}: contains data about all the dealer
 	- {$dealerSettings}: contains data about map settings
 	- {$lblBrands}
-	- {$lblCityOrZip|ucfirst} {$lblTel|ucfirst} {$lblFax|ucfirst} {$lblAddress|ucfirst} {$lblNumber|ucfirst} {$lblSite|ucfirst}
+	- {$lblCityOrZip|ucfirst} {$lblTel|ucfirst} {$lblFax|ucfirst} {$lblAddress|ucfirst} {$lblNumber|ucfirst} {$lblwebsite|ucfirst}
 	- {$msgDealerNoItems}
 	- {$msgViewOnMap}
 	- {$msgViewOnBigMap}
@@ -18,26 +18,26 @@
 				<img src="{$FRONTEND_FILES_URL}/dealer/avatars/64x64/{$dealerItem.avatar}" width="64" height="64" alt="" style="float:right; margin: 5px;" />
 			{/option:dealerItem.avatar}
 										
-			{$dealerItem.street} {$dealerItem.number}<br>
-			{$dealerItem.zip} {$dealerItem.city} <br>
+			{$dealerItem.street|ucfirst} {$dealerItem.number}<br>
+			{$dealerItem.zip} {$dealerItem.city|ucfirst} <br>
 			
 			{option:dealerItem.tel}
-				{$lblPhone}: {$dealerItem.tel} <br>
+				{$lblPhone|ucfirst}: {$dealerItem.tel} <br>
 			{/option:dealerItem.tel}
 			
 			{option:dealerItem.fax}
-				{$lblFax}: {$dealerItem.fax} <br>
+				{$lblFax|ucfirst}: {$dealerItem.fax} <br>
 			{/option:dealerItem.fax}
 			
 			{option:dealerItem.email}
-				{$lblEmail}: {$dealerItem.email} <br>
+				{$lblEmail|ucfirst}: <a href="mailto:{$dealerItem.email}">{$dealerItem.email}</a> <br>
 			{/option:dealerItem.email}
 									
-			{option:dealerItem.site}
-				{$lblSite}: {$dealerItem.site} <br>
-			{/option:dealerItem.site}
+			{option:dealerItem.website}
+				{$lblSite|ucfirst}: <a href="{$dealerItem.website}" target="_blank">{$dealerItem.website}</a> <br>
+			{/option:dealerItem.website}
 			
-			<strong>{$lblBrands}</strong> <br>
+			<strong>{$lblBrands|ucfirst}</strong> <br>
         	{iteration:dealerItem.brandInfo}
         		{option:dealerItem.brandInfo.name}
            			{$dealerItem.brandInfo.name}, 
@@ -132,7 +132,7 @@
 			<div class="dealerBlock">
 					<div>
 						<span class="dealerTitle"><a href="{$dealerItem.full_url}">{$dealerItem.name}</a></span>
-						<a href="#" onClick="openMarker({$dealerItem.dealer_id}, '{$dealerItem.name}', $('#markerText' + {$dealerItem.dealer_id}).html());">{$msgViewOnMap}</a>
+						<a href="#" onClick="openMarker({$dealerItem.id}, '{$dealerItem.name}', $('#markerText' + {$dealerItem.id}).html());">{$msgViewOnMap}</a>
 					</div>
 					<div class="dealerInfo">
 						{option:dealerItem.avatar}
@@ -153,9 +153,9 @@
 							{$lblEmail|ucfirst}: <a href="mailto:{$dealerItem.email}">{$dealerItem.email}</a><br>
 						{/option:dealerItem.email}
 												
-						{option:dealerItem.site}
-							{$lblSite|ucfirst}: {$dealerItem.site} <br>
-						{/option:dealerItem.site}
+						{option:dealerItem.website}
+							{$lblSite|ucfirst}: <a href="{$dealerItem.website}" target="_blank">{$dealerItem.website}</a><br>
+						{/option:dealerItem.website}
 					</div>
 				<div class="dealerMapLink">
 					<a href="http://maps.google.com/?q={$dealerItem.street|urlencode}+{$dealerItem.number|urlencode}+{$dealerItem.zip|urlencode}+{$dealerItem.city|urlencode}" target="_blank">{$msgViewOnBigMap}</a>

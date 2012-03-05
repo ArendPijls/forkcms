@@ -45,24 +45,24 @@
 				<img src="{$FRONTEND_FILES_URL}/dealer/avatars/64x64/{$dealerItems.avatar}" width="64" height="64" alt="" style="float:right; margin: 5px;" />
 			{/option:dealerItems.avatar}
 										
-			{$dealerItems.street} {$dealerItems.number}<br>
-			{$dealerItems.zip} {$dealerItems.city} <br>
+			{$dealerItems.street|ucfirst} {$dealerItems.number}<br>
+			{$dealerItems.zip} {$dealerItems.city|ucfirst} <br>
 			
 			{option:dealerItems.tel}
-				{$lblPhone}: {$dealerItems.tel} <br>
+				{$lblPhone|ucfirst}: {$dealerItems.tel} <br>
 			{/option:dealerItems.tel}
 			
 			{option:dealerItems.fax}
-				{$lblFax}: {$dealerItems.fax} <br>
+				{$lblFax|ucfirst}: {$dealerItems.fax} <br>
 			{/option:dealerItems.fax}
 			
 			{option:dealerItems.email}
-				{$lblEmail}: <a href="mailto:{$dealerItems.email}">{$dealerItems.email}</a><br>
+				{$lblEmail|ucfirst}: <a href="mailto:{$dealerItems.email}">{$dealerItems.email}</a><br>
 			{/option:dealerItems.email}
 									
-			{option:dealerItems.site}
-				{$lblSite}: {$dealerItems.site} <br>
-			{/option:dealerItems.site}
+			{option:dealerItems.website}
+				{$lblSite|ucfirst}: <a href="{$dealerItems.website}" target="_blank">{$dealerItems.website}</a> <br>
+			{/option:dealerItems.website}
 			
 			<strong>{$lblBrands}</strong> <br>
         	{iteration:dealerItems.brandInfo}
@@ -184,9 +184,9 @@
 							{$lblEmail|ucfirst}: <a href="mailto:{$dealerItems.email}">{$dealerItems.email}</a><br>
 						{/option:dealerItems.email}
 												
-						{option:dealerItems.site}
-							{$lblSite|ucfirst}: {$dealerItems.site} <br>
-						{/option:dealerItems.site}
+						{option:dealerItems.website}
+							{$lblSite|ucfirst}: <a href="{$dealerItems.website}" target="_blank">{$dealerItems.website}</a> <br>
+						{/option:dealerItems.website}
 					</div>
 				<div class="dealerMapLink">
 					<a href="http://maps.google.com/?q={$dealerItems.street|urlencode}+{$dealerItems.number|urlencode}+{$dealerItems.zip|urlencode}+{$dealerItems.city|urlencode}" target="_blank">{$msgViewOnBigMap}</a>

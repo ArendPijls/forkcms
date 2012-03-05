@@ -112,6 +112,10 @@ class FrontendDealerModel
 		$urlGoogleMaps = 'http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false';
 
 		// build address & full url to google
+		if($country == 'AROUND') $country = spoonhttp::getContent('http://api.hostip.info/country.php?ip=' . spoonhttp::getIp());
+
+		// set BE when getIP is private (using private ip's in our workplace)
+		if($country == 'XX') $country = 'BE';
 		$fullAddress = $area . ', ' . $country;
 		$url = sprintf($urlGoogleMaps, urlencode($fullAddress));
 
@@ -135,11 +139,11 @@ class FrontendDealerModel
 		$minLng = (float) $lng - rad2deg($distance / $radius / cos(deg2rad((float) $lat)));
 
 		// show only dealers in selected country
-		$sqlCountry = "";
-		if($country != "AROUND") $sqlCountry = " AND country = '" . $country . "'";
+		$sqlCountry = '';
+		if($country != 'AROUND') $sqlCountry = ' AND country = "' . $country . '"';
 
 		// show only selected brands
-		$sqlBrands = "";
+		$sqlBrands = '';
 		if(!empty($brands)) $sqlBrands = ' AND di.brand_id IN (' . implode(',', $brands) . ')';
 
 		// set db records in temp arr
