@@ -7,7 +7,7 @@
 	</requirements>
 	<description>
 		<![CDATA[
-			Map with all nearby dealer locators
+			Module where you can find easily all dealer locators nearby.
 		]]>
 	</description>
 	<authors>
@@ -17,8 +17,8 @@
 		</author>
 	</authors>
 	<events>
-		<event application="backend" name="after_add"><![CDATA[Triggered when a dealer is added.]]></event>
-		<event application="backend" name="after_delete"><![CDATA[Triggered when a dealer is deleted.]]></event>
-		<event application="backend" name="after_edit"><![CDATA[Triggered when a dealer is edited.]]></event>
+		<event application="backend" name="after_add"><![CDATA[Triggered when a dealer locator is added.]]></event>
+		<event application="backend" name="after_delete"><![CDATA[Triggered when a dealer locator is deleted.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when a dealer locator is edited.]]></event>
 	</events>
 </module>

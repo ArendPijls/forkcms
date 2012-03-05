@@ -1,4 +1,14 @@
-
+{*
+	variables that are available:
+	- {$brandItem}: contains data about all the brand
+	- {$dealerItems}: contains data about all the dealers
+	- {$dealerSettings}: contains data about map settings
+	- {$lblBrands}
+	- {$lblCityOrZip|ucfirst} {$lblTel|ucfirst} {$lblFax|ucfirst} {$lblAddress|ucfirst} {$lblNumber|ucfirst} {$lblSite|ucfirst}
+	- {$msgDealerNoItems}
+	- {$msgViewOnMap}
+	- {$msgViewOnBigMap}
+*}
 {option:brandItem}
 <h3>{$brandItem.name}</h3>
 <img src="{$FRONTEND_FILES_URL}/dealer/brands/128x128/{$brandItem.image}" width="128" height="128" alt="" />
@@ -27,7 +37,7 @@
 			{/option:dealerItems.fax}
 			
 			{option:dealerItems.email}
-				{$lblEmail}: {$dealerItems.email} <br>
+				{$lblEmail}: <a href="mailto:{$dealerItems.email}">{$dealerItems.email}</a><br>
 			{/option:dealerItems.email}
 									
 			{option:dealerItems.site}

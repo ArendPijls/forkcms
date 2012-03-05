@@ -8,9 +8,9 @@
  */
 
 /**
- * Search form with brands and on submit showing dealer locaters
+ * Detail brand page, showing all dealers with selected brand
  *
- * @author Arend Pijls <arend.pijls@netlash.com>
+ * @author Arend Pijls <arend.pijls@wijs.be>
  */
 class FrontendDealerBrand extends FrontendBaseBlock
 {
@@ -69,5 +69,4 @@ class FrontendDealerBrand extends FrontendBaseBlock
 
 		$this->tpl->assign('dealerSettings', FrontendModel::getModuleSettings('dealer'));
 	}
-
 }

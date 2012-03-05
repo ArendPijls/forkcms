@@ -8,9 +8,9 @@
  */
 
 /**
- * Display a form to create a new dealer.
+ * Display a form to create a new dealer locator.
  *
- * @author Arend Pijls <arend.pijls@netlash.com>
+ * @author Arend Pijls <arend.pijls@wijs.be>
  */
 class BackendDealerAdd extends BackendBaseActionAdd
 {

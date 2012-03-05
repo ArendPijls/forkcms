@@ -10,7 +10,7 @@
 /**
  * Display dealer locater overview
  *
- * @author Arend Pijls <arend.pijls@netlash.com>
+ * @author Arend Pijls <arend.pijls@wijs.be>
  */
 class BackendDealerIndex extends BackendBaseActionIndex
 {
@@ -44,7 +44,7 @@ class BackendDealerIndex extends BackendBaseActionIndex
 		$this->datagrid->setColumnHidden('name');
 		$this->datagrid->setColumnHidden('avatar');
 
-		// build html
+		// build html for showing dealer locator image in datagrid
 		$html = '<div class="dataGridAvatar">' . "\n";
 		$html .= '	<div class="avatar av24">' . "\n";
 		$html .= '			<img src="' . FRONTEND_FILES_URL . '/dealer/avatars/32x32/' . $this->datagrid->getColumn('avatar')->getValue() . '" width="24" height="24"  />' . "\n";

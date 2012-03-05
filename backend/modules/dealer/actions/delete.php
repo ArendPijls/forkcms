@@ -8,9 +8,9 @@
  */
 
 /**
- * Delete a dealer.
+ * Delete a dealer locator.
  *
- * @author Arend Pijls <arend.pijls@netlash.com>
+ * @author Arend Pijls <arend.pijls@wijs.be>
  */
 class BackendDealerDelete extends BackendBaseActionDelete
 {

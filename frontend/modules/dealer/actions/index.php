@@ -10,7 +10,7 @@
 /**
  * Search form with brands and on submit showing dealer locaters
  *
- * @author Arend Pijls <arend.pijls@netlash.com>
+ * @author Arend Pijls <arend.pijls@wijs.be>
  */
 class FrontendDealerIndex extends FrontendBaseBlock
 {

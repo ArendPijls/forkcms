@@ -10,7 +10,7 @@
 /**
  * This is the configuration-object
  *
- * @author Arend Pijls <arend.pijls@netlash.com>
+ * @author Arend Pijls <arend.pijls@wijs.be>
  */
 final class FrontendDealerConfig extends FrontendBaseConfig
 {

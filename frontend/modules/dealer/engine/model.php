@@ -8,9 +8,9 @@
 */
 
 /**
-* In this file we store all generic functions that we will be using in the dealer module
+* In this file we store all generic functions that we will be using in the dealer locator module
 *
-* @author Arend Pijls <arend.pijls@netlash.com>
+* @author Arend Pijls <arend.pijls@wijs.be>
 */
 class FrontendDealerModel
 {

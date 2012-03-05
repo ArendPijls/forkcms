@@ -8,9 +8,9 @@
  */
 
 /**
- * Edit a dealer.
+ * Edit a dealer locator.
  *
- * @author Arend Pijls <arend.pijls@netlash.com>
+ * @author Arend Pijls <arend.pijls@wijs.be>
  */
 class BackendDealerEdit extends BackendBaseActionEdit
 {

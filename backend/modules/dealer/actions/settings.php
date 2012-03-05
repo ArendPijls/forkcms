@@ -8,9 +8,9 @@
  */
 
 /**
- * This is the settings-action, it will display a form to set general dealer map settings
+ * This is the settings-action, it will display a form to set general dealer locator / widget map settings
  *
- * @author Arend Pijls <arend.pijls@netlash.com>
+ * @author Arend Pijls <arend.pijls@wijs.be>
  */
 class BackendDealerSettings extends BackendBaseActionEdit
 {

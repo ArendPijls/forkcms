@@ -92,10 +92,6 @@
         <translation language="nl"><![CDATA[Geen merken gevonden]]></translation>
         <translation language="en"><![CDATA[No brands found]]></translation>
       </item>
-      <item type="message" name="SellsTheseBrands">
-        <translation language="nl"><![CDATA[verkoopt deze merken]]></translation>
-        <translation language="en"><![CDATA[sells these brands]]></translation>
-      </item>
       <item type="error" name="NotNumeric">
         <translation language="en"><![CDATA[only numbers]]></translation>
         <translation language="nl"><![CDATA[alleen getallen]]></translation>
@@ -125,8 +121,12 @@
         <translation language="nl"><![CDATA[%1$s verdelers gevonden]]></translation>
       </item>
       <item type="message" name="DealerNoItems">
-        <translation language="en"><![CDATA[No dealers found specified location]]></translation>
+        <translation language="en"><![CDATA[No dealers found in specified location]]></translation>
         <translation language="nl"><![CDATA[Er zijn geen verdelers gevonden in opgegeven locatie.]]></translation>
+      </item>
+      <item type="message" name="SellsTheseBrands">
+        <translation language="nl"><![CDATA[verkoopt deze merken]]></translation>
+        <translation language="en"><![CDATA[sells these brands]]></translation>
       </item>
 	  <item type="error" name="AreaIsRequired">
         <translation language="en"><![CDATA[City or Zip is required]]></translation>

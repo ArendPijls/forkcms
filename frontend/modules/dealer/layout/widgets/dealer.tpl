@@ -1,6 +1,6 @@
 {*
 	variables that are available:
-	- {$widgetDealerItem}: contains data about this location
+	- {$widgetDealerItem}: contains data about this dealer locator
 	- {$widgetDealerSettings}: contains this module's settings
 *}
 
@@ -24,7 +24,7 @@
 			{/option:widgetDealerItem.fax}
 			
 			{option:widgetDealerItem.email}
-				{$lblEmail}: {$widgetDealerItem.email} <br>
+				{$lblEmail}: <a href="mailto:{$dealerItems.email}">{$widgetDealerItem.email}</a><br>
 			{/option:widgetDealerItem.email}
 									
 			{option:widgetDealerItem.site}

@@ -57,7 +57,7 @@
 			{/option:dealerItems.fax}
 			
 			{option:dealerItems.email}
-				{$lblEmail}: {$dealerItems.email} <br>
+				{$lblEmail}: <a href="mailto:{$dealerItems.email}">{$dealerItems.email}</a><br>
 			{/option:dealerItems.email}
 									
 			{option:dealerItems.site}

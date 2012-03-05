@@ -10,7 +10,7 @@
 /**
  * Display brands overview
  *
- * @author Arend Pijls <arend.pijls@netlash.com>
+ * @author Arend Pijls <arend.pijls@wijs.be>
  */
 class BackendDealerBrands extends BackendBaseActionIndex
 {
@@ -45,7 +45,7 @@ class BackendDealerBrands extends BackendBaseActionIndex
 		$this->datagrid->setColumnHidden('name');
 		$this->datagrid->setColumnHidden('image');
 
-		// build html
+		// build html for showing brand image in datagrid
 		$html = '<div class="dataGridAvatar">' . "\n";
 		$html .= '	<div class="avatar av24">' . "\n";
 		$html .= '			<img src="' . FRONTEND_FILES_URL . '/dealer/brands/32x32/' . $this->datagrid->getColumn('image')->getValue() . '" width="24" height="24"  />' . "\n";

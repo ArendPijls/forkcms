@@ -10,7 +10,7 @@
 /**
  * Display a form to create a new brand.
  *
- * @author Arend Pijls <arend.pijls@netlash.com>
+ * @author Arend Pijls <arend.pijls@wijs.be>
  */
 class BackendDealerAddBrands extends BackendBaseActionAdd
 {

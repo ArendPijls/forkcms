@@ -10,7 +10,7 @@
 /**
  * Installer for the dealer module
  *
- * @author Arend Pijls <arend.pijls@netlash.com>
+ * @author Arend Pijls <arend.pijls@wijs.be>
  */
 class DealerInstaller extends ModuleInstaller
 {
@@ -23,7 +23,7 @@ class DealerInstaller extends ModuleInstaller
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add 'dealer' as a module
-		$this->addModule('dealer', 'The dealer module.');
+		$this->addModule('dealer', 'The dealer locator module.');
 
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
@@ -48,10 +48,13 @@ class DealerInstaller extends ModuleInstaller
 
 		// action rights
 		$this->setActionRights(1, 'dealer', 'add');
+		$this->setActionRights(1, 'dealer', 'add_brands');
 		$this->setActionRights(1, 'dealer', 'delete');
+		$this->setActionRights(1, 'dealer', 'delete_brand');
 		$this->setActionRights(1, 'dealer', 'edit');
+		$this->setActionRights(1, 'dealer', 'edit_brands');
 		$this->setActionRights(1, 'dealer', 'index');
-		$this->setActionRights(1, 'dealer', 'sequence');
+		$this->setActionRights(1, 'dealer', 'brands');
 		$this->setActionRights(1, 'dealer', 'settings');
 
 		// set navigation

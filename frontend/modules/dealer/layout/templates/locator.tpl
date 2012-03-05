@@ -1,3 +1,13 @@
+{*
+	variables that are available:
+	- {$dealerItem}: contains data about all the dealer
+	- {$dealerSettings}: contains data about map settings
+	- {$lblBrands}
+	- {$lblCityOrZip|ucfirst} {$lblTel|ucfirst} {$lblFax|ucfirst} {$lblAddress|ucfirst} {$lblNumber|ucfirst} {$lblSite|ucfirst}
+	- {$msgDealerNoItems}
+	- {$msgViewOnMap}
+	- {$msgViewOnBigMap}
+*}
 
 {option:dealerItem}
 	<div id="map" style="height: {$dealerSettings.height}px; width: {$dealerSettings.width}px;"></div>

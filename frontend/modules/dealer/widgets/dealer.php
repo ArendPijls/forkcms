@@ -10,7 +10,7 @@
 /**
  * This is the dealer-widget: 1 specific map / address
  *
- * @author Arend Pijls <arend.pijls@netlash.com>
+ * @author Arend Pijls <arend.pijls@wijs.be>
  */
 class FrontendDealerWidgetDealer extends FrontendBaseWidget
 {

@@ -8,9 +8,9 @@
  */
 
 /**
- * Search form with brands and on submit showing dealer locaters
+ * Detail locator page, show locator details with brands.
  *
- * @author Arend Pijls <arend.pijls@netlash.com>
+ * @author Arend Pijls <arend.pijls@wijs.be>
  */
 class FrontendDealerLocator extends FrontendBaseBlock
 {
@@ -56,5 +56,4 @@ class FrontendDealerLocator extends FrontendBaseBlock
 		$this->tpl->assign('dealerItem', $this->record);
 		$this->tpl->assign('dealerSettings', FrontendModel::getModuleSettings('dealer'));
 	}
-
 }

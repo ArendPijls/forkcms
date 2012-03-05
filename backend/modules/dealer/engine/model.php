@@ -10,7 +10,7 @@
 /**
  * All model functions for the dealer locater module.
  *
- * @author Arend Pijls <arend.pijls@netlash.com>
+ * @author Arend Pijls <arend.pijls@wijs.be>
  */
 class BackendDealerModel
 {
@@ -49,11 +49,19 @@ class BackendDealerModel
 			array((int) $id)
 		);
 
-		// delete brand images
+		// loop upload directory
+		foreach(SpoonDirectory::getList(FRONTEND_FILES_PATH . '/dealer/brands/') as $value)
+		{
+			if($value !== 'source')
+			{
+				list( $width , $height ) = split('x', $value);
+				// delete images
+				SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/brands/' . $width . 'x' . $height . '/' . $imageFilname);
+			}
+		}
+
+		// delete source images
 		SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/brands/source/' . $imageFilname);
-		SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/brands/128x128/' . $imageFilname);
-		SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/brands/64x64/' . $imageFilname);
-		SpoonFile::delete(FRONTEND_FILES_PATH . '/dealer/brands/32x32/' . $imageFilname);
 
 		// delete brand
 		BackendModel::getDB(true)->delete('dealer_brands', 'id = ?', array((int) $id));
